@@ -1,15 +1,7 @@
 <template>
   <NavigationBar />
-  <!--    <RouterView v-slot="{ Component }">-->
-  <!--      &lt;!&ndash; TODO 要缓存 &ndash;&gt;-->
-  <!--      <KeepAlive>-->
-  <!--        <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive"></component>-->
-  <!--      </KeepAlive>-->
-  <!--      &lt;!&ndash; TODO 不缓存 &ndash;&gt;-->
-  <!--      <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive"></component>-->
-  <!--    </RouterView>-->
   <LeftNavigationBar />
-  <el-dialog class="gg" v-model="dialogVisible" title="公告" center align-center width="380px">
+  <el-dialog class="announcement" v-model="dialogVisible"  center align-center width="380px" style="background-color: rgb(27,30,32)">
     <span style="text-align: center">{{ context }}</span>
     <template #footer>
       <span class="dialog-footer">
@@ -74,14 +66,14 @@ export default {
 </script>
 
 <style>
-.gg {
+.announcement {
   width: 25%;
   border-radius: 10px;
 }
 
 
 @media (max-width: 767px) {
-  .gg {
+  .announcement {
     width: 70%;
   }
 }
@@ -109,10 +101,11 @@ body {
   margin: 0;
   padding: 0;
   /*background: #f6f6f6;*/
-  background: white;
+  background: #1D2022FF;
   color: #303030;
   width: 100%;
   height: 100%;
+
 }
 
 /* TODO 滚动条样式*/

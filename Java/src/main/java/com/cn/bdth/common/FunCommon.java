@@ -1,6 +1,7 @@
 package com.cn.bdth.common;
 
 import com.cn.bdth.constants.ServerConstant;
+
 import com.cn.bdth.structure.ServerStructure;
 import com.cn.bdth.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
@@ -84,6 +85,8 @@ public class FunCommon {
             return value;
         }
     }
+
+
 
 
 }

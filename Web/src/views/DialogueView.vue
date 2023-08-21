@@ -20,6 +20,7 @@
           <el-avatar class="flexShrink" :size="35" :icon="UserFilled"
                      :src="store.getters.userinfo.avatar ? imageUrl + store.getters.userinfo.avatar : require('../assets/my.png')"/>
         </div>
+
         <div class="answer">
           <el-avatar class="flexShrink" :size="35" :icon="UserFilled" :src="require('../assets/logoHead.svg')"/>
           <div v-if="item.assistant">
@@ -84,7 +85,7 @@
         <el-input ref="inputRef" @keyup.enter="onSubmit" v-model="input"
                   :placeholder="aiLoading ? '思考中..' : '输入你想问的...'" :disabled="aiLoading">
           <template #prepend>
-            <el-select placeholder="模式" style="width: 100px; margin-right: -20px;" v-model="model">
+            <el-select placeholder="模式" class="select_style" v-model="model">
               <el-option value="gpt-3.5-turbo" label="标准"/>
               <el-option value="gpt-4-0314" label="增强"/>
             </el-select>
@@ -105,7 +106,7 @@
       </div>
     </div>
   </div>
-  <el-dialog v-model="dialogueDisplay" title="" width="430px" center>
+  <el-dialog v-model="dialogueDisplay" title="" width="430px" center style="background-color: rgb(27,30,32)">
     <div>
       <div class="cache-flex-center">
         <img alt="Vue logo" src="../assets/logo02.svg" class="cache-img">
@@ -337,19 +338,6 @@ export default {
       } catch (err) {
         conversationList.value[index].assistant = err;
         conversationList.value[index].isError = true;
-      } finally {
-        // 在回复完成后将输入框设置为聚焦状态
-        socket.value.onclose = function () {
-          conversationList.value[index].isError = false;
-          writeDialogue();
-          getUser();
-          aiLoading.value = false;
-          scrollToTheBottom();
-          // 将输入框设置为聚焦状态
-          nextTick(() => {
-            inputRef.value.focus();
-          });
-        };
       }
     }
 
@@ -386,10 +374,20 @@ export default {
           aiLoading.value = false
           // 滚动到底部
           scrollToTheBottom();
+          nextTick(() => {
+            inputRef.value.focus();
+          });
         };
         // TODO 处理错误
         socket.value.onerror = function () {
-          console.log("websocket发生了错误");
+          ElNotification({
+            title: '信息过期',
+            message: '登录信息已过期,请重新登录',
+            type: 'error',
+          })
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          location.reload();
         }
       }
     }
@@ -528,7 +526,6 @@ export default {
 }
 
 .body {
-
   scroll-behavior: smooth;
   width: 100%;
   height: 100%;
@@ -539,6 +536,7 @@ export default {
   padding: 0 20px 120px;
   display: flex;
   overflow: auto;
+  background-color: rgb(38, 42, 44);
 }
 
 .footer {
@@ -546,13 +544,15 @@ export default {
   box-sizing: border-box;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(rgba(246, 246, 246, 0), #f6f6f6 25%);
+  background: linear-gradient(rgba(246, 246, 246, 0), #282c2e 25%);
   flex-shrink: 0;
   padding: 30px 20px;
   display: flex;
   position: absolute;
   bottom: 0;
-//overflow: hidden; flex-direction: column; align-items: center;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -561,7 +561,7 @@ export default {
   max-width: 800px;
   width: 100%;
   pointer-events: auto;
-  background: #fff;
+  background: #1d2022;
   border-radius: 8px;
   box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
   display: flex;
@@ -591,7 +591,7 @@ export default {
   min-height: 60px;
   resize: none;
   -webkit-appearance: none;
-  background: 0 0;
+  background: #1d2022 0 0;
   border: 0;
   flex: 1;
   margin: 0;
@@ -611,17 +611,22 @@ export default {
   margin: 0;
   padding: 0;
   line-height: 28px;
+
 }
 
 >>> .footer-bar > .el-input > .el-input-group__prepend > .el-select {
-  margin: 0;
+  margin: 0 !important;
+
 }
+
 
 >>> .footer-bar > .el-input > .el-input-group__prepend > .el-select > .select-trigger > .el-input > .el-input__wrapper {
   box-shadow: none !important;
   font-size: 15px;
   height: 62px;
   padding: 0 20px;
+
+  background-color: #1d2022;
 }
 
 .sendIcon {
@@ -697,12 +702,12 @@ export default {
   margin-top: 2px;
 }
 
-
->>> .vuepress-markdown-body {
-  margin-left: 16px;
-  padding: 0;
-  color: #303030;
+::v-deep( .vuepress-markdown-body) {
+  padding: 0 0 0 16px;
+  color: #ffffff;
+  background-color: #1f2224;
 }
+
 
 .operation--model {
   margin-top: 5px;
@@ -713,13 +718,14 @@ export default {
 
 .op-btn {
   box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
-  color: #666666;
+  color: #c8c8c8;
+  background-color: #1d2022;
   margin-right: 5px;
   padding: 3px 10px;
   display: flex;
   align-items: center;
   border-radius: 3px;
-  background-color: white
+
 }
 
 .op-font {
@@ -734,6 +740,7 @@ export default {
   flex-direction: column;
   align-items: center;
   animation: explainAnimation 0.3s;
+  color: white;
 }
 
 @keyframes explainAnimation {
@@ -753,13 +760,14 @@ export default {
   margin-top: 15px;
   display: flex;
   align-items: center;
-  box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
-  background-color: white;
+  box-shadow: 0 5px 7px rgba(29,32,34, 0.29);
+  background-color: rgb(29,32,34);
   padding: 5px 20px;
   font-size: 13px;
-  color: #636363;
+  color: #d8d8d8;
   border-radius: 5px
 }
+
 
 .answer-data {
   box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
@@ -767,7 +775,7 @@ export default {
   border-radius: 5px;
   margin-top: 2px;
   overflow-x: hidden;
-  background-color: white;
+  background-color: #1f2224;
   padding: 10px 10px 10px 5px;
   min-width: 50px;
 }
@@ -802,7 +810,7 @@ export default {
 
 .beCareful {
   padding: 40px 6px 12px;
-  color: #848484;
+  color: rgb(185, 175, 149);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -885,26 +893,26 @@ export default {
 .clear {
   display: flex;
   align-items: center;
-  color: #666666;
   position: absolute;
   top: 0;
   z-index: 1;
   font-size: 8px;
-  background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 3px 10px;
   box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
+  color: #c8c8c8;
+  background-color: #1d2022;
 }
 
 .clear2 {
   display: flex;
   align-items: center;
-  color: #666666;
   position: absolute;
   top: 0;
   z-index: 1;
   font-size: 8px;
-  background-color: rgb(255, 255, 255);
+  color: #c8c8c8;
+  background-color: #1d2022;
   border-radius: 5px;
   padding: 3px 10px;
   margin-left: 92px;
@@ -921,6 +929,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(27, 30, 32);
 }
 
 .cache-img {
@@ -929,6 +938,7 @@ export default {
 }
 
 .cache-text {
+  color: white;
   text-align: center;
   font-size: 15px;
   font-weight: 550;
@@ -944,7 +954,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(0, 0, 0);
+  background-color: #7171FFFF;
   padding: 10px 30px;
   border-radius: 5px;
 }
@@ -964,7 +974,7 @@ export default {
 }
 
 .cache-scrollbar {
-  background-color: rgb(47, 49, 51);
+  background-color: rgb(42, 44, 46);
   border-radius: 10px;
   color: #b7b7b7;
 }
@@ -981,8 +991,9 @@ export default {
 
 .cache-message {
   padding-bottom: 4px;
-  border-bottom: 1px white solid;
+  border-bottom: 1px #6b6b6b solid;
 }
+
 
 .cache-message-text {
 
@@ -1021,4 +1032,10 @@ export default {
   display: flex;
   padding-right: 10px
 }
+
+.select_style {
+  width: 100px;
+  margin-right: -20px;
+}
+
 </style>

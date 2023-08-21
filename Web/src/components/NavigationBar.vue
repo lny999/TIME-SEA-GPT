@@ -1,7 +1,6 @@
 <template>
 	<nav class="header">
 		<div class="header-side">
-
 			<div @click="appletDialogVisible = true" class="rechargeButton hidden-xs-only applet">
 				<img class="appletIcon" :src="require('../assets/applet.svg')">
 				<div class="rechargeButtonText">微信小程序</div>
@@ -184,13 +183,13 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped >
 .header {
 	user-select: none;
 	height: 60px;
 	box-sizing: border-box;
 	width: 100%;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #535353;
 	flex-shrink: 0;
 	justify-content: space-between;
 	align-items: center;
@@ -214,9 +213,10 @@ export default defineComponent({
 }
 
 .switch-button {
+  color: white;
 	box-sizing: border-box;
 	height: 34px;
-	background: #e6e6e6;
+	background: #35393c;
 	border-radius: 7px;
 	align-items: center;
 	padding: 0 2px;
@@ -232,14 +232,14 @@ export default defineComponent({
 	font-size: 14px;
 	font-weight: 500;
 	display: flex;
-	color: #303030;
+	color: #ffffff;
 	text-decoration: none;
 	box-sizing: border-box;
 	padding: 0 16px;
 }
 
 .switch-active {
-	background: #fff;
+	background: #1d2022 ;
 }
 
 .header-side {
@@ -389,8 +389,9 @@ export default defineComponent({
   margin-left: 8px;
   font-size: 15px;
   overflow: hidden;
+  color: #c5c5c5;
 }
 .header-user-btn:hover {
-  background: #e6e6e6;
+  background: rgb(48,49,51);
 }
 </style>

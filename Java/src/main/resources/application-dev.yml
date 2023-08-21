@@ -60,6 +60,19 @@ gpt:
   botNameChinese: '时间海'
   # BOT 英文名
   botNameEnglish: 'TIME SEA'
+  # 免费GPT配置
+  free:
+    # claude 配置
+    claudeModel:
+      # 原ID
+      organizationUuid: '3eead2bbe62c709'
+      # 连ID
+      conversationUuid: '082e12cc6dc59'
+      # sessionKey
+      sessionKey: 'sk-ant-ha7YaKDBm8WmC65_vcw6iw8_wU94Qf9NV4d5a2qg-g4Ei8wAA'
+    # 必应Cookie
+    newBingCookie: '1c5f8HXnv_XTnw8R7ZetpesLSSjVuZnOfOOGCVKJ2pEM_0Hg2ozW2ep_bvADewjMZDXBvzjHv8mpOAxrZ1tLjQQphjpeemQAMKl4AqmvObIClK8e0noqoXjr9jZ3l45qKy6ABBEqFeiWMiF8UCkKVqHBI5g'
+
 
 # 支付宝配置
 ali-pay:

@@ -39,8 +39,8 @@ public class AuthController {
     public Result wechatAuthLogin(@RequestBody @Validated WeChatAuthLoginDto dto) {
         try {
             return Result.data(authService.wechatAuthorizedLogin(dto.getCode()));
-        } catch (LoginPasswordException e) {
-            return Result.error(e.getMessage(), e.getCode());
+        } catch (LoginPasswordException | WechatException e) {
+            return Result.error(e.getMessage());
         }
     }
 

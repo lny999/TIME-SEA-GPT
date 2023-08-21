@@ -13,8 +13,26 @@ public interface GptService {
 
     /**
      * 建立GPT 流式连接
+     *
      * @param model 请求模型
      * @return string 流数据
      */
     Flux<String> concatenationGpt(final GptModel model);
+
+
+
+
+
+    /**
+     * NewBing
+     *
+     * @return the flux
+     */
+    Flux<String> concatenationNewBing(final String messages);
+
+
+    /*
+     *  Claude
+     */
+    Flux<String> concatenationClaude(final String messages);
 }

@@ -1,11 +1,11 @@
 <template>
   <el-dialog v-model="dialogVisible" width="330px" class="login-dialog" :show-close="false" align-center @close="close"
-             style="border-radius: 10px; overflow-x: hidden">
+             style="border-radius: 10px; overflow-x: hidden;">
     <div class="login-box">
       <div class="head">
         <div class="head_img"></div>
       </div>
-      <div class="login-title">微信登录</div>
+      <div class="login-title">扫码登录</div>
       <div class="form">
         <div class="animation" v-if="!qrCodeLoaded">
           <view class="loading-model">
@@ -13,10 +13,13 @@
           </view>
         </div>
         <div class="content" v-if="qrCode">
-          <img :src="qrCode" class="qc_code" alt="二维码">
-          <div class="cover-div" v-if="isFailure">
-            二维码已失效
+          <div style="position: relative;background-color: white;  border-radius: 5px;">
+            <img :src="qrCode" class="qc_code" alt="二维码">
+            <div class="cover-div" v-if="isFailure">
+              二维码已失效
+            </div>
           </div>
+
         </div>
       </div>
       <div class="btn-generate" v-if="isFailure">
@@ -26,7 +29,7 @@
         正在加载中...
       </div>
       <div class="h5 prompt-style" v-if="!promptAnimation">
-        打开微信扫一扫快速登录后使用
+        使用微信扫一扫快速登录后使用
       </div>
     </div>
   </el-dialog>
@@ -163,7 +166,7 @@ export default defineComponent({
   height: 160px;
   overflow: hidden;
   margin: 20px auto 0;
-  background-color: rgb(245, 246, 247);
+  background-color: rgb(53, 57, 60);
 }
 
 .animation img {
@@ -188,7 +191,7 @@ export default defineComponent({
   overflow: hidden;
   width: 100%;
   padding: 0;
-  background: #FFFFFF;
+  background-color: rgb(27,30,32)
 }
 
 .cover-div {
@@ -196,7 +199,7 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(27,30,32, 0.8);
   padding: 10px;
   border-radius: 5px;
   width: 150px;
@@ -205,6 +208,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  color: white;
 }
 
 .login-box > .head > img {
@@ -216,11 +220,11 @@ export default defineComponent({
 }
 
 .head_img {
-  background-image: linear-gradient(to top, white 30%, transparent 100%), url("../assets/login-header.png");
+  background-image: linear-gradient(to top, rgb(27,30,32) 30%, transparent 100%), url("../assets/login-header.png");
   background-size: cover;
   background-position: center;
   height: 100px;
-  box-shadow: 0px -10px 20px rgba(255, 255, 255, 0.2);
+  box-shadow: 0px -10px 20px rgba(27,30,32, 0.2);
 }
 
 .login-dialog {
@@ -251,11 +255,11 @@ export default defineComponent({
 
 
 .form > .content {
-  padding-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+
+
 }
 
 .loader {
@@ -332,11 +336,13 @@ export default defineComponent({
   text-align: center;
   font-weight: 550;
   padding-bottom: 10px;
+  color: #bababa;
 }
 
 .qc_code {
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
+  padding: 10px;
 
 }
 

@@ -26,4 +26,8 @@ public class WeChaQrCodeModel implements Serializable {
     private String env_version = "develop";
 
     private Boolean is_hyaline = true;
+
+    private Boolean auto_color = true;
+
+
 }

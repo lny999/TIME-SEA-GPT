@@ -11,7 +11,7 @@ public interface ExceptionMessages {
 
     String NOT_PAID_FOR_LONG_TIME = "长时间未支付,已自动取消";
 
-    String PRODUCT_NULL_ERR ="商品不存在";
+    String PRODUCT_NULL_ERR = "商品不存在";
 
     String BUILD_CODE_ERR = "兑换码生成次数不能为0";
 
@@ -27,9 +27,11 @@ public interface ExceptionMessages {
 
     String BUILD_FAILED_PAY_ERR = "生成支付二维码失败";
 
-    String GPT_TIMEOUT = ", 当前使用人数过多,请稍后再试";
+    String GPT_TIMEOUT = "当前使用人数过多,请稍后再试";
 
     String WECHAT_AUTHORIZATION = "微信API能力调用失败";
+
+    String BING_ERR = "目前必应可能正在维护中,请稍后再试";
 
     String DRAWING_DELETE = "本次生成可能涉及敏感词,已被系统自动删除";
 

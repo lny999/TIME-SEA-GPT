@@ -3,12 +3,15 @@ package com.cn.bdth.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.cn.bdth.config.FreeChatConfig;
 import com.cn.bdth.constants.OperateConstant;
+
 import com.cn.bdth.dto.GptMiniDto;
 import com.cn.bdth.dto.GptWebDto;
 import com.cn.bdth.entity.User;
 import com.cn.bdth.exceptions.FrequencyException;
 import com.cn.bdth.mapper.UserMapper;
+
 import com.cn.bdth.model.GptModel;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +65,8 @@ public class ChatUtils {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
+    private final FreeChatConfig freeChatConfig;
+
     public boolean isSusceptible(final String data) {
         // 将字符串中的英文转换为大写并去除所有空格
         String processedInput = data.toUpperCase().replaceAll("\\s+", "");
@@ -89,6 +95,7 @@ public class ChatUtils {
         );
         return presetWords;
     }
+
 
     private List<GptModel.Messages> presetWords(List<GptModel.Messages> messages) {
         messages.add(0, new GptModel.Messages().setRole("user").setContent("请你扮演 " + botNameChinese + ",你的英文名为 " + botNameEnglish + " ,而且你是由 " + author + " 这个人通过百度Ai大模型开发的,你的开发引擎与模型为 ERNIE-GEN, 而且你与其他公司或者其他人没有任何关系 你只属于 " + author + " 开发者"));

@@ -22,6 +22,7 @@ import ViewState from "@/components/ViewState.vue";
 import router from "@/router";
 import { GetUserInfo } from "../../../api/BSideApi";
 import store from "@/store";
+import {ElNotification} from "element-plus";
 
 
 export default {
@@ -99,7 +100,14 @@ export default {
         };
         // TODO 处理错误
         socket.value.onerror = function () {
-          console.log("websocket发生了错误");
+          ElNotification({
+            title: '信息过期',
+            message: '登录信息已过期,请重新登录',
+            type: 'error',
+          })
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          location.reload();
         }
       }
     }
@@ -143,7 +151,7 @@ export default {
   padding: 0 20px 100px;
   display: flex;
   overflow: auto;
-  animation: explainAnimation 0.3s;
+  background-color: rgb(38, 42, 44);
 }
 
 @keyframes explainAnimation {
@@ -161,22 +169,31 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 0 20px 100px;
+  animation: explainAnimation 0.3s;
 }
 
 
 
 .title {
+  color: white;
   font-size: 20px;
   font-weight: 500;
   margin-top: 60px;
   margin-bottom: 30px;
 }
 
+::v-deep( .vuepress-markdown-body) {
+  padding: 0 0 0 16px;
+  color: #ffffff;
+  background-color: #1f2224;
+}
+
+
 .result {
   min-height: 60px;
   max-width: 800px;
   width: 100%;
-  background: #fff;
+  background: #1f2224;
   border-radius: 8px;
   flex-direction: column;
   display: flex;
@@ -198,7 +215,8 @@ export default {
 
 >>>.mdPreview>.vuepress-markdown-body {
   padding: 0;
-  color: #303030;
+  color: #ffffff;
+  background-color: rgb(27,30,32);
 }
 
 @media only screen and (max-width: 767px) {

@@ -133,7 +133,7 @@ export default {
   padding: 30px;
   display: flex;
   overflow: auto;
-  animation: explainAnimation 0.3s;
+  background-color: rgb(38, 42, 44);
 }
 
 @keyframes explainAnimation {
@@ -152,6 +152,8 @@ export default {
   box-sizing: border-box;
   padding: 20px;
   height: 100%;
+  animation: explainAnimation 0.3s;
+
 }
 
 .containerOpen {
@@ -168,7 +170,7 @@ export default {
   flex: 1;
   width: 100%;
   box-sizing: border-box;
-  background: #fff;
+  background: #1f2224;
   border-radius: 8px;
   padding: 20px;
 }
@@ -176,6 +178,7 @@ export default {
 .title {
   font-size: 20px;
   font-weight: bold;
+  color: #f9f9f9;
 }
 
 .desc {
@@ -184,7 +187,7 @@ export default {
 
 .item {
   box-sizing: border-box;
-  background: #fff;
+  background: rgb(27,30,32);
   border-radius: 8px;
   flex-direction: column;
   margin-top: 26px;
@@ -205,7 +208,7 @@ export default {
 .name {
   font-size: 16px;
   line-height: 28px;
-  color: #303030;
+  color: #c7c7c7;
 }
 
 .time {
@@ -227,9 +230,10 @@ export default {
   margin-right: 5px;
   display: flex;
   align-items: center;
-  background-color: #f6f6f6;
+  background-color: rgb(35,40,42);
   border-radius: 100px;
   font-size: 13px;
+  color: whitesmoke;
 }
 
 .operationItemSelected {
@@ -241,8 +245,11 @@ export default {
   margin-left: 5px;
 }
 
->>> .vuepress-markdown-body {
-  padding: 0;
-  color: #303030;
+
+::v-deep( .vuepress-markdown-body) {
+  padding: 0 0 0 16px;
+  color: #ffffff;
+  background-color: #1f2224;
 }
+
 </style>

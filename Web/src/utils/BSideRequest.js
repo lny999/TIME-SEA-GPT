@@ -30,7 +30,8 @@ service.interceptors.response.use(response => {
     if (res.code !== 200) {
         if (res.code === 401) {
             localStorage.removeItem('token');
-            localStorage.removeItem('user')
+            localStorage.removeItem('user');
+            location.reload();
         } else {
             throw res.msg
         }

@@ -7,8 +7,8 @@
       <div class="title">
         TIME SEA PLUS
       </div>
-      <input type="text" class="input" placeholder="请输入兑换码" v-model="inputValue" maxlength="8"/>
-      <el-button type="primary" color="#626aef" class="button" @click="submit">兑换</el-button>
+      <input type="text" class="input" placeholder="请输入兑换码" v-model="inputValue" maxlength="8" style="background-color: #1d2022;color: whitesmoke"/>
+      <el-button type="primary" color="rgb(129,102,231)" class="button" @click="submit">兑换</el-button>
     </div>
   </div>
 </template>
@@ -87,7 +87,7 @@ export default {
 <style scoped>
 .body {
 
-  animation: explainAnimation 0.3s;
+
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -97,6 +97,18 @@ export default {
   padding: 60px 20px 0;
   display: flex;
   overflow: auto;
+  animation: explainAnimation 0.3s;
+}
+
+
+@keyframes explainAnimation {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
 input:focus {
@@ -107,6 +119,7 @@ input:focus {
   overflow: auto;
   overflow-y: scroll;
   height: 100%;
+  background-color: rgb(38, 42, 44);
 }
 
 .logo {
@@ -118,7 +131,8 @@ input:focus {
 .title {
   font-size: 24px;
   font-weight: 550;
-  padding-top: 20px
+  padding-top: 20px;
+  color: white;
 }
 
 .input {

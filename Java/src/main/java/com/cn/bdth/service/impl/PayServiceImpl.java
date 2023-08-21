@@ -369,7 +369,7 @@ public class PayServiceImpl implements PayService {
                             .eq(User::getUserId, orders.getUserId())
                             .setSql("frequency = frequency +" + orders.getFrequency()));
 
-                    redisUtils.delKey(orders.getUserId().toString() + orders.getProductId());
+                    redisUtils.delKey(OrderConstant.ORDER_PAY + orders.getUserId().toString() + orders.getProductId());
                 }
 
                 return "success";

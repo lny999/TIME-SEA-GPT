@@ -13,5 +13,5 @@ public interface WeChatConstant {
 
 
 
-    String RC_MODE ="@gitHub dulaiduwang003";
+    String RC_MODE ="(TIME SEA)";
 }

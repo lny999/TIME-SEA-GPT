@@ -161,10 +161,10 @@ export default {
         videoAd.onError(err => {
           console.log(err);
         });
-        videoAd.onClose((status) => {
+        videoAd.onClose(async (status) => {
           if (status && status.isEnded || status === undefined) {
             try {
-              let promise = useVideoReward();
+              let promise = await useVideoReward();
               uni.showToast({
                 title: '奖励已发放',
                 icon: 'none'

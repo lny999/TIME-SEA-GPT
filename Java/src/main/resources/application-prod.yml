@@ -58,14 +58,28 @@ ali-oss:
   bucketName: 'sea-time'
   domain: 'https://sea-XXXXXXncs.com'
 
+
 # GPT 对话助手配置
 gpt:
   # 开发者名称
   author: '时间海'
   # BOT 中文名
-  botNameChinese: '时间海的助手'
+  botNameChinese: '时间海'
   # BOT 英文名
   botNameEnglish: 'TIME SEA'
+  # 免费GPT配置
+  free:
+    # claude 配置
+    claudeModel:
+      # 原ID
+      organizationUuid: '3eead2aad4-2bec4e62c709'
+      # 连ID
+      conversationUuid: '082e12-a0ae-9ea06cc6dc59'
+      # sessionKey
+      sessionKey: 'sk-ant-siSpeGsHustha7YaKDBm8WmC65_vcw6iw8_wU94Qf9NV4d5a2qg-g4Ei8wAA'
+    # 必应Cookie
+    newBingCookie: '1c5f8HXnjpXTnw8R7ZetpesLSSjVuZnOfOOGCVKJ2pEM_0Hg2ozW2ep_bvADewjMZDXBvzjHv8mpOAxrZ1tLjQQphjpeemQAMKl4AqmvObIClK8e0noqoXjr9jZ3l45qKy6ABBEqFeiWMiF8UCkKVqHBI5g'
+
 
 # 支付宝配置
 ali-pay:

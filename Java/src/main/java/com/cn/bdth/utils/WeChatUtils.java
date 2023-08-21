@@ -47,7 +47,6 @@ public class WeChatUtils {
     private static final WebClient WEB_CLIENT = WebClient.builder().build();
 
 
-
     public String getOpenId(final String code) {
         try {
             final String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + this.appId +

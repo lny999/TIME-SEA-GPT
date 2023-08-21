@@ -23,7 +23,7 @@
                   <el-icon color="#7d80ff" size="20px">
                     <CircleCheckFilled/>
                   </el-icon>
-                  <div style="padding-left: 10px">
+                  <div style="padding-left: 10px;color: #a7a7a7">
                     <div>{{ item2 }}</div>
                   </div>
                 </div>
@@ -32,7 +32,7 @@
           </el-col>
         </el-row>
       </div>
-      <el-dialog v-model="payVisible" :title="productFrequency+' Ai币'" width="30%" v-if="productFrequency">
+      <el-dialog v-model="payVisible" width="30%" v-if="productFrequency" style="background-color: rgb(27,30,32)">
         <div class="pay-title">
           选择支付方式后点击“跳转至收银台”打开支付页面支付
         </div>
@@ -54,8 +54,8 @@
         </div>
         <template #footer>
              <span>
-                  <el-button @click="payVisible=false">不了, 谢谢</el-button>
-                  <el-button type="primary" @click="alipayPay">跳转至收银台</el-button>
+                  <el-button @click="payVisible=false" color="#000000">不了, 谢谢</el-button>
+                  <el-button  @click="alipayPay" color="rgb(125,128,255)" style="color: white">跳转至收银台</el-button>
               </span>
         </template>
       </el-dialog>
@@ -250,6 +250,7 @@ export default {
   overflow: auto;
   overflow-y: scroll;
   height: 100%;
+  background-color: #23282A;
 }
 
 .alipay-img {
@@ -292,6 +293,7 @@ export default {
   margin: 0;
   font-size: 26px;
   font-weight: 600;
+  color: #e9e9e9;
 }
 
 .wrapper {
@@ -303,19 +305,20 @@ export default {
 
 .item {
   text-align: center;
-  background-color: white;
+  background-color: rgb(27,30,32);
   cursor: pointer;
   width: 100%;
   height: 400px;
   border-radius: 8px;
   font-size: 15px;
-  color: #303030;
+  color: #ffffff;
   margin-bottom: 20px;
 }
 
 .introduce {
   font-size: 14px;
-  margin-top: 12px
+  margin-top: 12px;
+  color: #838383;
 }
 
 .card-introduce {
@@ -335,7 +338,7 @@ export default {
 
 .quantity {
   padding-top: 50px;
-  color: rgb(108, 117, 125);
+  color: white;
   font-size: 38px;
   font-weight: 500;
 }

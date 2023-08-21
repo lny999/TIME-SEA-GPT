@@ -78,4 +78,5 @@ public class ServerStructure {
      * 签到赠送次数不能为空
      */
     private Long gptTextImageFrequency;
+
 }

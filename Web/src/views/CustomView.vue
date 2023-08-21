@@ -133,7 +133,9 @@ export default {
       if (store.getters.userinfo) getUser();
       //获取图片域名
       imageUrl.value = process.env.VUE_APP_IMAGE;
+
       let item = localStorage.getItem("roleData");
+      console.log(item)
       data.value = JSON.parse(item);
 
       const {question, answer} = data.value.content[0];
@@ -235,7 +237,14 @@ export default {
         };
         // TODO 处理错误
         socket.value.onerror = function () {
-          console.log("websocket发生了错误");
+          ElNotification({
+            title: '信息过期',
+            message: '登录信息已过期,请重新登录',
+            type: 'error',
+          })
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          location.reload();
         };
       }
     }
@@ -372,6 +381,7 @@ export default {
   padding: 0 20px 120px;
   display: flex;
   overflow: auto;
+  background-color: rgb(38, 42, 44);
 }
 
 .footer {
@@ -379,7 +389,7 @@ export default {
   box-sizing: border-box;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(rgba(246, 246, 246, 0), #f6f6f6 25%);
+  background: linear-gradient(rgba(246, 246, 246, 0), #282c2e 25%);
   flex-shrink: 0;
   padding: 30px 20px;
   display: flex;
@@ -396,7 +406,7 @@ export default {
   max-width: 800px;
   width: 100%;
   pointer-events: auto;
-  background: #fff;
+  background: #1d2022;
   border-radius: 8px;
   box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
   display: flex;
@@ -422,7 +432,7 @@ export default {
   min-height: 60px;
   resize: none;
   -webkit-appearance: none;
-  background: 0 0;
+  background: #1d2022 0 0;
   border: 0;
   flex: 1;
   margin: 0;
@@ -474,12 +484,13 @@ export default {
   max-width: 800px;
   box-sizing: border-box;
   padding: 0 32px;
+
 }
 
 
 .questions > .item {
   box-sizing: border-box;
-  background: #fff;
+  background-color: #1f2224;
   /*border: 1px solid #ececec;*/
   border-radius: 8px;
   flex-direction: column;
@@ -514,13 +525,14 @@ export default {
   font-size: 16px;
   line-height: 28px;
   position: relative;
+  color: white;
+}
+::v-deep( .vuepress-markdown-body) {
+  padding: 0 0 0 16px;
+  color: #ffffff;
+  background-color: #1f2224;
 }
 
->>> .vuepress-markdown-body {
-  margin-left: 16px;
-  padding: 0;
-  color: #303030;
-}
 
 .explain {
   margin: auto;
@@ -528,6 +540,7 @@ export default {
   flex-direction: column;
   align-items: center;
   animation: explainAnimation 0.3s;
+  color: white;
 }
 
 @keyframes explainAnimation {
@@ -547,13 +560,14 @@ export default {
   margin-top: 15px;
   display: flex;
   align-items: center;
-  box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
-  background-color: white;
+  box-shadow: 0 5px 7px rgba(29,32,34, 0.29);
+  background-color: rgb(29,32,34);
   padding: 5px 20px;
   font-size: 13px;
-  color: #636363;
+  color: #d8d8d8;
   border-radius: 5px
 }
+
 
 .suspend div {
   padding-bottom: 1px;
@@ -589,7 +603,7 @@ export default {
 
 .beCareful {
   padding: 40px 6px 12px;
-  color: #848484;
+  color: rgb(185, 175, 149);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -597,11 +611,12 @@ export default {
 .typing {
   height: 20px;
   width: 3px;
-  background-color: var(--el-text-color-primary);
+  background-color: whitesmoke;
   border-radius: 100px;
   margin-top: 4px;
   margin-left: 16px;
   animation: typingAnimation 0.6s linear infinite;
+
 }
 
 @keyframes typingAnimation {
@@ -636,9 +651,10 @@ export default {
   margin-right: 5px;
   display: flex;
   align-items: center;
-  background-color: #f6f6f6;
+  background-color: #000000;
   border-radius: 100px;
   font-size: 13px;
+  color: white;
 }
 
 .operationItemSelected {
@@ -713,14 +729,16 @@ export default {
 .clear {
   display: flex;
   align-items: center;
-  color: #666666;
   position: absolute;
   top: 0;
   z-index: 1;
   font-size: 8px;
-  background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 3px 10px;
-
+  box-shadow: 0 5px 7px rgb(0 0 0 / 6%);
+  color: #c8c8c8;
+  background-color: #1d2022;
 }
+
+
 </style>

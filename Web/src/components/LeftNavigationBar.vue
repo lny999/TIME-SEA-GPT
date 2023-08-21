@@ -3,7 +3,7 @@
 		<div class="leftNavigation">
 			<el-avatar class="headPortrait" :size="70" :icon="UserFilled"
 				:src="store.getters.userinfo.avatar ? imageUrl + store.getters.userinfo.avatar : require('../assets/logoHead.svg')" />
-			<div class="surplus" v-if="store.getters.userinfo">SUPER币：{{ store.getters.userinfo.frequency }}</div>
+			<div class="surplus" v-if="store.getters.userinfo">SUPER币 {{ store.getters.userinfo.frequency }}</div>
 			<div v-else @click="loginVisible = true" class="loginBut">登录</div>
 			<div class="header">
 				<div class="switch-button">
@@ -52,12 +52,12 @@ import {
 } from "vue-router";
 // eslint-disable-next-line no-unused-vars
 import {
-	ChatDotSquare,
-	DataAnalysis,
-	EditPen,
-	MessageBox,
-	Odometer,
-	UserFilled
+  ChatDotSquare,
+
+  EditPen,
+  MessageBox,
+  Odometer, ScaleToOriginal,
+  UserFilled
 } from '@element-plus/icons-vue'
 import router from "@/router";
 import store from "../store";
@@ -101,7 +101,11 @@ export default defineComponent({
 			title: '我的收藏',
 			icon: MessageBox,
 			to: '/collection'
-		}])
+		}, {
+      title: '超级实验室',
+      icon: ScaleToOriginal ,
+      to: '/laboratory'
+    }])
 
 		watch(() => router.currentRoute.value, (newValue) => {
 			isHeadNavigation.value = newValue.meta.isHeadNavigation;
@@ -139,7 +143,7 @@ export default defineComponent({
 	width: 100%;
 	height: 100%;
 	display: flex;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #535353;
 	border-radius: 10px;
 	overflow: hidden;
 }
@@ -147,8 +151,8 @@ export default defineComponent({
 .leftNavigation {
 	width: 260px;
 	height: 100%;
-	background-color: white;
-	border-right: 1px solid #e8e8e8;
+	background-color: #1d2022;
+	border-right: 1px solid #535353;
 	position: relative;
 }
 
@@ -158,7 +162,7 @@ export default defineComponent({
 	bottom: 0;
 	width: 100%;
 	height: 70px;
-	border-top: 1px solid #e8e8e8;
+	border-top: 1px solid #535353;
 	display: flex;
 	align-items: center;
 	box-sizing: border-box;
@@ -173,6 +177,7 @@ export default defineComponent({
 }
 
 .bottomRightName {
+  color: #848484;
 	font-size: 14px;
 	font-weight: bold;
 }
@@ -235,8 +240,9 @@ export default defineComponent({
 	display: flex;
 	align-items: center;
 	text-decoration: none;
-	color: #303030;
+	color: #ffffff;
 	font-size: 15px;
+  background-color: #1d2022;
 }
 
 .switch-item-title {
@@ -244,7 +250,7 @@ export default defineComponent({
 }
 
 .switch-active {
-	background-color: #f6f6f6;
+	background-color: #262a2c;
 	border-radius: 8px
 }
 

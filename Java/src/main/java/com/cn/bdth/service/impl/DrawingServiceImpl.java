@@ -310,7 +310,7 @@ public class DrawingServiceImpl implements DrawingService {
         if (UserUtils.getCurrentRole().equals(AuthConstant.ADMIN)) {
             drawingMapper.deleteById(drawingId);
         } else {
-            drawingMapper.deleteById(new QueryWrapper<Drawing>()
+            drawingMapper.delete(new QueryWrapper<Drawing>()
                     .lambda().eq(Drawing::getDrawingId, drawingId)
                     .eq(Drawing::getUserId, UserUtils.getCurrentLoginId())
             );

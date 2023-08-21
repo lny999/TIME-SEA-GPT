@@ -5,14 +5,20 @@
         <el-row :gutter="20">
           <el-col @click="onItem(item)" v-for="(item, index) in menuCollection" :key="index" :xs="12" :sm="8" :md="6">
             <div class="item">
-              <div style="text-align: center;font-size: 50px">
-                {{ item.icon }}
+              <div style="font-size: 50px">
+                {{item.icon}}
               </div>
-              <div style="font-weight: 550;font-size: 15px;color: #515151;padding-top: 30px">
-                {{ item.title }}
-              </div>
-              <div style="padding-top: 10px;font-size: 9px;color: #aeaeae">
-                {{ item.introduce }}
+              <div >
+                <div style="font-weight: 700;font-size: 16px;color: #ffffff;padding-top: 10px">
+                  {{ item.title }}
+                </div>
+                <div style="padding-top: 20px;font-size: 7px;color: #878787; display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;">
+                  {{ item.introduce }}
+                </div>
               </div>
             </div>
           </el-col>
@@ -20,18 +26,18 @@
       </div>
     </div>
   </div>
-  <LoginDialog :show="loginVisible" @close="loginVisible = false" />
+  <LoginDialog :show="loginVisible" @close="loginVisible = false"/>
 </template>
 
 <script>
-import { ref } from "vue";
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import {ref} from "vue";
+import {useRouter} from 'vue-router'
+import {useStore} from 'vuex'
 import LoginDialog from "@/components/LoginDialog.vue";
 
 export default {
   name: "PresetCharacterView",
-  components: { LoginDialog },
+  components: {LoginDialog},
   setup() {
     let store = useStore()
     let router = useRouter()
@@ -40,7 +46,7 @@ export default {
 
     function onItem(data) {
       if (!store.getters.userinfo) return loginVisible.value = true
-      localStorage.setItem("roleData", JSON.stringify(data))
+      localStorage.setItem("roleData",JSON.stringify(data))
       router.push({
         path: '/Custom'
       })
@@ -67,7 +73,7 @@ export default {
   padding: 0 20px 120px;
   display: flex;
   overflow: auto;
-  animation: explainAnimation 0.3s;
+  background-color: rgb(38, 42, 44);
 }
 
 @keyframes explainAnimation {
@@ -81,7 +87,8 @@ export default {
 }
 
 .container {
-  max-width: 800px;
+  animation: explainAnimation 0.3s;
+  max-width: 1100px;
   width: 100%;
   box-sizing: border-box;
   padding: 0 20px 100px;
@@ -106,20 +113,19 @@ export default {
 }
 
 .item {
-  width: 160px;
-  height: 180px;
-  text-align: center;
-  background-color: white;
+  height: 150px;
+  width: 210px;
+  background-color: rgb(27,30,32);
   margin-bottom: 15px;
   border-radius: 8px;
   font-size: 15px;
   color: #303030;
-  padding: 10px;
-
+  padding: 20px;
+  box-shadow: 0 5px 7px rgba(35, 35, 35, 0.06);
 }
 
 .item:hover {
-  background-color: #e6e6e6;
+  background-color: rgb(62, 61, 61);
   cursor: pointer;
   transition: background-color .2s;
 }

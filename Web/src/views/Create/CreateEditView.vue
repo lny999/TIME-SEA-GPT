@@ -123,7 +123,7 @@ export default {
 	padding: 0 20px 100px;
 	display: flex;
 	overflow: auto;
-	animation: explainAnimation 0.3s;
+  background-color: rgb(38, 42, 44);
 }
 
 @keyframes explainAnimation {
@@ -141,6 +141,7 @@ export default {
 	width: 100%;
 	box-sizing: border-box;
 	padding: 0 20px 100px;
+  animation: explainAnimation 0.3s;
 }
 
 
@@ -148,7 +149,7 @@ export default {
 	font-size: 18px;
 	font-weight: bold;
 	line-height: 1.4;
-	color: black;
+	color: #ffffff;
 	margin-bottom: 15px;
 	display: block;
 }
@@ -165,7 +166,7 @@ export default {
 .illustrate {
 	display: block;
 	margin: 10px 0;
-	color: black;
+	color: #ffffff;
 	font-size: 13px;
 }
 
@@ -174,7 +175,7 @@ export default {
 	width: 100%;
 	height: 40px;
 	border-radius: 8px;
-	background-color: white;
+	background-color: rgb(27,30,32);
 	color: white;
 	font-size: 15px;
 	box-sizing: border-box;
@@ -186,8 +187,8 @@ export default {
 >>>.textareaBox>.el-textarea__inner {
 	width: 100%;
 	border-radius: 7.5px;
-	background-color: white;
-	color: black;
+  background-color: rgb(27,30,32);
+	color: #ffffff;
 	font-size: 15px;
 	outline: none;
 	margin-bottom: 20px;
@@ -198,7 +199,7 @@ export default {
 
 .determineTheBuild {
 	font-size: 15px;
-	background-color: var(--el-text-color-primary);
+	background-color: rgb(48,53,57);
 	color: #fff;
 	border-radius: 100px;
 	height: 40px;
@@ -211,14 +212,15 @@ export default {
 	cursor: pointer;
 }
 
+
 .determineTheBuild:hover {
 	background-color: #56575a;
 }
 
 .determineTheBuildBack {
 	font-size: 15px;
-	background-color: white;
-	color: #303030;
+	background-color: #000000;
+	color: #ffffff;
 	border-radius: 100px;
 	height: 40px;
 	width: 300px;
@@ -231,7 +233,7 @@ export default {
 }
 
 .determineTheBuildBack:hover {
-	background: #f0f0f0;
+	background: #535353;
 }
 
 @media only screen and (max-width: 767px) {
