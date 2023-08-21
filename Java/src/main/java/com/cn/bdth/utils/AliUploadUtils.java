@@ -82,7 +82,12 @@ public class AliUploadUtils {
         OSS ossClient = new OSSClientBuilder()
                 .build(endpoint, accessKey, secretKey);
         try {
-            ossClient.deleteObject(bucketName, filePath);
+
+            if (filePath.startsWith("/")) {
+                ossClient.deleteObject(bucketName, filePath.substring(1));
+            } else {
+                ossClient.deleteObject(bucketName, filePath);
+            }
         } catch (OSSException | ClientException e) {
             log.error("无法从阿里云删除图片。错误消息： {} 错误类： {}", e.getMessage(), e.getClass());
         } finally {
