@@ -65,8 +65,7 @@ public class GptServiceImpl implements GptService {
 
     @Override
     public Flux<String> concatenationNewBing(final String messages) {
-        Chat chat = new Chat("_U=" + newBingCookie, false)
-                .setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890)));
+        Chat chat = new Chat("_U=" + newBingCookie, false);
         return Flux.create(f -> chat.newChat().newQuestion(messages, new Callback() {
             @Override
             public void onSuccess(JSONObject rawData) {
@@ -97,14 +96,6 @@ public class GptServiceImpl implements GptService {
                 .clientConnector(new ReactorClientHttpConnector())
                 .defaultHeader(HttpHeaders.ORIGIN, "https://claude.ai")
                 .defaultCookie("sessionKey", claudeModel.getSessionKey())
-                .clientConnector(new ReactorClientHttpConnector(
-                        //configure proxy connections
-                        HttpClient.create()
-                                .proxy(proxy -> proxy
-                                        .type(ProxyProvider.Proxy.HTTP)
-                                        //set proxy
-                                        .address(new InetSocketAddress("127.0.0.1", 7890)))
-                ))
                 .build()
                 .post()
                 .body(BodyInserters.fromValue(claudeModel))
