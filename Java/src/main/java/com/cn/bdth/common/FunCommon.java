@@ -80,29 +80,7 @@ public class FunCommon {
     @Value("${config.newBingCookie}")
     private String newBingCookie;
 
-    @Value("${gpt.bitoModel.bitoUserId}")
-    private Integer bitoUserId;
 
-    @Value("${gpt.bitoModel.email}")
-    private String email;
-
-    @Value("${gpt.bitoModel.ideName}")
-    private String ideName;
-
-    @Value("${gpt.bitoModel.uId}")
-    private String uId;
-
-    @Value("${gpt.bitoModel.wsId}")
-    private Integer wsId;
-
-    @Value("${gpt.bitoModel.requestId}")
-    private String requestId;
-
-    @Value("${gpt.bitoModel.authorization}")
-    private String authorization;
-
-    @Value("${gpt.bitoModel.sessionId}")
-    private String sessionId;
 
     public ServerStructure getServer() {
         try {
