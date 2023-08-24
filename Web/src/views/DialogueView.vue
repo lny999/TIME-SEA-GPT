@@ -86,8 +86,8 @@
                   :placeholder="aiLoading ? '思考中..' : '输入你想问的...'" :disabled="aiLoading">
           <template #prepend>
             <el-select placeholder="模式" class="select_style" v-model="model">
-              <el-option value="gpt-3.5-turbo" label="标准"/>
-              <el-option value="gpt-4-0314" label="增强"/>
+              <el-option value="BASIC" label="标准"/>
+              <el-option value="ADVANCED" label="增强"/>
             </el-select>
           </template>
         </el-input>
@@ -195,7 +195,7 @@ export default {
     let loginVisible = ref(false)
     let socket = ref(null)
     let aiLoading = ref(false)
-    let model = ref("gpt-3.5-turbo")
+    let model = ref("BASIC")
     let dataIndex = ref(0)
     const imageUrl = ref('')
     let dialogueDisplay = ref(false)

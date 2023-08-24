@@ -46,9 +46,6 @@
         <empty-component msg="未查找到任何用户" height="60" v-else/>
         <loading-data-component v-if="isFlushed"/>
       </scroll-view>
-      <view style="color: #a0a0a0;padding-bottom: 15rpx;padding-left: 15rpx;font-size: 20rpx">
-        平台总用户量 1700 人
-      </view>
     </view>
 
     <!--    弹出层-->

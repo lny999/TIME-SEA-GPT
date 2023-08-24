@@ -42,6 +42,18 @@ public class ServerConfigDto {
     @NotBlank(message = "OPEN_KEY不能为空")
     private String openKey;
 
+
+    @NotBlank(message = "OPEN_PLUS_KEY不能为空")
+    private String openPlusKey;
+
+
+    @NotNull(message = "GPT_PLUS消耗次数不能为空")
+    private Long gptPlusFrequency;
+
+
+    @NotBlank(message = "必应Cookie不能为空")
+    private String newBingCookie;
+
     /**
      * 用户第一次登录奖励次数
      */
@@ -90,10 +102,16 @@ public class ServerConfigDto {
     @NotNull(message = "GPT消耗次数不能为空")
     private Long gptFrequency;
 
-
-    /**
-     * 签到赠送次数
-     */
     @NotNull(message = "标准文生图消耗次数不能为空")
     private Long gptTextImageFrequency;
+
+
+    @NotBlank(message = "克劳德organizationUuid不能为空")
+    private String organizationUuid;
+
+    @NotBlank(message = "克劳德conversationUuid不能为空")
+    private String conversationUuid;
+
+    @NotBlank(message = "克劳德SessionKey不能为空")
+    private String sessionKey;
 }

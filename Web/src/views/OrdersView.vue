@@ -4,7 +4,7 @@
                ButtonText="登录"
                @ClickTheButton="loginVisible = true"/>
     <ViewState class="state" v-else-if="load" LoadText="正在加载，请稍后..."/>
-    <ViewState class="state" v-else-if="empty" Type="empty" ErrorText="暂无任何打赏数据"/>
+    <ViewState class="state" v-else-if="empty" Type="empty" ErrorText="暂无任何创作的数据"/>
     <ViewState class="state" v-else-if="error" @ClickTheButton="handleCurrentChange(1)" Type="error"
                ErrorText="加载错误，请重试" IsShowBottom ButtonText="重新加载"/>
     <div class="tab-box" v-else>
@@ -16,16 +16,16 @@
         </div>
       </div>
       <el-table :data="dataTables" stripe height="360px" :header-cell-style="{ background:' rgb(27,30,32)'}"
-                :row-style="{ height: '80px', background:' rgb(27,30,32)' }"
+                :row-style="{ height: '100%', background:' rgb(27,30,32)' }"
                 style="background-color: rgb(27,30,32);color: white">
-        <el-table-column prop="ordersId" label="订单号" width="300"/>
-        <el-table-column prop="productName" label="商品名称" width="100"/>
-        <el-table-column prop="frequency" label="获赠Ai币" width="200"/>
-        <el-table-column prop="productPrice" label="价格" width="180"/>
-        <el-table-column prop="payTime" label="支付时间" width="180"/>
-        <el-table-column prop="state" label="支付状态" width="180"/>
+        <el-table-column prop="ordersId" label="订单号" />
+        <el-table-column prop="productName" label="商品名称"/>
+        <el-table-column prop="frequency" label="获赠Ai币" />
+        <el-table-column prop="productPrice" label="价格" />
+        <el-table-column prop="payTime" label="支付时间" />
+        <el-table-column prop="state" label="支付状态" />
       </el-table>
-      <div style="display: flex;justify-content: right;padding-top: 20px">
+      <div style="display: flex;justify-content: right;padding-top: 10px">
         <el-pagination layout="prev, pager, next" :total="total" :page-size="5" background
                        @current-change="handleCurrentChange"/>
       </div>
@@ -64,7 +64,10 @@ export default {
     let empty = ref(false)
     let error = ref(false)
     onMounted(() => {
-      handleCurrentChange(current.value)
+      if (store.getters.userinfo){
+        handleCurrentChange(current.value)
+      }
+
     })
 
     async function handleCurrentChange(pageNum) {

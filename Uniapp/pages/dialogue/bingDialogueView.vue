@@ -3,7 +3,7 @@
     <view class="init_container" v-if="chatTemporary.length<=0">
       <view>
         <view class="bot_logo">
-          <image src="/static/assets/super.svg"/>
+          <image src="/static/assets/bing.svg"/>
         </view>
         <view class="bot_introduce">
           {{ title }}
@@ -31,7 +31,7 @@
               <!--机器人-->
               <view class="chat-model-bot chat-model slide-animation">
                 <view class="avatar-bot avatar">
-                  <image src="/static/assets/super.svg"/>
+                  <image src="/static/assets/bing.svg"/>
                 </view>
                 <view class="chat-content chat-content-bot">
                   <view v-show="!item.answer">
@@ -81,11 +81,7 @@
           <van-icon name="clock-o"/>
           ️ 清空屏幕
         </view>
-        <view :class="mode?'mode_btn':'levitation_btn'" @click="mode =!mode">
-          <van-icon name="exchange"/>
-          ️ {{ mode ? 'MODE-4' : 'MODE-3' }}
-        </view>
-        <view class="levitation_btn" @click="isMemoryDisplay=true" >
+        <view class="levitation_btn" @click="isMemoryDisplay=true">
           <van-icon name="birthday-cake-o"/>
           ️ 记忆回溯
         </view>
@@ -108,10 +104,10 @@
                closeable>
       <view class="memory-container">
         <view class="memory-logo">
-          <image src="/static/assets/super.svg"/>
+          <image src="/static/assets/bing.svg"/>
         </view>
         <view class="memory-title">
-          TIME SEA PLUS
+          NEW BING PLUS
         </view>
         <view class="memory-button-model">
           <view class="memory-button" @click="createdNewChat">
@@ -132,7 +128,7 @@
                   </view>
                 </view>
                 <view class="memory-right" @click="removeChat(index)">
-                  <image :src="dialogueCache.index===index?'/static/assets/selected.svg':'/static/assets/close.svg'"/>
+                  <image :src="dialogueCache.index===index?'/static/assets/selected02.svg':'/static/assets/close.svg'"/>
                 </view>
               </view>
             </view>
@@ -147,7 +143,7 @@
 import md from "@/static/css/md";
 import mpHtml from "@/wxcomponents/mp-html/mp-html.vue";
 import env from "@/utils/env";
-import {getHistory, getToken, getUser, removeChat, removeToken, removeUser, setHistory,} from "@/utils/utils";
+import {getBing, getToken, getUser, removeChat, removeToken, removeUser, setBing,} from "@/utils/utils";
 import {deleteStarDialogue, putStarDialogue} from "@/api/user";
 import {conversionImage} from "@/utils/image";
 import {conversionTime} from "@/utils/date";
@@ -165,7 +161,7 @@ export default {
   created() {
     //获取当前登录用户信息
     this.userInfo = getUser();
-    let cache = getHistory();
+    let cache = getBing();
 
     if (cache) {
       this.dialogueCache = JSON.parse(cache)
@@ -187,7 +183,7 @@ export default {
           }
         ]
       }
-      setHistory(JSON.stringify(this.dialogueCache))
+      setBing(JSON.stringify(this.dialogueCache))
     }
   },
   //刷新次数
@@ -258,7 +254,7 @@ export default {
       this.dialogueCache.index = 0
       this.context = []
       this.chatTemporary = []
-      setHistory(JSON.stringify(this.dialogueCache))
+      setBing(JSON.stringify(this.dialogueCache))
     },
     /**
      * 切换对话
@@ -269,7 +265,7 @@ export default {
       let data = this.dialogueCache.array[index].data;
       this.chatTemporary = data.template
       this.context = data.context
-      setHistory(JSON.stringify(this.dialogueCache))
+      setBing(JSON.stringify(this.dialogueCache))
       this.isMemoryDisplay = false
     },
     writeChat: function () {
@@ -282,7 +278,7 @@ export default {
       if (item.length > 0) {
         this.dialogueCache.array[this.dialogueCache.index].title = (item[item.length - 1].question).trim().slice(0, 25)
       }
-      setHistory(JSON.stringify(this.dialogueCache))
+      setBing(JSON.stringify(this.dialogueCache))
     },
     /**
      * 删除对话
@@ -295,7 +291,7 @@ export default {
         }
         this.dialogueCache.array.splice(index, 1)
       }
-      setHistory(JSON.stringify(this.dialogueCache))
+      setBing(JSON.stringify(this.dialogueCache))
     },
     /**
      * 关闭连接
@@ -398,35 +394,16 @@ export default {
       setTimeout(() => {
         _this.scrollToBottom()
       }, 200)
-      /**
-       * 与服务器建立连接
-       */
-      const model = this.mode ? 'ADVANCED' : 'BASIC'
 
       uni.connectSocket({
-        url: env.baseWs + '/gpt/api/' + getToken() + '/' + model
+        url: env.baseWs + '/bing/api/' + getToken()
       });
       /**
        * 建立连接成功
        */
       uni.onSocketOpen(function () {
-        //建立连接成功
-        if (_this.context.length > env.memory) {
-          _this.context.shift();
-        }
-        _this.context.forEach(item => {
-          if (item.question.length > env.contextLength) {
-            item.question = item.question.substring(0, env.contextLength) + "//省略...";
-          }
-          if (item.answer.length > env.contextLength) {
-            item.answer = item.answer.substring(0, env.contextLength) + "//省略...";
-          }
-        });
         uni.sendSocketMessage({
-          data: JSON.stringify({
-            "prompt": requestInput,
-            "context": _this.context
-          })
+          data: JSON.stringify(requestInput)
         });
 
       });
@@ -441,11 +418,10 @@ export default {
         uni.reLaunch({
           url: '/pages/master/master?swiperIndex=1'
         })
-
       });
       //回收消息
       uni.onSocketMessage(function (res) {
-        _this.chatTemporary[index].answer += res.data
+        _this.chatTemporary[index].answer = res.data
         //每一次输出都往下面靠
         _this.scrollToBottom()
       });
@@ -522,7 +498,9 @@ export default {
             icon: 'none',
             duration: 2000
           })
+
         }
+        this.writeChat()
 
       } catch (e) {
         uni.showToast({
@@ -630,7 +608,7 @@ page {
 }
 
 .mode_btn {
-  background-color: #7f80fd;
+  background-color: rgb(250, 182, 2);
   padding: 8rpx 20rpx;
   border-radius: 10rpx;
   font-size: 25rpx;
@@ -680,7 +658,7 @@ scroll-view {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #7f80fd;
+  background-color: rgb(250, 182, 2);
   height: 75rpx;
   padding: 8rpx;
   border-radius: 10rpx;
@@ -691,7 +669,7 @@ scroll-view {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #2b2b58;
+  background-color: rgb(130, 103, 32);
   height: 75rpx;
   padding: 8rpx;
   border-radius: 10rpx;
@@ -756,7 +734,7 @@ scroll-view {
 .dot1,
 .dot2,
 .dot3 {
-  background: #7f80fd;
+  background: rgb(250, 182, 2);
   width: 30rpx;
   height: 30rpx;
   border-color: #464646;
@@ -788,7 +766,7 @@ scroll-view {
   }
   40% {
     transform: scale(1.0);
-    background-color: #5b5cd7;
+    background-color: rgb(250, 182, 2);
   }
 }
 
@@ -839,8 +817,8 @@ scroll-view {
   animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-.frames{
- animation: fadeIn 0.5s ease-in-out forwards;
+.frames {
+  animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 .stop_model {
@@ -923,7 +901,7 @@ scroll-view {
 .memory-button {
   font-size: 26rpx;
   border-radius: 10rpx;
-  background-color: #000000;
+  background-color: rgb(222, 163, 7);
   color: whitesmoke;
   display: flex;
   align-items: center;

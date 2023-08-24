@@ -19,6 +19,10 @@ public class ServerStructure {
      */
     private String sdUrl;
 
+
+    /**
+     * openAi Url
+     */
     private String openAiUrl;
 
     /**
@@ -30,6 +34,11 @@ public class ServerStructure {
      * OpenKey
      */
     private String openKey;
+
+    /**
+     * plus
+     */
+    private String openPlusKey;
 
     /**
      * 用户第一次登录奖励次数
@@ -46,11 +55,16 @@ public class ServerStructure {
      */
     private Long gptFrequency;
 
+
+    /**
+     * 调取GPT-4消耗次数
+     */
+    private Long gptPlusFrequency;
+
     /**
      * 调取文生图次数消耗
      */
     private Long sdTextImageFrequency;
-
 
 
     /**
@@ -78,5 +92,17 @@ public class ServerStructure {
      * 签到赠送次数不能为空
      */
     private Long gptTextImageFrequency;
+
+
+    private String organizationUuid;
+
+
+    private String conversationUuid;
+
+
+    private String sessionKey;
+
+
+    private String newBingCookie;
 
 }

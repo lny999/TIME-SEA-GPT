@@ -2,7 +2,7 @@
   <div class="body" ref="scrollRef">
     <div v-if="!conversationList.length" class="explain">
       <img class="logo" alt="Vue logo" src="../assets/blend02.svg">
-      <div class="expositoryCase">欢迎使用 NERVE GPT PLUS</div>
+      <div class="expositoryCase">欢迎使用 SUPER GPT PLUS</div>
       <div class="consume">
         <el-icon>
           <Goods/>
@@ -15,7 +15,7 @@
       <div v-for="(item, index) in conversationList" :key="index" class="item slide-animation">
         <div class="question">
           <div>
-            <div class="text" >{{ item.user }}</div>
+            <div class="text">{{ item.user }}</div>
           </div>
           <el-avatar class="flexShrink" :size="35" :icon="UserFilled"
                      :src="store.getters.userinfo.avatar ? imageUrl + store.getters.userinfo.avatar : require('../assets/my.png')"/>
@@ -83,6 +83,12 @@
         </div>
         <el-input ref="inputRef" @keyup.enter="onSubmit" v-model="input"
                   :placeholder="aiLoading ? '思考中..' : '输入你想问的...'" :disabled="aiLoading">
+          <template #prepend>
+            <el-select placeholder="模式" class="select_style" v-model="model">
+              <el-option value="BASIC" label="标准"/>
+              <el-option value="ADVANCED" label="增强"/>
+            </el-select>
+          </template>
         </el-input>
         <div class="animation-dot" v-if="aiLoading">
           <div class="dot0"></div>
@@ -105,7 +111,7 @@
         <img alt="Vue logo" src="../assets/blend.svg" class="cache-img">
       </div>
       <div class="cache-text">
-        NERVE GPT PLUS
+        SUPER GPT PLUS
       </div>
       <div class="cache-flex-center cache-padding-top">
         <div class="cache-btn" @click="createdNewChat">
@@ -178,6 +184,7 @@ export default {
     }
   },
   setup() {
+    let model = ref("BASIC")
     let initialWidth = ref(50)
     let maxWidth = ref(740)
     let inputRef = ref(null);
@@ -342,7 +349,7 @@ export default {
           socket.value = null;
         }
 
-        socket.value = new WebSocket(process.env.VUE_APP_WSS + "/free/api/" + localStorage.getItem('token') );
+        socket.value = new WebSocket(process.env.VUE_APP_WSS + "/free-web/api/" + localStorage.getItem('token') + '/' + model.value);
         // TODO 建立连接
         socket.value.onopen = function () {
           socket.value.send(JSON.stringify(messages))
@@ -489,7 +496,8 @@ export default {
       dialogueWidth,
       calculateWidth,
       initialWidth,
-      maxWidth
+      maxWidth,
+      model
     };
   },
 };
@@ -627,7 +635,7 @@ export default {
   height: 36px;
   color: #fff;
   cursor: pointer;
-  background:  #ca6ba9;
+  background: #ca6ba9;
   border-radius: 50%;
   justify-content: center;
   align-items: center;
@@ -751,8 +759,8 @@ export default {
   margin-top: 15px;
   display: flex;
   align-items: center;
-  box-shadow: 0 5px 7px rgba(29,32,34, 0.29);
-  background-color: rgb(29,32,34);
+  box-shadow: 0 5px 7px rgba(29, 32, 34, 0.29);
+  background-color: rgb(29, 32, 34);
   padding: 5px 20px;
   font-size: 13px;
   color: #d8d8d8;
@@ -823,7 +831,7 @@ export default {
 
   40% {
     transform: scale(1.0);
-    background-color:  #ca6ba9;
+    background-color: #ca6ba9;
   }
 }
 
@@ -842,7 +850,7 @@ export default {
 .dot_1,
 .dot_2,
 .dot_3 {
-  background:  #ca6ba9;
+  background: #ca6ba9;
   width: 15px;
   height: 15px;
   border-color: #464646;

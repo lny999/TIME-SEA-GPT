@@ -32,6 +32,9 @@ public class FunCommon {
     @Value("${config.openKey}")
     private String openKey;
 
+    @Value("${config.openPlusKey}")
+    private String openPlusKey;
+
     @Value("${config.incentiveFrequency}")
     private Long incentiveFrequency;
 
@@ -59,34 +62,86 @@ public class FunCommon {
     @Value("${config.gptFrequency}")
     private Long gptFrequency;
 
+    @Value("${config.gptPlusFrequency}")
+    private Long gptPlusFrequency;
+
     @Value("${config.mjUrl}")
     private String mjUrl;
 
+    @Value("${config.organizationUuid}")
+    private String organizationUuid;
+
+    @Value("${config.conversationUuid}")
+    private String conversationUuid;
+
+    @Value("${config.sessionKey}")
+    private String sessionKey;
+
+    @Value("${config.newBingCookie}")
+    private String newBingCookie;
+
+    @Value("${gpt.bitoModel.bitoUserId}")
+    private Integer bitoUserId;
+
+    @Value("${gpt.bitoModel.email}")
+    private String email;
+
+    @Value("${gpt.bitoModel.ideName}")
+    private String ideName;
+
+    @Value("${gpt.bitoModel.uId}")
+    private String uId;
+
+    @Value("${gpt.bitoModel.wsId}")
+    private Integer wsId;
+
+    @Value("${gpt.bitoModel.requestId}")
+    private String requestId;
+
+    @Value("${gpt.bitoModel.authorization}")
+    private String authorization;
+
+    @Value("${gpt.bitoModel.sessionId}")
+    private String sessionId;
 
     public ServerStructure getServer() {
-        final ServerStructure value = (ServerStructure) redisUtils.getValue(ServerConstant.CONFIG);
-        if (value == null) {
-            log.warn("当前正在使用服务器默认配置,请及时前往控制台配置服务器参数");
-            return new ServerStructure()
-                    .setSignInFrequency(signInFrequency)
-                    .setVideoFrequency(videoFrequency)
-                    .setSdUrl(sdUrl)
-                    .setMjUrl(mjUrl)
-                    .setOpenKey(openKey)
-                    .setGptFrequency(gptFrequency)
-                    .setGptTextImageFrequency(gptTextImageFrequency)
-                    .setSdImage2Frequency(sdImage2Frequency)
-                    .setSdTextImageFrequency(sdTextImageFrequency)
-                    .setMjImage2Frequency(mjImage2Frequency)
-                    .setMjTextImageFrequency(mjTextImageFrequency)
-                    .setOpenAiUrl(openAiUrl)
-                    .setIncentiveFrequency(incentiveFrequency);
-        } else {
-            return value;
+        try {
+            final ServerStructure value = (ServerStructure) redisUtils.getValue(ServerConstant.CONFIG);
+            if (value == null) {
+                log.warn("当前正在使用服务器默认配置,请及时前往控制台配置服务器参数");
+                return createdDefaultServer();
+            } else {
+                return value;
+            }
+        } catch (Exception e) {
+            redisUtils.delKey(ServerConstant.CONFIG);
+            log.warn("已清除旧版本的服务器配置,当前正在使用服务器默认配置,请及时前往控制台配置服务器参数");
+            return createdDefaultServer();
+
         }
     }
 
-
-
+    private ServerStructure createdDefaultServer() {
+        return new ServerStructure()
+                .setNewBingCookie(newBingCookie)
+                .setOrganizationUuid(organizationUuid)
+                .setConversationUuid(conversationUuid)
+                .setSessionKey(sessionKey)
+                .setSignInFrequency(signInFrequency)
+                .setVideoFrequency(videoFrequency)
+                .setSdUrl(sdUrl)
+                .setMjUrl(mjUrl)
+                .setOpenKey(openKey)
+                .setGptFrequency(gptFrequency)
+                .setGptTextImageFrequency(gptTextImageFrequency)
+                .setSdImage2Frequency(sdImage2Frequency)
+                .setSdTextImageFrequency(sdTextImageFrequency)
+                .setMjImage2Frequency(mjImage2Frequency)
+                .setMjTextImageFrequency(mjTextImageFrequency)
+                .setOpenAiUrl(openAiUrl)
+                .setGptPlusFrequency(gptPlusFrequency)
+                .setOpenPlusKey(openPlusKey)
+                .setIncentiveFrequency(incentiveFrequency);
+    }
 
 }

@@ -17,9 +17,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class GptModel implements Serializable {
 
-//    private String model = "gpt-4-0314";
-
-    private String model = "gpt-3.5-turbo";
+    private String model;
 
     private int top_p = 1;
 

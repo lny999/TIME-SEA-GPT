@@ -1,7 +1,8 @@
 <template>
-  <NavigationBar />
-  <LeftNavigationBar />
-  <el-dialog class="announcement" v-model="dialogVisible"  center align-center width="380px" style="background-color: rgb(27,30,32)">
+  <NavigationBar/>
+  <LeftNavigationBar/>
+  <el-dialog class="announcement" v-model="dialogVisible" center align-center width="380px"
+             style="background-color: rgb(27,30,32)">
     <span style="text-align: center">{{ context }}</span>
     <template #footer>
       <span class="dialog-footer">
@@ -11,17 +12,19 @@
       </span>
     </template>
   </el-dialog>
+  <levitation-ball/>
 </template>
 
 <script>
-import { useStore } from "vuex";
+import {useStore} from "vuex";
 import LeftNavigationBar from "@/components/LeftNavigationBar.vue";
+import LevitationBall from "@/components/LevitationBall.vue";
 import NavigationBar from "@/components/NavigationBar.vue";
-import { getAnnouncement } from "../api/BSideApi";
-import { onMounted, ref } from "vue";
+import {getAnnouncement} from "../api/BSideApi";
+import {onMounted, ref} from "vue";
 
 export default {
-  components: { LeftNavigationBar, NavigationBar },
+  components: {LeftNavigationBar, NavigationBar,LevitationBall},
   setup() {
     let store = useStore()
     store.commit("initState");
@@ -31,7 +34,9 @@ export default {
       setTimeout(() => {
         getAnnouncementData()
       }, 100)
+
     })
+
     async function getAnnouncementData() {
       try {
         let announcement = await getAnnouncement();
@@ -54,9 +59,11 @@ export default {
         console.log(e)
       }
     }
+
+
+
     return {
       dialogVisible,
-      getAnnouncementData,
       context
     }
   }
@@ -126,11 +133,12 @@ body {
 }
 
 
-.login-dialog>header {
+.login-dialog > header {
   display: none;
 }
 
-.login-dialog>.el-dialog__body {
+.login-dialog > .el-dialog__body {
   padding: 0 !important;
 }
+
 </style>

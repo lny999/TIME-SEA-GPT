@@ -1,6 +1,5 @@
 package com.cn.bdth.api;
 
-
 import com.cn.bdth.msg.Result;
 import com.cn.bdth.service.PayService;
 import com.cn.bdth.service.ServerService;
@@ -30,7 +29,6 @@ public class PublicController {
     private final ServerService serverService;
 
     private final PayService payService;
-
 
     /**
      * 获取公告

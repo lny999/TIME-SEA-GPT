@@ -1,3 +1,10 @@
+server:
+  #   SSL证书
+  ssl:
+    key-store: classpath:anchwngb.cn.pfx
+    key-store-password: g15xrx4u57
+    key-store-type: PKCS12
+
 spring:
   data:
     # redis配置
@@ -32,9 +39,9 @@ we-chat:
   # 密钥
   secret: 'c82fb67bdd8aff6bae'
   # 通知模板
-  template: '1I4cl8AMMoavLS-xu9t1QuT5Irezvaw'
+  template: '1I4cl8xu9t1QuT5Irezvaw'
   # 环境 (develop开发板 trial体验版 release正式版)
-  env: develop
+  env: release
 
 # 百度翻译
 baidu-translation:
@@ -114,6 +121,6 @@ config:
   # sessionKey
   sessionKey: 'sk-ant-sid01WmC65_vcw6iw8_wU94Qf9NV4d5a2qg-g4Ei8wAA'
   # 必应Cookie
-  newBingCookie: '1c5f8HXnv_WnzPpXTnw8R7ZetpesLSSjVuZnOfOOGCVKJ2pEM_0Hg2ozW2ep_bvADewjMZDXBvzjHv8mpOAxrZ1tLjQQphjpeemQAMKl4AqmvObIClK8e0noqoXjr9jZ3l45qKy6ABBEqFeiWMiF8UCkKVqHBI5g'
+  newBingCookie: '1c5f8HXnOfOOGCVKJ2pEM_0Hg2ozW2ep_bvADewjMZDXBvzjHv8mpOAxrZ1tLjQQphjpeemQAMKl4AqmvObIClK8e0noqoXjr9jZ3l45qKy6ABBEqFeiWMiF8UCkKVqHBI5g'
 
 

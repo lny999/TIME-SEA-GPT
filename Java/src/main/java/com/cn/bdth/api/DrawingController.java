@@ -9,7 +9,6 @@ import com.cn.bdth.exceptions.FrequencyException;
 import com.cn.bdth.exceptions.ViolationsException;
 import com.cn.bdth.msg.Result;
 import com.cn.bdth.service.DrawingService;
-import com.cn.bdth.utils.UserUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

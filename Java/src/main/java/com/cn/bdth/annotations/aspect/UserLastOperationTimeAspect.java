@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class UserLastOperationTimeAspect {
+public class  UserLastOperationTimeAspect {
 
     private final RedisUtils redisUtils;
 

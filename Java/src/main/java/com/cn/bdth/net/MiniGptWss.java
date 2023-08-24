@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cn.bdth.common.FunCommon;
+import com.cn.bdth.constants.AiTypeConstant;
 import com.cn.bdth.constants.WeChatConstant;
 import com.cn.bdth.dto.GptMiniDto;
 import com.cn.bdth.exceptions.ExceptionMessages;
@@ -12,6 +13,7 @@ import com.cn.bdth.exceptions.ViolationsException;
 import com.cn.bdth.exceptions.WechatException;
 import com.cn.bdth.model.GptModel;
 import com.cn.bdth.service.GptService;
+import com.cn.bdth.structure.ServerStructure;
 import com.cn.bdth.utils.ChatUtils;
 import com.cn.bdth.utils.SpringContextUtil;
 import com.cn.bdth.utils.UserUtils;
@@ -83,26 +85,29 @@ public class MiniGptWss {
     public void onMessage(String messages, @PathParam("token") String token, @PathParam("model") String model) {
         try {
             final GptMiniDto gptMiniDto = JSONObject.parseObject(messages, GptMiniDto.class);
-            // 微信文字识别能力 防止用户发送色情 政治信息
-            //weChatUtils.filterText(gptMiniDto.getPrompt(), UserUtils.getOpenIdByToken(token));
             //校验用户次数
             final Long userId = UserUtils.getLoginIdByToken(token);
-            //消耗次数
-            final Long gptFrequency = funCommon.getServer().getGptFrequency();
             //更新用户最后操作时间
             chatUtils.lastOperationTime(userId);
-            chatUtils.deplete(gptFrequency, userId);
-            // 缓存对话数据 初始化缓存长度
-            final StringBuilder builder = new StringBuilder(1000);
-            final GptModel gptModel = new GptModel().setMessages(chatUtils.conversionStructure(gptMiniDto));
+            final ServerStructure server = funCommon.getServer();
+            //具体选择模型
+            boolean equals = AiTypeConstant.ADVANCED.equals(model);
+            //检查GPT-4是否开启 如果开启那么需要 把次数定义为 1次
+            final Long frequency;
             if (chatUtils.getEnableGpt()) {
-                gptModel.setModel(model);
+                frequency = equals ? server.getGptPlusFrequency() : server.getGptFrequency();
+            } else {
+                frequency = server.getGptFrequency();
+                //将指向值为 GPT-3
+                equals = false;
             }
-            gptService.concatenationGpt(gptModel)
+            chatUtils.deplete(frequency, userId);
+            final StringBuilder builder = new StringBuilder(200);
+            gptService.concatenationGpt(chatUtils.conversionStructure(gptMiniDto), equals)
                     .timeout(Duration.ofSeconds(60))
                     .doOnError(TimeoutException.class, e -> {
                         log.error("GPT回复超时 异常信息:{} 异常类:{}", e.getMessage(), e.getClass());
-                        chatUtils.compensate(gptFrequency, userId);
+                        chatUtils.compensate(frequency, userId);
                         handleWebSocketError(ExceptionMessages.GPT_TIMEOUT);
                     })
                     .doFinally(signal -> {
@@ -129,7 +134,7 @@ public class MiniGptWss {
                             }
                         }
                     }, throwable -> {
-                        chatUtils.compensate(gptFrequency, userId);
+                        chatUtils.compensate(frequency, userId);
                         log.error("调用GPT时出现异常 异常信息:{} 异常类:{}", throwable.getMessage(), throwable.getClass());
                         // throwable.printStackTrace(); 输出错误堆栈信息
                         handleWebSocketError(ExceptionMessages.GPT_TIMEOUT);

@@ -104,7 +104,7 @@
 import md from "@/static/css/md";
 import mpHtml from "@/wxcomponents/mp-html/mp-html.vue";
 import env from "@/utils/env";
-import {getChat, getToken, getUser, removeChat} from "@/utils/utils";
+import {getChat, getToken, getUser, removeChat, removeToken, removeUser} from "@/utils/utils";
 import {conversionImage} from "@/utils/image";
 import {deleteStarDialogue, putStarDialogue} from "@/api/user";
 
@@ -303,8 +303,12 @@ export default {
        * 重定向至 登录页
        */
       uni.onSocketError(function () {
-        _this.chatTemporary[index].answer = '哎哟! 与服务器建立连接失败,请稍后再试'
-        _this.isNextSend = true
+        removeToken()
+        removeUser()
+        uni.reLaunch({
+          url: '/pages/master/master?swiperIndex=1'
+        })
+
       });
       //回收消息
       uni.onSocketMessage(function (res) {

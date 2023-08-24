@@ -1,7 +1,5 @@
 package com.cn.bdth.task;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cn.bdth.entity.Drawing;
 import com.cn.bdth.entity.User;
 import com.cn.bdth.mapper.DrawingMapper;
 import com.cn.bdth.mapper.UserMapper;
@@ -9,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 /**
  * 雨纷纷旧故里草木深

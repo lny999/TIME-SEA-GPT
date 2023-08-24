@@ -27,15 +27,15 @@ public class ImageUtils {
     public String convertImageToBase64(final String imagePath) {
         try {
             String imageUrl = domain + imagePath;
-            Mono<byte[]> imageMono =  WebClient.builder()
-                    .codecs(item -> item.defaultCodecs().maxInMemorySize(10 * 1024 * 1024)).build().get()
+            Mono<byte[]> imageMono = WebClient.builder()
+                    .codecs(item -> item.defaultCodecs().maxInMemorySize(10 * 1024 * 1024 * 1024)).build().get()
                     .uri(imageUrl)
                     .accept(MediaType.IMAGE_JPEG, MediaType.IMAGE_PNG)
                     .retrieve()
                     .bodyToMono(byte[].class);
             byte[] imageBytes = imageMono.block();
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-            return "data:image/jpg;base64,"+base64Image;
+            return "data:image/jpg;base64," + base64Image;
         } catch (Exception e) {
             log.error("图片转BASE64失败 错误信息:{} 位置:{}", e.getMessage(), e.getClass());
             throw new RuntimeException(e);

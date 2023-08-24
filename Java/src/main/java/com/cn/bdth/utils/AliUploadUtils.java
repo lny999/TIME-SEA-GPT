@@ -82,7 +82,7 @@ public class AliUploadUtils {
         OSS ossClient = new OSSClientBuilder()
                 .build(endpoint, accessKey, secretKey);
         try {
-
+//            ossClient.deleteDirectory(bucketName, filePath);
             if (filePath.startsWith("/")) {
                 ossClient.deleteObject(bucketName, filePath.substring(1));
             } else {
@@ -93,8 +93,9 @@ public class AliUploadUtils {
         } finally {
             ossClient.shutdown();
         }
-    }
 
+
+    }
 
     public String uploadImageFromUrl(String imageUrl, String path, String newFileName) {
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKey, secretKey);

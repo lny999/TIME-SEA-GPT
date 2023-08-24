@@ -3,15 +3,13 @@ package com.cn.bdth.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.cn.bdth.config.FreeChatConfig;
+import com.cn.bdth.common.FunCommon;
 import com.cn.bdth.constants.OperateConstant;
-
 import com.cn.bdth.dto.GptMiniDto;
 import com.cn.bdth.dto.GptWebDto;
 import com.cn.bdth.entity.User;
 import com.cn.bdth.exceptions.FrequencyException;
 import com.cn.bdth.mapper.UserMapper;
-
 import com.cn.bdth.model.GptModel;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,7 +62,7 @@ public class ChatUtils {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final FreeChatConfig freeChatConfig;
+    private final FunCommon funCommon;
 
     public boolean isSusceptible(final String data) {
         // 将字符串中的英文转换为大写并去除所有空格
@@ -75,11 +72,13 @@ public class ChatUtils {
         return matcher.find();
     }
 
-    public List<GptModel.Messages> conversionStructure(final GptWebDto dto) {
-        return presetWords(dto.getMessages());
+    public GptModel conversionStructure(final GptWebDto dto) {
+        return new GptModel().setMessages(presetWords(dto.getMessages()));
     }
 
-    public List<GptModel.Messages> conversionStructure(final GptMiniDto dto) {
+
+
+    public GptModel conversionStructure(final GptMiniDto dto) {
         List<GptModel.Messages> messages;
         try (Stream<GptMiniDto.Context> contextStream = dto.getContext().stream()) {
             messages = contextStream.parallel()
@@ -93,7 +92,7 @@ public class ChatUtils {
         presetWords.add(
                 new GptModel.Messages().setRole("user").setContent(dto.getPrompt())
         );
-        return presetWords;
+        return new GptModel().setMessages(presetWords);
     }
 
 

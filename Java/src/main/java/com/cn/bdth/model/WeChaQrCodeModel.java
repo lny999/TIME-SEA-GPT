@@ -27,7 +27,18 @@ public class WeChaQrCodeModel implements Serializable {
 
     private Boolean is_hyaline = true;
 
-    private Boolean auto_color = true;
+//    private Boolean auto_color = false;
+//
+//    private LineColor line_color = new LineColor();
 
 
+//    @Data
+//    private static class LineColor {
+//        private Integer r = 151;
+//
+//        private Integer g = 136;
+//
+//        private Integer b = 239;
+//
+//    }
 }

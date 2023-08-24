@@ -5,7 +5,7 @@
         OPEN-AI-URL请求链
       </view>
       <view>
-        <input type="text" placeholder="请设置open ai请求链" v-model="form.openAiUrl"/>
+        <input type="text" placeholder="请设置open ai请求链" v-model="form.openAiUrl" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -13,7 +13,7 @@
         SD绘图请求链
       </view>
       <view>
-        <input type="text" placeholder="请设置stable diffusion请求链" v-model="form.sdUrl"/>
+        <input type="text" placeholder="请设置stable diffusion请求链" v-model="form.sdUrl" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -21,7 +21,39 @@
         MJ绘图请求链
       </view>
       <view>
-        <input type="text" placeholder="请设置stable diffusion请求链" v-model="form.mjUrl"/>
+        <input type="text" placeholder="请设置stable diffusion请求链" v-model="form.mjUrl" maxlength="-1"/>
+      </view>
+    </view>
+    <view class="row">
+      <view class="key">
+        必应Cookie
+      </view>
+      <view>
+        <input type="text" placeholder="请设置必应Cookie" v-model="form.newBingCookie" maxlength="-1"/>
+      </view>
+    </view>
+    <view class="row">
+      <view class="key">
+        克劳德原ID
+      </view>
+      <view>
+        <input type="text" placeholder="请设置organizationUuid" v-model="form.organizationUuid" maxlength="-1"/>
+      </view>
+    </view>
+    <view class="row">
+      <view class="key">
+        克劳德连ID
+      </view>
+      <view>
+        <input type="text" placeholder="请设置conversationUuid" v-model="form.conversationUuid" maxlength="-1"/>
+      </view>
+    </view>
+    <view class="row">
+      <view class="key">
+        克劳德sessionKey
+      </view>
+      <view>
+        <input type="text" placeholder="请设置sessionKey" v-model="form.sessionKey" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -29,7 +61,15 @@
         OPEN-KEY
       </view>
       <view>
-        <input type="text" placeholder="请设置OPEN-KEY" v-model="form.openKey"/>
+        <input type="text" placeholder="请设置OPEN-KEY" v-model="form.openKey" maxlength="-1"/>
+      </view>
+    </view>
+    <view class="row">
+      <view class="key">
+        OPEN-PLUS-KEY
+      </view>
+      <view>
+        <input type="text" placeholder="请设置OPEN-PLUS-KEY" v-model="form.openPlusKey" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -37,7 +77,7 @@
         默认赠送次数
       </view>
       <view>
-        <input type="number" placeholder="请设置默认赠送次数" v-model="form.incentiveFrequency"/>
+        <input type="number" placeholder="请设置默认赠送次数" v-model="form.incentiveFrequency" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -45,7 +85,7 @@
         签到赠送次数
       </view>
       <view>
-        <input type="number" placeholder="请设置签到赠送次数" v-model="form.signInFrequency"/>
+        <input type="number" placeholder="请设置签到赠送次数" v-model="form.signInFrequency" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -53,7 +93,8 @@
         标准文生图消耗次数
       </view>
       <view>
-        <input type="number" placeholder="请设置标准文生图消耗次数" v-model="form.gptTextImageFrequency"/>
+        <input type="number" placeholder="请设置标准文生图消耗次数" v-model="form.gptTextImageFrequency"
+               maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -61,7 +102,7 @@
         SD图生图消耗次数
       </view>
       <view>
-        <input type="number" placeholder="请设置图生图消耗次数" v-model="form.sdImage2Frequency"/>
+        <input type="number" placeholder="请设置图生图消耗次数" v-model="form.sdImage2Frequency" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -69,7 +110,7 @@
         SD文生图消耗次数
       </view>
       <view>
-        <input type="number" placeholder="请设置文生图消耗次数" v-model="form.sdTextImageFrequency"/>
+        <input type="number" placeholder="请设置文生图消耗次数" v-model="form.sdTextImageFrequency" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -77,7 +118,7 @@
         MJ图生图消耗次数
       </view>
       <view>
-        <input type="number" placeholder="请设置图生图消耗次数" v-model="form.mjImage2Frequency"/>
+        <input type="number" placeholder="请设置图生图消耗次数" v-model="form.mjImage2Frequency" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -85,15 +126,23 @@
         MJ文生图消耗次数
       </view>
       <view>
-        <input type="number" placeholder="请设置文生图消耗次数" v-model="form.mjTextImageFrequency"/>
+        <input type="number" placeholder="请设置文生图消耗次数" v-model="form.mjTextImageFrequency" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
       <view class="key">
-        BOT对话
+        标准对话
       </view>
       <view>
-        <input type="number" placeholder="请设置BOT对话消耗次数" v-model="form.gptFrequency"/>
+        <input type="number" placeholder="请设置BOT对话消耗次数" v-model="form.gptFrequency" maxlength="-1"/>
+      </view>
+    </view>
+    <view class="row">
+      <view class="key">
+        增强对话
+      </view>
+      <view>
+        <input type="number" placeholder="请设置BOT对话消耗次数" v-model="form.gptPlusFrequency" maxlength="-1"/>
       </view>
     </view>
     <view class="row">
@@ -101,7 +150,7 @@
         观看视频奖励次数
       </view>
       <view>
-        <input type="number" placeholder="请设置观看视频奖励次数" v-model="form.videoFrequency"/>
+        <input type="number" placeholder="请设置观看视频奖励次数" v-model="form.videoFrequency" maxlength="-1"/>
       </view>
     </view>
     <view style="margin-top: 38vh">
@@ -115,7 +164,7 @@
 import {getServerConfig, putServerConfig} from "@/api/admin";
 import LoadingComponent from "@/wxcomponents/components/loadingComponent.vue";
 
-const requiredFields = ['sdUrl', 'openKey', 'incentiveFrequency', 'videoFrequency', 'sdImage2Frequency', 'sdTextImageFrequency', 'gptFrequency', 'signInFrequency', 'gptTextImageFrequency'];
+const requiredFields = ['sdUrl', 'openKey', 'incentiveFrequency', 'videoFrequency', 'sdImage2Frequency', 'sdTextImageFrequency', 'gptFrequency', 'signInFrequency', 'gptTextImageFrequency', 'newBingCookie', 'organizationUuid', 'conversationUuid', 'sessionKey', 'gptPlusFrequency', 'openPlusKey'];
 const fieldNames = {
   'sdUrl': 'SD—API',
   'openKey': 'OPEN',
@@ -123,9 +172,15 @@ const fieldNames = {
   'videoFrequency': '视频奖励',
   'sdImage2Frequency': 'SD图生图消耗次数',
   'sdTextImageFrequency': 'SD文生图消耗次数',
-  'gptFrequency': 'BOT对话次数',
+  'gptFrequency': '标准消耗次数',
   'signInFrequency': '签到赠送次数',
-  'gptTextImageFrequency': '标准文生图消耗次数'
+  'gptTextImageFrequency': '标准文生图消耗次数',
+  'newBingCookie': '必应Cookie',
+  'organizationUuid': 'organizationUuid',
+  'conversationUuid': 'conversationUuid',
+  'sessionKey': 'sessionKey',
+  'gptPlusFrequency': '增强消耗次数',
+  'openPlusKey': '增强KEY',
 };
 
 export default {
@@ -144,7 +199,13 @@ export default {
         mjTextImageFrequency: undefined,
         openAiUrl: undefined,
         mjImage2Frequency: undefined,
-        gptTextImageFrequency: undefined
+        gptTextImageFrequency: undefined,
+        newBingCookie: '',
+        organizationUuid: '',
+        conversationUuid: '',
+        sessionKey: '',
+        openPlusKey: '',
+        gptPlusFrequency: undefined
       }
     };
   },

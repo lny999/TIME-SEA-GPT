@@ -13,7 +13,7 @@
           </view>
         </div>
         <div class="content" v-if="qrCode">
-          <div style="position: relative;background-color: white;  border-radius: 5px;">
+          <div style="position: relative;  border-radius: 5px; ">
             <img :src="qrCode" class="qc_code" alt="二维码">
             <div class="cover-div" v-if="isFailure">
               二维码已失效
@@ -191,7 +191,7 @@ export default defineComponent({
   overflow: hidden;
   width: 100%;
   padding: 0;
-  background-color: rgb(27,30,32)
+  background-color: rgb(27, 30, 32)
 }
 
 .cover-div {
@@ -199,7 +199,7 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(27,30,32, 0.8);
+  background: rgba(27, 30, 32, 0.8);
   padding: 10px;
   border-radius: 5px;
   width: 150px;
@@ -220,11 +220,11 @@ export default defineComponent({
 }
 
 .head_img {
-  background-image: linear-gradient(to top, rgb(27,30,32) 30%, transparent 100%), url("../assets/login-header.png");
+  background-image: linear-gradient(to top, rgb(27, 30, 32) 30%, transparent 100%), url("../assets/login-header.png");
   background-size: cover;
   background-position: center;
   height: 100px;
-  box-shadow: 0px -10px 20px rgba(27,30,32, 0.2);
+  box-shadow: 0px -10px 20px rgba(27, 30, 32, 0.2);
 }
 
 .login-dialog {
@@ -343,7 +343,9 @@ export default defineComponent({
   width: 140px;
   height: 140px;
   padding: 10px;
-
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 50px rgba(183, 156, 156, 0.9);
 }
 
 .btn-generate {

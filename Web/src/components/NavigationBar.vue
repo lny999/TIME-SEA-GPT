@@ -189,7 +189,7 @@ export default defineComponent({
 	height: 60px;
 	box-sizing: border-box;
 	width: 100%;
-	border-bottom: 1px solid #535353;
+	border-bottom: 1px solid #1D2022;
 	flex-shrink: 0;
 	justify-content: space-between;
 	align-items: center;
