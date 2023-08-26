@@ -1,6 +1,7 @@
 package com.cn.bdth.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cn.bdth.common.ControlCommon;
 import com.cn.bdth.exceptions.ExceptionMessages;
 import com.cn.bdth.exceptions.ViolationsException;
 import com.cn.bdth.exceptions.WechatException;
@@ -30,20 +31,17 @@ import java.util.Base64;
 public class WeChatUtils {
     @Value("${we-chat.appId}")
     private String appId;
-
-
     @Value("${we-chat.secret}")
     private String secret;
 
     @Value("${ali-oss.domain}")
     private String domain;
 
-    @Value("${we-chat.env}")
-    private String env;
-
     private final RedisUtils redisUtils;
 
     private final BaiduTranslationUtil translationUtil;
+
+    private final ControlCommon controlCommon;
     private static final WebClient WEB_CLIENT = WebClient.builder().build();
 
 
@@ -55,7 +53,9 @@ public class WeChatUtils {
             final JSONObject block = JSONObject.parseObject(response);
 
             final String openid = block.getString("openid");
-            assert openid != null;
+            if (!StringUtils.notEmpty(openid)) {
+                throw new RuntimeException();
+            }
             return openid;
         } catch (Exception e) {
             log.error("获取微信用户标识失败 信息:{},错误类:{}", e.getMessage(), e.getClass());
@@ -64,11 +64,12 @@ public class WeChatUtils {
     }
 
     public String getQrCode(final String secene) {
+
         try {
             final String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + WeChatTokenUtil.INSTANCE.getWechatToken(appId, secret);
             final byte[] block = WEB_CLIENT.post()
                     .uri(url)
-                    .body(BodyInserters.fromValue(new WeChaQrCodeModel().setScene(secene).setEnv_version(env)))
+                    .body(BodyInserters.fromValue(new WeChaQrCodeModel().setScene(secene).setEnv_version(controlCommon.getControl().getWechatAppEnv())))
                     .retrieve().bodyToMono(byte[].class).block();
             final String s = "data:image/png;base64," + Base64.getEncoder().encodeToString(block);
             return s;

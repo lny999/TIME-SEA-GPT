@@ -20,11 +20,12 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanIcon from '../icon/index.vue'
+import {VantComponent} from '../common/component';
+import {getRect, requestAnimationFrame} from '../common/utils';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/notice-bar/index'
-import { VantComponent } from '../common/component';
-import { getRect, requestAnimationFrame } from '../common/utils';
 VantComponent({
     props: {
         text: {

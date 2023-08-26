@@ -32,10 +32,11 @@
 <script>
 import VanButton from '../button/index.vue'
 import VanIcon from '../icon/index.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-button': VanButton,'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/submit-bar/index'
-import { VantComponent } from '../common/component';
 VantComponent({
     classes: ['bar-class', 'price-class', 'button-class'],
     props: {

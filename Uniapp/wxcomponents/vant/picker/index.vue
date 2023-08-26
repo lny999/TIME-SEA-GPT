@@ -19,11 +19,12 @@
 <script>
 import PickerColumn from '../picker-column/index.vue'
 import Loading from '../loading/index.vue'
+import {VantComponent} from '../common/component';
+import {pickerProps} from './shared';
+
 global['__wxVueOptions'] = {components:{'picker-column': PickerColumn,'loading': Loading}}
 
 global['__wxRoute'] = 'vant/picker/index'
-import { VantComponent } from '../common/component';
-import { pickerProps } from './shared';
 VantComponent({
     classes: ['active-class', 'toolbar-class', 'column-class'],
     props: Object.assign(Object.assign({}, pickerProps), { valueKey: {

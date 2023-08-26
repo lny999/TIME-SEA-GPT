@@ -20,18 +20,13 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanIcon from '../icon/index.vue'
+import {VantComponent} from '../common/component';
+import {useParent} from '../common/relation';
+import {link} from '../mixins/link';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/grid-item/index'
-import {
-	VantComponent
-} from '../common/component';
-import {
-	useParent
-} from '../common/relation';
-import {
-	link
-} from '../mixins/link';
 VantComponent({
 	relation: useParent('grid'),
 	classes: ['content-class', 'icon-class', 'text-class'],

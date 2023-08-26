@@ -12,13 +12,13 @@ export default {
     // 默认作者名
     author: '时间海',
     // HTTP请求 基类
-    baseUrl: 'https://anchwngb.cn:8625',
+    baseUrl: 'http://192.168.1.26:8625',
     // 长连接请求 基类
-    baseWs: 'wss://anchwngb.cn:8625',
+    baseWs: 'ws://192.168.1.26:8625',
     // 图片服务器域名
-    imageBaseUrl: 'https://sea-time.oss-cn-shanghai.aliyuncs.com',
+    imageBaseUrl: 'https://sXXXXXXXXncs.com',
     // 过滤用户输入关键词 (英文则大写) (初步校验 后端也会做校验)
-    filtration: ["GPT", "OPENAI"],
+    filtration: ["GPT", "OPENAI", "引擎"],
     // BOT最大记忆
     memory: 10,
     // 每条历史词汇最大长度,
@@ -119,7 +119,7 @@ export default {
                 }
             ],
 
-        },{
+        }, {
             icon: '👩‍⚕️', //功能ICON
             title: 'Ai医生', //菜单功能名称
             introduce: '虚拟Ai医生',//功能介绍
@@ -133,7 +133,7 @@ export default {
                 }
             ],
 
-        },{
+        }, {
             icon: '👰‍♂️', //功能ICON
             title: 'Ai女友', //菜单功能名称
             introduce: '虚拟Ai女友',//功能介绍

@@ -5,7 +5,8 @@
       <swiper :autoplay="false" @change="changeSwiper($event)" :current="swiperIndex" class="master-container">
         <!--首页-->
         <swiper-item>
-          <home-view/>
+          <home-view v-if="isWechatStatus"/>
+          <camouflage-component v-else/>
         </swiper-item>
         <!--登录-->
         <swiper-item v-if="!isLogin">
@@ -43,8 +44,7 @@
             </view>
           </view>
           <view class="ani-button">
-            <van-button round type="primary" color="#8A75FFFF" block @click="isAnnouncement=false">朕已阅
-            </van-button>
+            <van-button round type="primary" color="#8A75FFFF" block @click="isAnnouncement=false">朕已阅</van-button>
           </view>
         </view>
       </van-popup>
@@ -63,14 +63,16 @@ import PersonalView from "@/pages/master/view/personalView.vue";
 import {getAnnouncement, getToken, setAnnouncement} from "@/utils/utils";
 import env from "@/utils/env";
 import {useVideoReward} from "@/api/inspirit";
-import {getAnnouncementData} from "@/api/public";
+import {getAnnouncementData, getWechatAppStatus} from "@/api/public";
 import {conversionTime} from "@/utils/date";
 import LoadingComponent from "@/wxcomponents/components/loadingComponent.vue";
 import DisconnectComponent from "@/wxcomponents/components/disconnectComponent.vue";
+import CamouflageComponent from "@/pages/master/components/camouflageComponent.vue";
 
 let videoAd = null;
 export default {
   components: {
+    CamouflageComponent,
     DisconnectComponent,
     LoadingComponent,
     PersonalView,
@@ -129,16 +131,31 @@ export default {
       announcement: {},
       //是否显示公告
       isAnnouncement: false,
+      //网络连通性
+      isConnection: true,
+      //状态
+      isWechatStatus: false
 
-      isConnection: true
     }
   },
   created() {
     this.handleIsLogin();
     this.getAnnouncement();
+    this.getServerStatus();
   },
   methods: {
     conversionTime,
+    /**
+     * 获取服务状态
+     */
+    getServerStatus: async function () {
+      try {
+        this.isWechatStatus = await getWechatAppStatus();
+      } catch (e) {
+        this.isWechatStatus = false
+      }
+    },
+
     /**
      * 加载个人中心组件数据
      */

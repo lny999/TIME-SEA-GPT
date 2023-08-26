@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { createAnimation } from './createAnimation'
+import {createAnimation} from './createAnimation'
 
 /**
  * Transition 过渡动画

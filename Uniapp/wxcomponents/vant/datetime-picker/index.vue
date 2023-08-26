@@ -4,12 +4,13 @@
 
 <script>
 import VanPicker from '../picker/index.vue'
+import {VantComponent} from '../common/component';
+import {isDef} from '../common/validator';
+import {pickerProps} from '../picker/shared';
+
 global['__wxVueOptions'] = {components:{'van-picker': VanPicker}}
 
 global['__wxRoute'] = 'vant/datetime-picker/index'
-import { VantComponent } from '../common/component';
-import { isDef } from '../common/validator';
-import { pickerProps } from '../picker/shared';
 const currentYear = new Date().getFullYear();
 function isValidDate(date) {
     return isDef(date) && !isNaN(new Date(date).getTime());

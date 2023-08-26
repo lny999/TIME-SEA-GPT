@@ -100,7 +100,7 @@ const routes = [{
             isHeadNavigation: false,
             keepAlive: true
         }
-    },  {
+    }, {
         path: "/claude_view",
         name: "ClaudeView",
         component: () => import('../views/ClaudeView.vue'),
@@ -110,16 +110,7 @@ const routes = [{
             keepAlive: true
         }
     },
-    {
-        path: "/blend_view",
-        name: "BlendView",
-        component: () => import('../views/BlendView.vue'),
-        meta: {
-            title: 'NERVE GPT',
-            isHeadNavigation: false,
-            keepAlive: true
-        }
-    },
+
     {
         path: "/preset_character",
         name: "PresetCharacter",
@@ -130,16 +121,25 @@ const routes = [{
             keepAlive: false
         }
     },
-	{
-		path: "/laboratory",
-		name: "Laboratory",
-		component: () => import('../views/LaboratoryView.vue'),
-		meta: {
-			title: '超级实验室',
-			isHeadNavigation: false,
-			keepAlive: false
-		}
-	}
+    {
+        path: "/laboratory",
+        name: "Laboratory",
+        component: () => import('../views/LaboratoryView.vue'),
+        meta: {
+            title: '超级实验室',
+            isHeadNavigation: false,
+            keepAlive: false
+        }
+    }, {
+        path: '/admin',
+        name: 'Admin',
+        component: () => import('@/views/Admin/AdminView.vue'),
+        meta: {
+            title: '管理控制台',
+            isHeadNavigation: false,
+            keepAlive: true
+        }
+    },
 ]
 
 const router = createRouter({

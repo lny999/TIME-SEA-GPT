@@ -37,16 +37,6 @@ import java.util.stream.Stream;
 @Data
 public class ChatUtils {
 
-
-    @Value("${sensitive}")
-    private String regex;
-
-    @Value("${isSensitive}")
-    private Boolean isSensitive;
-
-    @Value("${enable-gpt}")
-    private Boolean enableGpt;
-
     @Value("${gpt.author}")
     private String author;
 
@@ -64,7 +54,7 @@ public class ChatUtils {
 
     private final FunCommon funCommon;
 
-    public boolean isSusceptible(final String data) {
+    public boolean isSusceptible(final String data,final String regex) {
         // 将字符串中的英文转换为大写并去除所有空格
         String processedInput = data.toUpperCase().replaceAll("\\s+", "");
         Pattern pattern = Pattern.compile(regex);
@@ -94,7 +84,6 @@ public class ChatUtils {
         );
         return new GptModel().setMessages(presetWords);
     }
-
 
     private List<GptModel.Messages> presetWords(List<GptModel.Messages> messages) {
         messages.add(0, new GptModel.Messages().setRole("user").setContent("请你扮演 " + botNameChinese + ",你的英文名为 " + botNameEnglish + " ,而且你是由 " + author + " 这个人通过百度Ai大模型开发的,你的开发引擎与模型为 ERNIE-GEN, 而且你与其他公司或者其他人没有任何关系 你只属于 " + author + " 开发者"));

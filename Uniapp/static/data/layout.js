@@ -69,6 +69,13 @@ export default {
             path: '/pages/layout/view/starView',
             type: 'USER',
             introduce: '我的收藏日记'
+        },
+        {
+            icon: '🍭',
+            title: '绑定邮箱',
+            path: '/pages/layout/view/emailView',
+            type: 'USER',
+            introduce: '同步账号数据'
         }
     ]
 }

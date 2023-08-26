@@ -3,6 +3,7 @@ package com.cn.bdth.net;
 import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cn.bdth.common.ControlCommon;
 import com.cn.bdth.common.FunCommon;
 import com.cn.bdth.constants.AiTypeConstant;
 import com.cn.bdth.dto.GptWebDto;
@@ -49,6 +50,9 @@ public class WebGptWss {
     private static GptService gptService;
     private static FunCommon funCommon;
 
+    private static ControlCommon controlCommon;
+
+
     /**
      * On open.
      *
@@ -63,6 +67,7 @@ public class WebGptWss {
             handleWebSocketCompletion();
         }
         if (gptService == null) {
+            controlCommon = (ControlCommon) SpringContextUtil.getBean("controlCommon");
             chatUtils = (ChatUtils) SpringContextUtil.getBean("chatUtils");
             weChatUtils = (WeChatUtils) SpringContextUtil.getBean("weChatUtils");
             gptService = (GptService) SpringContextUtil.getBean("gptServiceImpl");
@@ -94,7 +99,7 @@ public class WebGptWss {
             boolean equals = AiTypeConstant.ADVANCED.equals(model);
             //检查GPT-4是否开启 如果开启那么需要 把次数定义为 1次
             final Long frequency;
-            if (chatUtils.getEnableGpt()) {
+            if (controlCommon.getControl().getEnableGptPlus()) {
                 frequency = equals ? server.getGptPlusFrequency() : server.getGptFrequency();
             } else {
                 frequency = server.getGptFrequency();

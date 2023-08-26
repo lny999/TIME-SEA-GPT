@@ -8,10 +8,11 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanLoading from '../loading/index.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-loading': VanLoading}}
 
 global['__wxRoute'] = 'vant/switch/index'
-import { VantComponent } from '../common/component';
 VantComponent({
     field: true,
     classes: ['node-class'],

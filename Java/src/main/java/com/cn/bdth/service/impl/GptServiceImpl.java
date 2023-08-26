@@ -1,6 +1,7 @@
 package com.cn.bdth.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cn.bdth.common.ControlCommon;
 import com.cn.bdth.common.FunCommon;
 import com.cn.bdth.constants.AiModelConstant;
 import com.cn.bdth.constants.ServerConstant;
@@ -11,6 +12,7 @@ import com.cn.bdth.interfaces.Callback;
 import com.cn.bdth.model.ClaudeModel;
 import com.cn.bdth.model.GptModel;
 import com.cn.bdth.service.GptService;
+import com.cn.bdth.structure.ControlStructure;
 import com.cn.bdth.structure.ServerStructure;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,15 +43,17 @@ public class GptServiceImpl implements GptService {
 
     private final FunCommon funCommon;
 
+    private final ControlCommon controlCommon;
+
 
     @Override
     public Flux<String> concatenationGpt(final GptModel model, final boolean isAdvanced) {
         //设置请求模型
         model.setModel(isAdvanced ? AiModelConstant.ADVANCED : AiModelConstant.BASIC);
         final ServerStructure server = funCommon.getServer();
+        final ControlStructure control = controlCommon.getControl();
         return webClient.baseUrl(server.getOpenAiUrl())
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + (isAdvanced ? server.getOpenPlusKey() : server.getOpenKey()))
-                .build()
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + (isAdvanced ? server.getOpenPlusKey() : server.getOpenKey())).build()
                 .post()
                 .uri(ServerConstant.GPT_DIALOGUE)
                 .body(BodyInserters.fromValue(model))
@@ -60,8 +64,14 @@ public class GptServiceImpl implements GptService {
 
     @Override
     public Flux<String> concatenationNewBing(final String messages) {
-        Chat chat = new Chat("_U=" + funCommon.getServer().getNewBingCookie(), false)
-                .setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890)));
+        final ControlStructure control = controlCommon.getControl();
+        final Chat chat;
+        if (control.getEnableProxy()) {
+            chat = new Chat("_U=" + funCommon.getServer().getNewBingCookie(), false)
+                    .setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(control.getProxyIp(), control.getProxyPort())));
+        } else {
+            chat = new Chat("_U=" + funCommon.getServer().getNewBingCookie(), false);
+        }
         return Flux.create(f -> {
             chat.newChat().newQuestion(messages, new Callback() {
                 @Override
@@ -85,28 +95,31 @@ public class GptServiceImpl implements GptService {
 
     @Override
     public Flux<String> concatenationClaude(final String message) {
+        final ControlStructure control = controlCommon.getControl();
         final ServerStructure server = funCommon.getServer();
-
         final ClaudeModel claudeModel = new ClaudeModel()
                 .setSessionKey(server.getSessionKey())
                 .setCompletion(new ClaudeModel.Completion().setPrompt(message))
                 .setOrganization_uuid(server.getOrganizationUuid())
                 .setConversation_uuid(server.getConversationUuid())
                 .setText(message);
-        return webClient
+        final WebClient.Builder builder = webClient
                 .baseUrl("https://claude.ai/api/append_message")
                 .clientConnector(new ReactorClientHttpConnector())
                 .defaultHeader(HttpHeaders.ORIGIN, "https://claude.ai")
-                .defaultCookie("sessionKey", claudeModel.getSessionKey())
-                .clientConnector(new ReactorClientHttpConnector(
-                        //configure proxy connections
-                        HttpClient.create()
-                                .proxy(proxy -> proxy
-                                        .type(ProxyProvider.Proxy.HTTP)
-                                        //set proxy
-                                        .address(new InetSocketAddress("127.0.0.1", 7890)))
-                ))
-                .build()
+                .defaultCookie("sessionKey", claudeModel.getSessionKey());
+
+        if (control.getEnableProxy()) {
+            builder.clientConnector(new ReactorClientHttpConnector(
+                    HttpClient.create()
+                            .proxy(proxy -> proxy
+                                    .type(ProxyProvider.Proxy.HTTP)
+                                    //set proxy
+                                    .address(new InetSocketAddress(control.getProxyIp(), control.getProxyPort())))
+            ));
+        }
+
+        return builder.build()
                 .post()
                 .body(BodyInserters.fromValue(claudeModel))
                 .retrieve()

@@ -19,10 +19,11 @@
 import VanIcon from '../icon/index.vue'
 import VanSidebar from '../sidebar/index.vue'
 import VanSidebarItem from '../sidebar-item/index.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-sidebar': VanSidebar,'van-sidebar-item': VanSidebarItem}}
 
 global['__wxRoute'] = 'vant/tree-select/index'
-import { VantComponent } from '../common/component';
 VantComponent({
     classes: [
         'main-item-class',

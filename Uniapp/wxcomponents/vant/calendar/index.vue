@@ -11,20 +11,31 @@
 <script>
 
 const __wxTemplateComponentProps = {}
-import __wxTemplateComponent0 from './calendar.vue'
-
 import Header from './components/header/index.vue'
 import Month from './components/month/index.vue'
 import VanButton from '../button/index.vue'
 import VanPopup from '../popup/index.vue'
 import VanToast from '../toast/index.vue'
+import {VantComponent} from '../common/component';
+import {
+  calcDateNum,
+  compareDay,
+  compareMonth,
+  copyDates,
+  formatMonthTitle,
+  getDayByOffset,
+  getMonths,
+  getNextDay,
+  getPrevDay,
+  getToday,
+  ROW_HEIGHT,
+} from './utils';
+import Toast from '../toast/toast';
+import {requestAnimationFrame} from '../common/utils';
+
 global['__wxVueOptions'] = {components:{'header': Header,'month': Month,'van-button': VanButton,'van-popup': VanPopup,'van-toast': VanToast,}}
 
 global['__wxRoute'] = 'vant/calendar/index'
-import { VantComponent } from '../common/component';
-import { ROW_HEIGHT, getPrevDay, getNextDay, getToday, compareDay, copyDates, calcDateNum, formatMonthTitle, compareMonth, getMonths, getDayByOffset, } from './utils';
-import Toast from '../toast/toast';
-import { requestAnimationFrame } from '../common/utils';
 const initialMinDate = getToday().getTime();
 const initialMaxDate = (() => {
     const now = getToday();

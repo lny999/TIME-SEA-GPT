@@ -9,10 +9,11 @@
 
 <script>
 import VanTransition from '../transition/index.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-transition': VanTransition}}
 
 global['__wxRoute'] = 'vant/overlay/index'
-import { VantComponent } from '../common/component';
 VantComponent({
     props: {
         show: Boolean,

@@ -15,10 +15,11 @@
 
 <script>
 import VanCell from '../cell/index.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-cell': VanCell}}
 
 global['__wxRoute'] = 'vant/panel/index'
-import { VantComponent } from '../common/component';
 VantComponent({
     classes: ['header-class', 'footer-class'],
     props: {

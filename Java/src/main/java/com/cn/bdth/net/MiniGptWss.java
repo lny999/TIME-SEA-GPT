@@ -3,6 +3,7 @@ package com.cn.bdth.net;
 import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cn.bdth.common.ControlCommon;
 import com.cn.bdth.common.FunCommon;
 import com.cn.bdth.constants.AiTypeConstant;
 import com.cn.bdth.constants.WeChatConstant;
@@ -11,8 +12,8 @@ import com.cn.bdth.exceptions.ExceptionMessages;
 import com.cn.bdth.exceptions.FrequencyException;
 import com.cn.bdth.exceptions.ViolationsException;
 import com.cn.bdth.exceptions.WechatException;
-import com.cn.bdth.model.GptModel;
 import com.cn.bdth.service.GptService;
+import com.cn.bdth.structure.ControlStructure;
 import com.cn.bdth.structure.ServerStructure;
 import com.cn.bdth.utils.ChatUtils;
 import com.cn.bdth.utils.SpringContextUtil;
@@ -50,6 +51,7 @@ public class MiniGptWss {
     private static WeChatUtils weChatUtils;
     private static GptService gptService;
     private static FunCommon funCommon;
+    private static ControlCommon controlCommon;
 
     /**
      * On open.
@@ -69,6 +71,7 @@ public class MiniGptWss {
             weChatUtils = (WeChatUtils) SpringContextUtil.getBean("weChatUtils");
             gptService = (GptService) SpringContextUtil.getBean("gptServiceImpl");
             funCommon = (FunCommon) SpringContextUtil.getBean("funCommon");
+            controlCommon = (ControlCommon) SpringContextUtil.getBean("controlCommon");
         }
 
     }
@@ -94,7 +97,8 @@ public class MiniGptWss {
             boolean equals = AiTypeConstant.ADVANCED.equals(model);
             //检查GPT-4是否开启 如果开启那么需要 把次数定义为 1次
             final Long frequency;
-            if (chatUtils.getEnableGpt()) {
+            final ControlStructure control = controlCommon.getControl();
+            if (control.getEnableGptPlus()) {
                 frequency = equals ? server.getGptPlusFrequency() : server.getGptFrequency();
             } else {
                 frequency = server.getGptFrequency();
@@ -107,7 +111,6 @@ public class MiniGptWss {
                     .timeout(Duration.ofSeconds(60))
                     .doOnError(TimeoutException.class, e -> {
                         log.error("GPT回复超时 异常信息:{} 异常类:{}", e.getMessage(), e.getClass());
-                        chatUtils.compensate(frequency, userId);
                         handleWebSocketError(ExceptionMessages.GPT_TIMEOUT);
                     })
                     .doFinally(signal -> {
@@ -122,9 +125,9 @@ public class MiniGptWss {
                             if (delta.containsKey("content")) {
                                 final String string = delta.getString("content");
                                 // 是否开启自定义校验
-                                if (chatUtils.getIsSensitive()) {
+                                if (control.getEnableSensitive()) {
                                     builder.append(string.trim().toUpperCase());
-                                    if (chatUtils.isSusceptible(builder.toString())) {
+                                    if (chatUtils.isSusceptible(builder.toString(), control.getSensitiveWords())) {
                                         handleWebSocketError(WeChatConstant.RC_MODE);
                                         handleWebSocketCompletion();
                                         return;

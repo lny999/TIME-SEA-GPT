@@ -9,12 +9,13 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanTransition from '../transition/index.vue'
+import {VantComponent} from '../common/component';
+import {WHITE} from '../common/color';
+import {getSystemInfoSync} from '../common/utils';
+
 global['__wxVueOptions'] = {components:{'van-transition': VanTransition}}
 
 global['__wxRoute'] = 'vant/notify/index'
-import { VantComponent } from '../common/component';
-import { WHITE } from '../common/color';
-import { getSystemInfoSync } from '../common/utils';
 VantComponent({
     props: {
         message: String,

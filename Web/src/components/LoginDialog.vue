@@ -1,35 +1,104 @@
 <template>
-  <el-dialog v-model="dialogVisible" width="330px" class="login-dialog" :show-close="false" align-center @close="close"
+  <el-dialog v-model="dialogVisible" width="420px" class="login-dialog" :show-close="false" align-center @close="close"
              style="border-radius: 10px; overflow-x: hidden;">
     <div class="login-box">
       <div class="head">
         <div class="head_img"></div>
       </div>
-      <div class="login-title">扫码登录</div>
-      <div class="form">
-        <div class="animation" v-if="!qrCodeLoaded">
-          <view class="loading-model">
-            <view class="loader"></view>
-          </view>
+      <div class="login-title">
+        <div :class="loginType===0?'login-selected':''" @click="switchLoginType(0)">微信登录</div>
+        <div :class="loginType===1?'login-selected':''" @click="switchLoginType(1)">
+          {{ isLogin ? '邮箱登录' : '注册账号' }}
         </div>
-        <div class="content" v-if="qrCode">
-          <div style="position: relative;  border-radius: 5px; ">
-            <img :src="qrCode" class="qc_code" alt="二维码">
-            <div class="cover-div" v-if="isFailure">
-              二维码已失效
-            </div>
+      </div>
+      <!--微信扫码登录-->
+      <div v-if="loginType===0">
+        <div class="form">
+          <div class="animation" v-if="!qrCodeLoaded">
+            <view class="loading-model">
+              <view class="loader"></view>
+            </view>
           </div>
+          <div class="content" v-if="qrCode">
+            <div style="position: relative;  border-radius: 5px; ">
+              <img :src="qrCode" class="qc_code" alt="二维码">
+              <div class="cover-div" v-if="isFailure">
+                二维码已失效
+              </div>
+            </div>
 
+          </div>
+        </div>
+        <div class="btn-generate" v-if="isFailure">
+          <el-button type="primary" color="#626aef" @click="getLoginQRCode()">重新生成</el-button>
+        </div>
+        <div class="h5 prompt-style" v-if="!loginAnimation">
+          正在加载中...
+        </div>
+        <div class="h5 prompt-style" v-if="!promptAnimation">
+          使用微信扫一扫快速登录后使用
         </div>
       </div>
-      <div class="btn-generate" v-if="isFailure">
-        <el-button type="primary" color="#626aef" @click="getLoginQRCode()">重新生成</el-button>
-      </div>
-      <div class="h5 prompt-style" v-if="!loginAnimation">
-        正在加载中...
-      </div>
-      <div class="h5 prompt-style" v-if="!promptAnimation">
-        使用微信扫一扫快速登录后使用
+      <!--      登录-->
+      <div v-if="loginType===1" style="margin-top: 40px;padding: 0 60px 50px;">
+        <el-form @keyup.enter="onSubmit" ref="formRef" size="large">
+          <el-form-item prop="username">
+            <el-input type="text" clearable v-model="emailForm.email" placeholder="请输入邮箱" autocomplete=“off”>
+              <template #prefix>
+                <el-icon :size="16" color="var(&#45;&#45;el-input-icon-color)">
+                  <UserFilled/>
+                </el-icon>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="emailForm.password" type="password" placeholder="请输入密码" show-password
+                      autocomplete=“off”>
+              <template #prefix>
+                <el-icon :size="16" color="var(&#45;&#45;el-input-icon-color)">
+                  <Platform/>
+                </el-icon>
+              </template>
+            </el-input>
+            <div style="text-align: right;color: #929292;font-size: 10px" @click="isLogin=!isLogin" v-if="isLogin">
+              前往注册
+            </div>
+          </el-form-item>
+          <el-form-item prop="code" v-show="isLogin===false">
+            <el-input
+                maxlength="6"
+                minlength="6"
+                ref="codeRef"
+                type="text"
+                clearable
+                v-model="emailForm.code"
+                placeholder="请输入验证码"
+                autocomplete=“off”>
+              >
+              <template #prefix>
+                <el-icon :size="16" color="var(&#45;&#45;el-input-icon-color)">
+                  <Connection/>
+                </el-icon>
+
+              </template>
+              <template #append>
+                <div style="padding-left: 10px;background: none">
+                  <el-button :disabled="disabled" @click="startCountdown"
+                             v-text="buttonText" style="background-color: rgb(129,102,231);color: white"></el-button>
+                </div>
+              </template>
+            </el-input>
+            <div style="text-align: right;color: #929292;font-size: 10px" @click="isLogin=!isLogin" v-if="!isLogin">
+              前往登录
+            </div>
+          </el-form-item>
+          <el-form-item>
+            <el-button :loading="loginLoading" class="submit-button" round type="primary" size="large"
+                       @click="onSubmit">
+              {{ isLogin ? '验证身份' : '快速注册' }}
+            </el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </el-dialog>
@@ -38,13 +107,22 @@
 <script>
 import {defineComponent, ref, watch} from "vue";
 
-import {GetUserInfo, GetWechatCode, isQrCodeLoginSucceed} from "../../api/BSideApi";
-import {ElNotification} from "element-plus";
+import {
+  EmailEnroll,
+  EmailLogin,
+  getEmailCode,
+  GetUserInfo,
+  GetWechatCode,
+  isQrCodeLoginSucceed
+} from "../../api/BSideApi";
+import {ElMessage, ElNotification} from "element-plus";
 import store from "@/store";
+import {Connection, Platform, UserFilled} from "@element-plus/icons-vue";
 
 
 export default defineComponent({
   name: "LoginDialog",
+  components: {Connection, Platform, UserFilled},
   props: {
     show: {
       type: Boolean,
@@ -54,6 +132,8 @@ export default defineComponent({
   setup(props, {
     emit
   }) {
+    const buttonText = ref('获取验证码')
+    let loginType = ref(0)
     let qrCode = ref('')
     let qrCodeLoaded = ref(false)
     let promptAnimation = ref(true)
@@ -66,6 +146,14 @@ export default defineComponent({
     let isFailure = ref(false)
     let timerId;
     let lock = ref(false)
+    const countdown = ref(null)
+    const disabled = ref(false)
+    const isCode = ref(true)
+    const emailForm = ref({
+      email: '',
+      password: '',
+      code: ''
+    })
     watch(() => props.show, (newValue) => {
       if (newValue) {
         getLoginQRCode()
@@ -75,6 +163,61 @@ export default defineComponent({
     }, {
       immediate: true
     })
+
+    function switchLoginType(type) {
+      if (type === 0) {
+        getLoginQRCode();
+      } else {
+        if (timerId) {
+          clearInterval(timerId);
+        }
+      }
+      loginType.value = type
+    }
+
+    /**
+     * 获取验证码
+     * @returns {Promise<void>}
+     */
+    async function startCountdown() {
+      if (isCode.value) {
+
+        if (!emailForm.value.email) {
+          ElMessage.warning('验证邮箱不能为空')
+          return
+        }
+        isCode.value = false
+        let seconds = 120
+        try {
+          buttonText.value='正在发送中'
+          await getEmailCode(emailForm.value.email);
+          ElMessage.info('验证码发送成功')
+          disabled.value = true
+
+        } catch (e) {
+          ElNotification({
+            title: '错误',
+            message: e,
+            type: 'error',
+          })
+          buttonText.value = '重新获取验证码'
+          isCode.value = true
+          return
+        }
+        countdown.value = setInterval(() => {
+          if (seconds === 0) {
+            clearInterval(countdown.value)
+            countdown.value = null
+            disabled.value = false
+            buttonText.value = '重新获取验证码'
+            isCode.value = true
+          } else {
+            seconds--
+            buttonText.value = `${seconds}` + '后重新获取'
+          }
+        }, 1000)
+      }
+    }
 
 
     /**
@@ -120,11 +263,13 @@ export default defineComponent({
             } catch (e) {
               console.log(e)
             }
+            clearInterval(timerId);
             ElNotification({
               title: '登录成功',
               message: '欢迎使用TIME SEA PLUS',
               type: 'success',
             })
+            emit('loginSucceeded')
             location.reload();
             lock.value = false
           }
@@ -137,12 +282,100 @@ export default defineComponent({
 
     }
 
-
     function close() {
       emit('close')
     }
 
+    /**
+     * 邮箱登录
+     * @returns {Promise<void>}
+     */
+    async function emailLogin() {
+      if (loginLoading.value) {
+        return
+      }
+      let value = emailForm.value;
+      if (!value.email) {
+        ElMessage.warning('登录邮箱不能为空')
+        return
+      }
+      if (!value.password) {
+        ElMessage.warning('登录邮箱不能为空')
+        return
+      }
+      loginLoading.value = true
+      try {
+        let promise = await EmailLogin(emailForm.value);
+        localStorage.setItem('token', promise);
+        try {
+          let res = await GetUserInfo()
+          store.commit("setUserinfo", res);
+          // eslint-disable-next-line no-empty
+        } catch (e) {
+          console.log(e)
+        }
+        dialogVisible.value = false
+        loginLoading.value = false
+        ElNotification({
+          title: '登录成功',
+          message: '快登录体验TIME SEA PLUS吧',
+          type: 'success',
+        })
+        loginLoading.value = false
+        isLogin.value = true
+        location.reload();
+      } catch (e) {
+        ElMessage.error(e)
+        loginLoading.value = false
+      }
+    }
+
+    async function register() {
+      try {
+        if (!emailForm.value.email) {
+          ElMessage.warning('注册邮箱不能为空')
+          return
+        }
+        if (!emailForm.value.password) {
+          ElMessage.warning('登陆密码不能为空')
+          return
+        }
+        if (!emailForm.value.code) {
+          ElMessage.warning('验证码不能为空')
+          return
+        }
+        loginLoading.value = true
+        await EmailEnroll(emailForm.value)
+        ElNotification({
+          title: '注册成功',
+          message: '快登录体验Ai吧',
+          type: 'success',
+        })
+        loginLoading.value = false
+        isLogin.value = true
+      } catch (e) {
+        loginLoading.value = false
+        ElNotification({
+          title: '错误',
+          message: e,
+          type: 'error',
+        })
+      }
+    }
+
+    function onSubmit() {
+      if (isLogin.value) {
+        emailLogin()
+      } else {
+        register()
+      }
+    }
+
     return {
+      onSubmit,
+      startCountdown,
+      buttonText,
+      countdown,
       qrCode,
       qrCodeLoaded,
       loginAnimation,
@@ -152,7 +385,11 @@ export default defineComponent({
       close,
       isLogin,
       getLoginQRCode,
-      isFailure
+      isFailure,
+      loginType,
+      switchLoginType,
+      emailForm,
+      disabled
     }
   }
 });
@@ -191,7 +428,7 @@ export default defineComponent({
   overflow: hidden;
   width: 100%;
   padding: 0;
-  background-color: rgb(27, 30, 32)
+  background-color: rgb(29, 32, 34);
 }
 
 .cover-div {
@@ -220,7 +457,7 @@ export default defineComponent({
 }
 
 .head_img {
-  background-image: linear-gradient(to top, rgb(27, 30, 32) 30%, transparent 100%), url("../assets/login-header.png");
+  background-image: linear-gradient(to top, rgb(29, 32, 34) 30%, transparent 100%), url("../assets/login-header.png");
   background-size: cover;
   background-position: center;
   height: 100px;
@@ -242,14 +479,14 @@ export default defineComponent({
   letter-spacing: 2px;
   font-weight: 300;
   margin-top: 15px;
-  --el-button-bg-color: #686efe;
+  --el-button-bg-color: rgb(129,102,231);
   border: none;
 }
 
 .submit-button:hover,
 .submit-button:focus,
 .submit-button:active {
-  background-color: #7d80ff;
+  background-color: rgb(83, 67, 146);
   outline: 0;
 }
 
@@ -334,9 +571,23 @@ export default defineComponent({
 
 .login-title {
   text-align: center;
-  font-weight: 550;
+  font-size: 15px;
+  font-weight: 500;
   padding-bottom: 10px;
-  color: #bababa;
+  color: #b3b3b3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.login-selected {
+  color: white;
+  font-weight: 550;
+}
+
+.login-title div {
+  margin: 0 20px;
 }
 
 .qc_code {
@@ -361,4 +612,20 @@ export default defineComponent({
   padding-bottom: 50px
 }
 
+/deep/ .el-input__inner {
+
+  background: #0D0F10;
+
+  font-weight: 400;
+  color: #b7b7b7;
+}
+
+/deep/ .el-input__wrapper {
+  background: #0D0F10;
+  box-shadow: none;
+}
+
+/deep/ .el-input-group__append, .el-input-group__prepend {
+  border: none !important;
+}
 </style>

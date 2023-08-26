@@ -17,12 +17,11 @@
 </template>
 
 <script>
-	import popup from '../uni-popup/popup.js'
-	import {
-	initVueI18n
-	} from '@dcloudio/uni-i18n'
-	import messages from '../uni-popup/i18n/index.js'
-	const {	t	} = initVueI18n(messages)
+import popup from '../uni-popup/popup.js'
+import {initVueI18n} from '@dcloudio/uni-i18n'
+import messages from '../uni-popup/i18n/index.js'
+
+const {	t	} = initVueI18n(messages)
 	export default {
 		name: 'UniPopupShare',
 		mixins:[popup],

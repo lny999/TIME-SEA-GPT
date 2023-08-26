@@ -24,11 +24,12 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanIcon from '../icon/index.vue'
+import {VantComponent} from '../common/component';
+import {getRect, getSystemInfoSync} from '../common/utils';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/nav-bar/index'
-import { VantComponent } from '../common/component';
-import { getRect, getSystemInfoSync } from '../common/utils';
 VantComponent({
     classes: ['title-class'],
     props: {

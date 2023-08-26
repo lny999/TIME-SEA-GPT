@@ -20,7 +20,8 @@
 <script>
 
 global['__wxRoute'] = 'vant/calendar/components/header/index'
-import { VantComponent } from '../../../common/component';
+import {VantComponent} from '../../../common/component';
+
 VantComponent({
     props: {
         title: {

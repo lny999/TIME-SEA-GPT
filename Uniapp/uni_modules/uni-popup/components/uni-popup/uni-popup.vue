@@ -17,9 +17,9 @@
 </template>
 
 <script>
-	// #ifdef H5
-	import keypress from './keypress.js'
-	// #endif
+// #ifdef H5
+import keypress from './keypress.js'
+// #endif
 
 	/**
 	 * PopUp 弹出层

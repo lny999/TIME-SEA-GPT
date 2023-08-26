@@ -3,6 +3,7 @@ package com.cn.bdth.api;
 import com.cn.bdth.dto.PutExchangeDto;
 import com.cn.bdth.dto.ServerConfigDto;
 import com.cn.bdth.dto.ShelvesProductDto;
+import com.cn.bdth.dto.TerminalConfigDto;
 import com.cn.bdth.dto.admin.AnnouncementDto;
 import com.cn.bdth.dto.admin.UserPutDto;
 import com.cn.bdth.msg.Result;
@@ -72,6 +73,30 @@ public class AdminController {
         return Result.data(serverService.getDisposition());
     }
 
+
+    /**
+     * 更新终端
+     *
+     * @param dto the dto
+     * @return the bot configuration
+     */
+    @PostMapping(value = "/server/put/terminal", name = "用于保存或更新终端参数", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Result putTerminalConfig(@RequestBody @Validated final TerminalConfigDto dto) {
+        serverService.putTerminal(dto);
+        return Result.ok();
+    }
+
+    /**
+     * 获取终端
+     *
+     * @return the bot configuration
+     */
+    @GetMapping(value = "/server/get/terminal", name = "获取服务器配置", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Result getTerminalConfig() {
+        return Result.data(serverService.getTerminal());
+    }
+
+
     /**
      * 分页获取用户信息
      *
@@ -81,8 +106,19 @@ public class AdminController {
      */
     @GetMapping(value = "/user/get/page", name = "分页获取用户信息", produces = MediaType.APPLICATION_JSON_VALUE)
     public Result getUserPages(@RequestParam(defaultValue = "1") final int pageNum, final String prompt) {
+
         return Result.data(
                 userService.getUserPageVo(pageNum, prompt)
+        );
+    }
+
+    /**
+     * 获取平台总人数
+     */
+    @GetMapping(value = "/user/get/count", name = "获取平台总人数", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Result getPlatformCount() {
+        return Result.data(
+                userService.getTotalUsers()
         );
     }
 
@@ -137,7 +173,6 @@ public class AdminController {
     }
 
 
-
     /**
      * 修改用户信息
      *
@@ -159,6 +194,7 @@ public class AdminController {
      */
     @GetMapping(value = "/exchange/get/page", name = "兑换码列表", produces = MediaType.APPLICATION_JSON_VALUE)
     public Result redemptionCodePage(@RequestParam(defaultValue = "1") int pageNum, @RequestParam final String prompt) {
+
         return Result.data(serverService.getRedemptionCodePage(pageNum, prompt));
     }
 

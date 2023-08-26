@@ -38,6 +38,13 @@ public interface UserService {
     UserInfoVo getCurrentUserInfo();
 
 
+
+    /**
+     * 绑定邮箱
+     */
+    void wechatBindEmail(final String email, final String password);
+
+
     /**
      * 获取用户数据分页 （可搜索）
      *
@@ -54,7 +61,9 @@ public interface UserService {
      */
     void updateById(final UserPutDto dto);
 
-
-
+    /**
+     * 获取平台总人数
+     */
+    Long getTotalUsers();
 
 }

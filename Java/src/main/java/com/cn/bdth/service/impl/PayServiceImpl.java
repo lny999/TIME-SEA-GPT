@@ -133,7 +133,7 @@ public class PayServiceImpl implements PayService {
      */
     private OrderPageVo getOrdersPage(final Long userId, final String prompt, final String state, final int pageNum) {
         final OrderPageVo orderPageVo = new OrderPageVo();
-        final IPage<OrderPageVo.Orders> convert = ordersMapper.selectPage(new Page<>(pageNum, 5), new QueryWrapper<Orders>()
+        final IPage<OrderPageVo.Orders> convert = ordersMapper.selectPage(new Page<>(pageNum, 15), new QueryWrapper<Orders>()
                 .lambda()
                 .eq(userId != null, Orders::getUserId, userId)
                 .eq(StringUtils.notEmpty(state), Orders::getState, state)
@@ -195,14 +195,12 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public IPage<ProductVo> getProductPageVo(int pageNum, String prompt) {
-        return productMapper.selectPage(new Page<>(pageNum, 5), new QueryWrapper<Product>()
+        return productMapper.selectPage(new Page<>(pageNum, 15), new QueryWrapper<Product>()
                         .lambda()
                         .like(StringUtils.notEmpty(prompt), Product::getProductName, prompt)
-                        .select(Product::getProductId, Product::getProductName, Product::getProductPrice, Product::getFrequency)
+                        .select(Product::getProductId, Product::getProductName, Product::getProductPrice, Product::getFrequency, Product::getCreatedTime)
                 )
-                .convert(c -> {
-                    return new ProductVo().setProductId(c.getProductId()).setProductName(c.getProductName()).setProductPrice(c.getProductPrice()).setFrequency(c.getFrequency());
-                });
+                .convert(c -> new ProductVo().setProductId(c.getProductId()).setProductName(c.getProductName()).setProductPrice(c.getProductPrice()).setFrequency(c.getFrequency()).setCreatedTime(c.getCreatedTime()));
     }
 
     /**

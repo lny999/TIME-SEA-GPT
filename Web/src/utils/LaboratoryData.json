@@ -1,5 +1,4 @@
 [
-
   {
     "icon": "bing.svg",
     "title": "New Bing",
@@ -15,10 +14,10 @@
     "icon": "claude.svg",
     "title": "Claude",
     "introduce": "Anthropic开发的大语言Ai模型Claude 2",
-    "botInitialization": "你好! 我是必应, 请问有什么需要帮助的吗?",
+    "botInitialization": "你好! 我是Claude 2, 请问有什么需要帮助的吗?",
     "label": [
       "记忆回溯",
-      "消耗次数",
+      "Ai模型",
       "智能"
     ],
     "path": "/claude_view"

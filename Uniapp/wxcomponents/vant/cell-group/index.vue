@@ -10,7 +10,8 @@
 <script>
 
 global['__wxRoute'] = 'vant/cell-group/index'
-import { VantComponent } from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
     props: {
         title: String,

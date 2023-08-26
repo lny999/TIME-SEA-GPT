@@ -46,11 +46,12 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs>
 <script>
 import VanTag from '../tag/index.vue'
+import {link} from '../mixins/link';
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-tag': VanTag}}
 
 global['__wxRoute'] = 'vant/card/index'
-import { link } from '../mixins/link';
-import { VantComponent } from '../common/component';
 VantComponent({
     classes: [
         'num-class',

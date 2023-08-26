@@ -2,13 +2,13 @@
 <uni-shadow-root class="vant-toast-index"><van-overlay v-if="mask || forbidClick" :show="show" :z-index="zIndex" :custom-style="mask ? '' : 'background-color: transparent;'"></van-overlay>
 <van-transition :show="show" :custom-style="'z-index: '+(zIndex)" custom-class="van-toast__container">
   <view :class="'van-toast van-toast--'+((type === 'text' || type === 'html') ? 'text' : 'icon')+' van-toast--'+(position)" @touchmove.stop.prevent="noop">
-    
+
     <text v-if="type === 'text'">{{ message }}</text>
 
-    
+
     <rich-text v-else-if="type === 'html'" :nodes="message"></rich-text>
 
-    
+
     <block v-else>
       <van-loading v-if="type === 'loading'" color="white" :type="loadingType" custom-class="van-toast__loading"></van-loading>
       <van-icon v-else class="van-toast__icon" :name="type"></van-icon>
@@ -25,10 +25,11 @@ import VanIcon from '../icon/index.vue'
 import VanLoading from '../loading/index.vue'
 import VanOverlay from '../overlay/index.vue'
 import VanTransition from '../transition/index.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-loading': VanLoading,'van-overlay': VanOverlay,'van-transition': VanTransition}}
 
 global['__wxRoute'] = 'vant/toast/index'
-import { VantComponent } from '../common/component';
 VantComponent({
     props: {
         show: Boolean,

@@ -141,4 +141,24 @@ body {
   padding: 0 !important;
 }
 
+.el-switch__core{
+  background: #393939 !important;
+}
+.el-input-group__append{
+  box-shadow: none !important;
+}
+.el-input-group__append{
+  background: none !important;
+}
+
+.el-pagination .btn-prev,
+.el-pagination .btn-next {
+  background-color: rgb(35,40,42) !important;
+}
+
+.el-pagination .el-pager li:not(.active) {
+  background-color: rgb(35,40,42) !important;
+  color: darkgray !important;
+}
+
 </style>

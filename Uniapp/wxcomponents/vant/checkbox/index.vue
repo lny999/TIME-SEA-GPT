@@ -15,11 +15,13 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanIcon from '../icon/index.vue'
+import {useParent} from '../common/relation';
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/checkbox/index'
-import { useParent } from '../common/relation';
-import { VantComponent } from '../common/component';
+
 function emit(target, value) {
     target.$emit('input', value);
     target.$emit('change', value);

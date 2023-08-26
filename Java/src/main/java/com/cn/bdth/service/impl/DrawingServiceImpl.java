@@ -276,7 +276,7 @@ public class DrawingServiceImpl implements DrawingService {
                 .isNotNull(Drawing::getGenerateUrl)
                 .select(Drawing::getPrompt, Drawing::getGenerateUrl, Drawing::getDrawingId, Drawing::getCreatedTime);
 
-        return drawingMapper.selectPage(new Page<>(pageNum, 8), lambdaQueryWrapper).convert(c -> new DrawingOpsVo()
+        return drawingMapper.selectPage(new Page<>(pageNum, 15), lambdaQueryWrapper).convert(c -> new DrawingOpsVo()
                 .setImage(c.getGenerateUrl())
                 .setValue(new DrawingOpsVo.ImageInfo()
                         .setDrawingId(c.getDrawingId())
@@ -288,9 +288,10 @@ public class DrawingServiceImpl implements DrawingService {
 
     @Override
     public IPage<DrawingVo> getDrawingPage(final int pageNum) {
-        return drawingMapper.selectPage(new Page<>(pageNum, 8), new QueryWrapper<Drawing>()
+        return drawingMapper.selectPage(new Page<>(pageNum, 15), new QueryWrapper<Drawing>()
                 .lambda()
                 .select(Drawing::getDrawingId, Drawing::getGenerateUrl, Drawing::getIsPublic)
+                .orderByDesc(Drawing::getCreatedTime)
         ).convert(c -> new DrawingVo().setDrawingId(c.getDrawingId()).setGenerateUrl(c.getGenerateUrl()).setIsPublic(c.getIsPublic()));
     }
 
@@ -300,6 +301,7 @@ public class DrawingServiceImpl implements DrawingService {
                 .lambda()
                 .eq(Drawing::getDrawingId, drawingId)
                 .select(Drawing::getIsPublic, Drawing::getDrawingId)
+                .orderByDesc(Drawing::getCreatedTime)
         );
         drawingMapper.updateById(drawing.setIsPublic((drawing.getIsPublic() == 1L ? 0 : 1L)));
     }
@@ -320,11 +322,12 @@ public class DrawingServiceImpl implements DrawingService {
 
     @Override
     public IPage<UserDrawingVo> getUserDrawingOpsPage(final int pageNum) {
-        return drawingMapper.selectPage(new Page<>(pageNum, 8), new QueryWrapper<Drawing>()
+        return drawingMapper.selectPage(new Page<>(pageNum, 15), new QueryWrapper<Drawing>()
                 .lambda()
                 .isNotNull(Drawing::getGenerateUrl)
                 .eq(Drawing::getUserId, UserUtils.getCurrentLoginId())
                 .select(Drawing::getDrawingId, Drawing::getGenerateUrl)
+                .orderByDesc(Drawing::getCreatedTime)
         ).convert(c -> new UserDrawingVo().setDrawingId(c.getDrawingId()).setGenerateUrl(c.getGenerateUrl()));
     }
 

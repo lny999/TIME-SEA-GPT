@@ -9,11 +9,12 @@
 <script>
 import VanIcon from '../icon/index.vue'
 import VanOverlay from '../overlay/index.vue'
+import {VantComponent} from '../common/component';
+import {transition} from '../mixins/transition';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-overlay': VanOverlay}}
 
 global['__wxRoute'] = 'vant/popup/index'
-import { VantComponent } from '../common/component';
-import { transition } from '../mixins/transition';
 VantComponent({
     classes: [
         'enter-class',

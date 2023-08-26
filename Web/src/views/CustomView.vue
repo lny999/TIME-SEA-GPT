@@ -135,7 +135,7 @@ export default {
       imageUrl.value = process.env.VUE_APP_IMAGE;
 
       let item = localStorage.getItem("roleData");
-      console.log(item)
+
       data.value = JSON.parse(item);
 
       const {question, answer} = data.value.content[0];

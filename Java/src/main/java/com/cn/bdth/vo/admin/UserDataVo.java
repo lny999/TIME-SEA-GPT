@@ -25,4 +25,6 @@ public class UserDataVo {
 
     private String lastOperationTime;
 
+    private String email;
+
 }

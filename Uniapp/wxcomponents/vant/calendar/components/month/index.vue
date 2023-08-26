@@ -33,8 +33,9 @@
 <script>
 
 global['__wxRoute'] = 'vant/calendar/components/month/index'
-import { VantComponent } from '../../../common/component';
-import { getMonthEndDay, compareDay, getPrevDay, getNextDay, } from '../../utils';
+import {VantComponent} from '../../../common/component';
+import {compareDay, getMonthEndDay, getNextDay, getPrevDay,} from '../../utils';
+
 VantComponent({
     props: {
         date: {

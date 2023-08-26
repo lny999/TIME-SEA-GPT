@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import {addProduct, buildExchangeCode, deleteExchangeCodeById, deleteProduct, getProductPages} from "@/api/admin";
+import {addProduct, deleteProduct, getProductPages} from "@/api/admin";
 import {conversionTime} from "@/utils/date";
 import EmptyComponent from "@/wxcomponents/components/emptyComponent.vue";
 import LoadingDataComponent from "@/pages/layout/view/components/loadingDataComponent.vue";

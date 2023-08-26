@@ -51,4 +51,12 @@ public class PublicController {
         return payService.alipayPullback(request);
     }
 
+    /**
+     * 获取小程序状态
+     */
+    @GetMapping(value = "/get/wechat/status", name = "获取小程序状态", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Result getWechatAppStatus() {
+        return Result.data(serverService.wechatStatus());
+    }
+
 }

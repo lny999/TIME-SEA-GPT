@@ -1,5 +1,7 @@
 package com.cn.bdth.service;
 
+import com.cn.bdth.dto.EmailEnrollDto;
+import com.cn.bdth.dto.EmailLoginDto;
 import com.cn.bdth.vo.WechatCodeVo;
 
 /**
@@ -9,6 +11,25 @@ import com.cn.bdth.vo.WechatCodeVo;
  * @version 1.0
  */
 public interface AuthService {
+
+
+    /**
+     * 邮箱注册
+     */
+    void emailEnroll(final EmailEnrollDto dto);
+
+
+    /**
+     * 获取邮箱二维码
+     */
+    void getEmailEnrollCode(final String email);
+
+    /**
+     * 邮箱登录
+     */
+    String emailLogin(final EmailLoginDto dto);
+
+
 
     /**
      * 微信授权登录

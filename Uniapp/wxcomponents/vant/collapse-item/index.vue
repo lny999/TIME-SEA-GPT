@@ -16,12 +16,13 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs>
 <script>
 import VanCell from '../cell/index.vue'
+import {VantComponent} from '../common/component';
+import {useParent} from '../common/relation';
+import {setContentAnimate} from './animate';
+
 global['__wxVueOptions'] = {components:{'van-cell': VanCell}}
 
 global['__wxRoute'] = 'vant/collapse-item/index'
-import { VantComponent } from '../common/component';
-import { useParent } from '../common/relation';
-import { setContentAnimate } from './animate';
 VantComponent({
     classes: ['title-class', 'content-class'],
     relation: useParent('collapse'),

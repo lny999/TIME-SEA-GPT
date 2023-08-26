@@ -37,6 +37,7 @@
             </div>
             <template #dropdown>
               <el-dropdown-menu class="dropdown-menu">
+                <el-dropdown-item @click="router().push({ path: '/Admin' })" v-if="store.getters.userinfo.type==='ADMIN'">控制台</el-dropdown-item>
                 <el-dropdown-item @click="router().push({ path: '/Orders' })">打赏记录</el-dropdown-item>
                 <el-dropdown-item @click="router().push({ path: '/Exchange' })">兑换中心</el-dropdown-item>
                 <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
@@ -335,7 +336,7 @@ export default defineComponent({
 .applet {
 	width: 120px;
 	margin-left: 10px;
-	background-color: #686efe;
+	background-color: rgb(129,102,231);
 }
 
 .applet>.rechargeButtonText {
@@ -363,7 +364,7 @@ export default defineComponent({
 .login {
 	width: 72px;
 	height: 34px;
-	background: #686efe;
+	background: rgb(129,102,231);
 	border-radius: 6px;
 	padding: 0;
 	font-size: 14px;

@@ -7,8 +7,9 @@
 <script>
 
 global['__wxRoute'] = 'vant/radio-group/index'
-import { VantComponent } from '../common/component';
-import { useChildren } from '../common/relation';
+import {VantComponent} from '../common/component';
+import {useChildren} from '../common/relation';
+
 VantComponent({
     field: true,
     relation: useChildren('radio'),

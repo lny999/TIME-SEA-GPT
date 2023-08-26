@@ -11,3 +11,13 @@ export function getAnnouncementData() {
     })
 }
 
+
+/**
+ *    获取状态
+ */
+export function getWechatAppStatus() {
+    return request({
+        url: '/public/get/wechat/status',
+        method: 'GET'
+    })
+}

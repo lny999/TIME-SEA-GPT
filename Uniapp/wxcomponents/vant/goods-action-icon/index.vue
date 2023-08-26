@@ -9,12 +9,13 @@
 <script>
 import VanIcon from '../icon/index.vue'
 import VanButton from '../button/index.vue'
+import {VantComponent} from '../common/component';
+import {button} from '../mixins/button';
+import {link} from '../mixins/link';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-button': VanButton}}
 
 global['__wxRoute'] = 'vant/goods-action-icon/index'
-import { VantComponent } from '../common/component';
-import { button } from '../mixins/button';
-import { link } from '../mixins/link';
 VantComponent({
     classes: ['icon-class', 'text-class'],
     mixins: [link, button],

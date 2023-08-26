@@ -16,11 +16,12 @@
 <script>
 import VanIcon from '../icon/index.vue'
 import VanLoading from '../loading/index.vue'
+import {VantComponent} from '../common/component';
+import {button} from '../mixins/button';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-loading': VanLoading}}
 
 global['__wxRoute'] = 'vant/image/index'
-import { VantComponent } from '../common/component';
-import { button } from '../mixins/button';
 VantComponent({
     mixins: [button],
     classes: ['custom-class', 'loading-class', 'error-class', 'image-class'],

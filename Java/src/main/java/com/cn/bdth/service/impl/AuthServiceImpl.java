@@ -1,23 +1,35 @@
 package com.cn.bdth.service.impl;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cn.bdth.common.FunCommon;
 import com.cn.bdth.constants.WeChatConstant;
 import com.cn.bdth.constants.user.AuthConstant;
+import com.cn.bdth.dto.EmailEnrollDto;
+import com.cn.bdth.dto.EmailLoginDto;
 import com.cn.bdth.entity.User;
 import com.cn.bdth.exceptions.ExceptionMessages;
+import com.cn.bdth.exceptions.LoginPasswordException;
+import com.cn.bdth.exceptions.RegistrationException;
 import com.cn.bdth.exceptions.WechatException;
 import com.cn.bdth.mapper.UserMapper;
 import com.cn.bdth.service.AuthService;
 import com.cn.bdth.utils.RedisUtils;
 import com.cn.bdth.utils.WeChatUtils;
 import com.cn.bdth.vo.WechatCodeVo;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-import java.util.Set;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -28,18 +40,87 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("all")
 public class AuthServiceImpl implements AuthService {
 
     private final UserMapper userMapper;
 
     private final WeChatUtils weChatUtils;
 
-    @Value("#{'${admin}'.split(',')}")
-    private Set<String> administrators;
-
     private final FunCommon funCommon;
 
     private final RedisUtils redisUtils;
+
+    private final JavaMailSender mailSender;
+
+    private final TemplateEngine templateEngine;
+    private final static String SALT = "HuJiaXin";
+
+    @Value(value = "${spring.mail.username}")
+    private String username;
+
+
+    @Override
+    public void emailEnroll(final EmailEnrollDto dto) {
+
+        final String code = dto.getCode();
+        final Object value = redisUtils.getValue(AuthConstant.EMAIL_CODE + dto.getEmail());
+        if (value != null && value.equals(code)) {
+            final User user = userMapper.selectOne(new QueryWrapper<User>()
+                    .lambda().eq(User::getEmail, dto.getEmail())
+                    .select(User::getUserId));
+            if (user != null) {
+                throw new RegistrationException(ExceptionMessages.ACCOUNT_ALREADY_EXISTS_ERR);
+            }
+            userMapper.insert(new User()
+                    .setEmail(dto.getEmail())
+                    .setPassword(SaSecureUtil.md5BySalt(dto.getPassword(), SALT))
+                    .setFrequency(funCommon.getServer().getIncentiveFrequency()));
+        } else {
+            throw new RegistrationException(ExceptionMessages.CODE_ERR);
+        }
+
+    }
+
+    @Override
+    public void getEmailEnrollCode(final String email) {
+        final String code = RandomStringUtils.random(6, true, true).toUpperCase();
+        Context context = new Context();
+        context.setVariable("code", code);
+        String process = templateEngine.process("emailCode.html", context);
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setSubject("TIME SEA PLUS GPT注册验证码");
+            helper.setFrom(username);
+            helper.setTo(email);
+            helper.setSentDate(new Date());
+            helper.setText(process, true);
+            redisUtils.setValueTimeout(AuthConstant.EMAIL_CODE + email, code, 300);
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RegistrationException(ExceptionMessages.VERIFICATION_CODE_ERR, 500);
+        }
+    }
+
+    @Override
+    public String emailLogin(final EmailLoginDto dto) {
+        final User user = userMapper.selectOne(new QueryWrapper<User>()
+                .lambda()
+                .eq(User::getEmail, dto.getEmail())
+                .eq(User::getPassword, SaSecureUtil.md5BySalt(dto.getPassword(), SALT))
+                .select(User::getType, User::getUserId)
+
+        );
+        if (user == null) {
+            throw new LoginPasswordException(ExceptionMessages.EMAIL_LOGIN_PWD_ERR);
+        }
+        StpUtil.login(user.getUserId());
+        //设置具体TOKEN Session权限
+        StpUtil.getSession()
+                .set(AuthConstant.ROLE, user.getType());
+        return StpUtil.getTokenValue();
+    }
 
     /**
      * 微信授权登录
@@ -55,7 +136,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userMapper.selectOne(new QueryWrapper<User>()
                 .lambda()
                 .eq(User::getOpenId, openId)
-                .select(User::getUserId, User::getOpenId)
+                .select(User::getUserId, User::getOpenId, User::getType)
         );
         //不存在则写入DB
         if (user == null) {
@@ -65,12 +146,10 @@ public class AuthServiceImpl implements AuthService {
                     .setOpenId(openId);
             userMapper.insert(user);
         }
-        //匹配是否为管理员用户
-        boolean isAdmin = administrators.contains(user.getOpenId());
         StpUtil.login(user.getUserId());
         //设置具体TOKEN Session权限
         StpUtil.getSession()
-                .set(AuthConstant.ROLE, isAdmin ? AuthConstant.ADMIN : AuthConstant.USER)
+                .set(AuthConstant.ROLE, user.getType())
                 .set(AuthConstant.OPEN_ID, user.getOpenId());
         // 返回TOKEN
         return StpUtil.getTokenValue();

@@ -28,14 +28,11 @@ public class ServerConfigDto {
     @NotBlank(message = "MJ_URL不能为空")
     private String mjUrl;
 
-
     /**
      * SD绘图URL
      */
     @NotBlank(message = "OPEN_AI_URL不能为空")
     private String openAiUrl;
-
-
     /**
      * OpenKey
      */

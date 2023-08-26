@@ -4,12 +4,13 @@
 <wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanPicker from '../picker/index.vue'
+import {VantComponent} from '../common/component';
+import {pickerProps} from '../picker/shared';
+import {requestAnimationFrame} from '../common/utils';
+
 global['__wxVueOptions'] = {components:{'van-picker': VanPicker}}
 
 global['__wxRoute'] = 'vant/area/index'
-import { VantComponent } from '../common/component';
-import { pickerProps } from '../picker/shared';
-import { requestAnimationFrame } from '../common/utils';
 const EMPTY_CODE = '000000';
 VantComponent({
     classes: ['active-class', 'toolbar-class', 'column-class'],

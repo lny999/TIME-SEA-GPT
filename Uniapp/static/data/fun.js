@@ -9,12 +9,6 @@ export default {
             path: '/pages/dialogue/gptDialogueView',
             introduce: '根据您的需求提供个性化的建议和回答'
         },
-        // {
-        //     icon: '/static/assets/blend.svg',
-        //     title: 'Nerve',
-        //     path: '/pages/dialogue/bitoDialogueView',
-        //     introduce: '免费使用 无需消耗Ai币(小概率回复失败)'
-        // },
         {
             icon: '/static/assets/code.svg',
             title: 'SD Visualize',

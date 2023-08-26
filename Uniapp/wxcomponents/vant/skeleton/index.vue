@@ -16,9 +16,8 @@
 global['__wxVueOptions'] = {components:{}}
 
 global['__wxRoute'] = 'vant/skeleton/index'
-import {
-	VantComponent
-} from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
 	classes: ['avatar-class', 'title-class', 'row-class'],
 	props: {

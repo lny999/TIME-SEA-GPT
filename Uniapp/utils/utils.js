@@ -9,7 +9,11 @@ const AnnouncementKey = 'announcement';
 const historyKey = 'history'
 
 
+const nerveKey = 'nerve'
 
+const bingKey = 'bing'
+
+const claudeKey = 'claude'
 
 //获取token缓存
 export function getToken() {
@@ -86,4 +90,50 @@ export function setHistory(data) {
 //移除历史
 export function removeHistory() {
     return uni.removeStorageSync(historyKey)
+}
+
+
+//设置历史
+export function getNerve(data) {
+    return uni.getStorageSync(nerveKey)
+}
+
+//设置历史
+export function setNerve(data) {
+    return uni.setStorageSync(nerveKey, data)
+}
+
+//移除历史
+export function removeNerve() {
+    return uni.removeStorageSync(nerveKey)
+}
+
+
+//设置历史
+export function getBing(data) {
+    return uni.getStorageSync(bingKey)
+}
+
+//设置历史
+export function setBing(data) {
+    return uni.setStorageSync(bingKey, data)
+}
+
+//移除历史
+export function removeBing() {
+    return uni.removeStorageSync(bingKey)
+}
+
+export function getClaude(data) {
+    return uni.getStorageSync(claudeKey)
+}
+
+//设置历史
+export function setClaude(data) {
+    return uni.setStorageSync(claudeKey, data)
+}
+
+//移除历史
+export function removeClaude() {
+    return uni.removeStorageSync(claudeKey)
 }

@@ -9,8 +9,9 @@
 </template>
 
 <script>
-	import popup from '../uni-popup/popup.js'
-	/**
+import popup from '../uni-popup/popup.js'
+
+/**
 	 * PopUp 弹出层-消息提示
 	 * @description 弹出层-消息提示
 	 * @tutorial https://ext.dcloud.net.cn/plugin?id=329
@@ -63,7 +64,7 @@
 		methods: {
 			timerClose(){
 				if(this.duration === 0) return
-				clearTimeout(this.timer) 
+				clearTimeout(this.timer)
 				this.timer = setTimeout(()=>{
 					this.popup.close()
 				},this.duration)

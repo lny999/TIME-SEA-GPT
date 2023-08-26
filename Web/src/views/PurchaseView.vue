@@ -55,7 +55,7 @@
         <template #footer>
              <span>
                   <el-button @click="payVisible=false" color="#000000">不了, 谢谢</el-button>
-                  <el-button  @click="alipayPay" color="rgb(125,128,255)" style="color: white">跳转至收银台</el-button>
+                  <el-button @click="alipayPay" color="rgb(125,128,255)" style="color: white">跳转至收银台</el-button>
               </span>
         </template>
       </el-dialog>
@@ -160,7 +160,7 @@ export default {
         //3秒检查一下订单是否支付成功
         let timerId = setInterval(async function () {
           let res = await alipayIsSucceed(outcome.value.ordersId);
-          console.log(res)
+
           if (res === "PAID") {
             ElNotification({
               title: '成功',
@@ -193,7 +193,9 @@ export default {
     }
 
     onMounted(() => {
-      init()
+      if (store.getters.userinfo) {
+        init()
+      }
     });
     return {
       load,
@@ -305,7 +307,7 @@ export default {
 
 .item {
   text-align: center;
-  background-color: rgb(27,30,32);
+  background-color: rgb(27, 30, 32);
   cursor: pointer;
   width: 100%;
   height: 400px;

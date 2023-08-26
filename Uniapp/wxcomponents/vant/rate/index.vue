@@ -10,12 +10,13 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="../wxs/style.wxs" module="style"></wxs>
 <script>
 import VanIcon from '../icon/index.vue'
+import {getAllRect} from '../common/utils';
+import {VantComponent} from '../common/component';
+import {canIUseModel} from '../common/version';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/rate/index'
-import { getAllRect } from '../common/utils';
-import { VantComponent } from '../common/component';
-import { canIUseModel } from '../common/version';
 VantComponent({
     field: true,
     classes: ['icon-class'],

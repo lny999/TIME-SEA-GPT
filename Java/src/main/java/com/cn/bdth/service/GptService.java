@@ -19,6 +19,7 @@ public interface GptService {
      */
     Flux<String> concatenationGpt(final GptModel model, final boolean isAdvanced);
 
+
     /**
      * NewBing
      *

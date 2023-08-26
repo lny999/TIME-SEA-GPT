@@ -32,6 +32,12 @@ public class User {
      */
     private String userName;
 
+    private String email;
+
+    private String type;
+
+    private String password;
+
     /**
      * 用户头像
      */
@@ -46,7 +52,6 @@ public class User {
      * 是否签到
      */
     private Long isSignIn;
-
 
 
     /**

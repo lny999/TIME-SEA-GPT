@@ -1,10 +1,12 @@
 import App from './App'
 
 // #ifndef VUE3
-import Vue from 'vue'
+// #ifdef VUE3
+import Vue, {createSSRApp} from 'vue'
 import './uni.promisify.adaptor'
-Vue.config.productionTip = false
 import share from '@/wxcomponents/share/share.js'
+
+Vue.config.productionTip = false
 Vue.mixin(share)
 App.mpType = 'app'
 const app = new Vue({
@@ -12,9 +14,6 @@ const app = new Vue({
 })
 app.$mount()
 // #endif
-
-// #ifdef VUE3
-import { createSSRApp } from 'vue'
 export function createApp() {
   const app = createSSRApp(App)
   return {

@@ -17,15 +17,12 @@
 <script>
 import VanIcon from '../icon/index.vue'
 import VanInfo from '../info/index.vue'
+import {VantComponent} from '../common/component';
+import {useParent} from '../common/relation';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-info': VanInfo}}
 
 global['__wxRoute'] = 'vant/tabbar-item/index'
-import {
-	VantComponent
-} from '../common/component';
-import {
-	useParent
-} from '../common/relation';
 VantComponent({
 	props: {
 		info: null,

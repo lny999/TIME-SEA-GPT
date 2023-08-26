@@ -2,6 +2,159 @@ import request from '@/utils/BSideRequest'
 
 
 /**
+ *    获取终端数据
+ */
+export function GetTerminal() {
+    return request({
+        url: '/admin/server/get/terminal',
+        method: 'GET'
+    })
+}
+
+/**
+ *   更新终端数据
+ */
+export function PutTerminal(data) {
+    return request({
+        url: '/admin/server/put/terminal',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ *    获取分页用户数据
+ */
+export function GetUserPage(a, b) {
+    return request({
+        url: '/admin/user/get/page?pageNum=' + a + '&prompt=' + b,
+        method: 'GET'
+    })
+}
+
+/**
+ *    获取订单分页数据
+ */
+export function getOrdersPage(a, b) {
+    return request({
+        url: '/admin/orders/page?pageNum=' + a + '&prompt=' + b + '&status=',
+        method: 'GET'
+    })
+}
+
+/**
+ *   重载服务器配置
+ */
+export function GetServerConfig() {
+    return request({
+        url: '/admin/server/get/config',
+        method: 'GET'
+    })
+}
+
+
+/**
+ * Production exchange code
+ * @returns {*}
+ */
+export function AddRedemptionCode(data) {
+    return request({
+        url: '/admin/exchange/build',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ * Production exchange code
+ * @returns {*}
+ */
+export function DeleteRedemptionCode(data) {
+    return request({
+        url: '/admin/exchange/delete/' + data,
+        method: 'POST'
+    })
+}
+
+
+/**
+ *   分页获取兑换码
+ */
+export function GetRedemptionCodePage(a, b) {
+    return request({
+        url: '/admin/exchange/get/page?pageNum=' + a + '&prompt=' + b,
+        method: 'GET'
+    })
+}
+
+/**
+ * Production exchange code
+ * @returns {*}
+ */
+export function DeleteProduct(data) {
+    return request({
+        url: '/admin/product/delete/' + data,
+        method: 'POST'
+    })
+}
+
+/**
+ * Production exchange code
+ * @returns {*}
+ */
+export function AddProduct(data) {
+    return request({
+        url: '/admin/product/put/data',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ *   分页获取商品
+ */
+export function GetProductPage(a, b) {
+    return request({
+        url: '/admin/product/get/page?pageNum=' + a + '&prompt=' + b,
+        method: 'GET'
+    })
+}
+
+
+/**
+ *   重载服务器配置
+ */
+export function PutServerConfig(data) {
+    return request({
+        url: '/admin/server/put/config',
+        method: 'POST',
+        data
+    })
+}
+
+
+/**
+ *    修改用户Ai币
+ */
+export function UpdateUserInfo(data) {
+    return request({
+        url: '/admin/user/put/data',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ *    获取平台总人数
+ */
+export function GetUserCount() {
+    return request({
+        url: '/admin/user/get/count',
+        method: 'GET'
+    })
+}
+
+/**
  *    退出
  */
 export function Logout() {
@@ -18,6 +171,38 @@ export function getAnnouncement() {
     return request({
         url: '/public/get/announcement',
         method: 'GET'
+    })
+}
+
+/**
+ *    获取验证码
+ */
+export function getEmailCode(data) {
+    return request({
+        url: '/auth/email/code/' + data,
+        method: 'GET'
+    })
+}
+
+/**
+ *    注册
+ */
+export function EmailEnroll(data) {
+    return request({
+        url: '/auth/email/enroll',
+        method: 'POST',
+        data
+    })
+}
+
+/**
+ *   邮箱登录
+ */
+export function EmailLogin(data) {
+    return request({
+        url: '/auth/email/login',
+        method: 'POST',
+        data
     })
 }
 

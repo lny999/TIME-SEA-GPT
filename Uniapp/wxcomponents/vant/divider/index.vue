@@ -9,9 +9,8 @@
 global['__wxVueOptions'] = {components:{}}
 
 global['__wxRoute'] = 'vant/divider/index'
-import {
-	VantComponent
-} from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
 	props: {
 		dashed: Boolean,

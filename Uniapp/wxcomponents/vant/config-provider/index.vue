@@ -7,7 +7,8 @@
 <script>
 
 global['__wxRoute'] = 'vant/config-provider/index'
-import { VantComponent } from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
     props: {
         themeVars: {

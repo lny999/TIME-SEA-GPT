@@ -22,11 +22,12 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs module="status" src="./index-status.wxs"></wxs>
 <script>
 import VanIcon from '../icon/index.vue'
+import {VantComponent} from '../common/component';
+import {GRAY_DARK, GREEN} from '../common/color';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/steps/index'
-import { VantComponent } from '../common/component';
-import { GREEN, GRAY_DARK } from '../common/color';
 VantComponent({
     classes: ['desc-class'],
     props: {

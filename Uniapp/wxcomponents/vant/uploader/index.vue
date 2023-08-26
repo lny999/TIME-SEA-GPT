@@ -1,7 +1,7 @@
 <template>
 <uni-shadow-root class="vant-uploader-index"><view class="van-uploader">
   <view class="van-uploader__wrapper">
-    
+
     <view v-for="(item,index) in (lists)" :key="item.index" v-if="previewImage" class="van-uploader__preview" :data-index="index" @click="onClickPreview">
       <image v-if="item.isImage" :mode="imageFit" :src="item.thumb || item.url" :alt="item.name || ('图片' + index)" class="van-uploader__preview-image" :style="computed.sizeStyle({ previewSize })" :data-index="index" @click="onPreviewImage"></image>
       <video v-else-if="item.isVideo" :src="item.url" :title="item.name || ('视频' + index)" :poster="item.thumb" :autoplay="item.autoplay" class="van-uploader__preview-image" :style="computed.sizeStyle({ previewSize })" :data-index="index" @click="onPreviewVideo">
@@ -20,13 +20,13 @@
       </view>
     </view>
 
-    
+
     <block v-if="isInCount">
       <view class="van-uploader__slot" @click="startUpload">
         <slot></slot>
       </view>
 
-      
+
       <view v-if="showUpload" :class="'van-uploader__upload '+(disabled ? 'van-uploader__upload--disabled': '')" :style="computed.sizeStyle({ previewSize })" @click="startUpload">
         <van-icon :name="uploadIcon" class="van-uploader__upload-icon"></van-icon>
         <text v-if="uploadText" class="van-uploader__upload-text">{{ uploadText }}</text>
@@ -39,13 +39,14 @@
 <script>
 import VanIcon from '../icon/index.vue'
 import VanLoading from '../loading/index.vue'
+import {VantComponent} from '../common/component';
+import {chooseFile, isImageFile, isVideoFile} from './utils';
+import {chooseImageProps, chooseVideoProps} from './shared';
+import {isBoolean, isPromise} from '../common/validator';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-loading': VanLoading}}
 
 global['__wxRoute'] = 'vant/uploader/index'
-import { VantComponent } from '../common/component';
-import { isImageFile, chooseFile, isVideoFile } from './utils';
-import { chooseImageProps, chooseVideoProps } from './shared';
-import { isBoolean, isPromise } from '../common/validator';
 VantComponent({
     props: Object.assign(Object.assign({ disabled: Boolean, multiple: Boolean, uploadText: String, useBeforeRead: Boolean, afterRead: null, beforeRead: null, previewSize: {
             type: null,

@@ -7,12 +7,11 @@
 <wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanInfo from '../info/index.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-info': VanInfo}}
 
 global['__wxRoute'] = 'vant/icon/index'
-import {
-	VantComponent
-} from '../common/component';
 VantComponent({
 	props: {
 		dot: Boolean,

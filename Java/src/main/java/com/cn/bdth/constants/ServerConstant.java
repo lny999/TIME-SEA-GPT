@@ -7,7 +7,9 @@ package com.cn.bdth.constants;
  * @version 1.0
  */
 public interface ServerConstant {
-    String CONFIG = "SUPER_CONFIG";
+    String SERVER = "SERVER_CONFIG";
+
+    String TERMINAL = "TERMINAL_CONFIG";
 
     String ANNOUNCEMENT = "ANNOUNCEMENT";
     String DRAWING_SD_TASK_QUEUE = "DRAWING_SD_TASK_QUEUE";

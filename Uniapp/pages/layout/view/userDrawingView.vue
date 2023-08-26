@@ -23,7 +23,6 @@
 
 import EmptyComponent from "@/wxcomponents/components/emptyComponent.vue";
 import env from "@/utils/env";
-import {getDrawingPage, putDrawingStatus} from "@/api/admin";
 import LoadingDataComponent from "@/pages/layout/view/components/loadingDataComponent.vue";
 import {deleteDrawingById} from "@/api/drawing";
 import LoadingComponent from "@/wxcomponents/components/loadingComponent.vue";

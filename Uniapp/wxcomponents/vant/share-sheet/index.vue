@@ -29,10 +29,11 @@
 <script>
 import VanPopup from '../popup/index.vue'
 import Options from './options.vue'
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-popup': VanPopup,'options': Options}}
 
 global['__wxRoute'] = 'vant/share-sheet/index'
-import { VantComponent } from '../common/component';
 VantComponent({
     props: {
         // whether to show popup

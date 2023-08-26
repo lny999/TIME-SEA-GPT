@@ -28,11 +28,12 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs><wxs src="./index.wxs" module="computed"></wxs>
 <script>
 import VanIcon from '../icon/index.vue'
+import {link} from '../mixins/link';
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/cell/index'
-import { link } from '../mixins/link';
-import { VantComponent } from '../common/component';
 VantComponent({
     classes: [
         'title-class',

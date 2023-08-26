@@ -21,7 +21,7 @@
 				<el-avatar :size="40" :icon="UserFilled" :src="require('../assets/logoHead.svg')" />
 				<div class="bottomRight">
 					<div class="bottomRightName">TIME SEA PLUS</div>
-					<div class="bottomRightEdition">v1.2.9</div>
+					<div class="bottomRightEdition">v1.3.0</div>
 				</div>
 			</div>
 		</div>
@@ -196,7 +196,7 @@ export default defineComponent({
 .surplus {
 	box-sizing: border-box;
 	padding: 5px 10px;
-	background-color: #7d80ff;
+	background-color: #8065e5;
 	display: table;
 	margin: 20px auto 0;
 	font-size: 13px;
@@ -213,7 +213,7 @@ export default defineComponent({
 .loginBut {
 	width: 80px;
 	height: 40px;
-	background-color: #7d80ff;
+	background-color: rgb(129,102,231);
 	border-radius: 8px;
 	margin: 20px auto 0;
 	display: flex;

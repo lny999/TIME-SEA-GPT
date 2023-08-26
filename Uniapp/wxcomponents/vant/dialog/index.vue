@@ -35,13 +35,14 @@ import VanPopup from '../popup/index.vue'
 import VanButton from '../button/index.vue'
 import VanGoodsAction from '../goods-action/index.vue'
 import VanGoodsActionButton from '../goods-action-button/index.vue'
+import {VantComponent} from '../common/component';
+import {button} from '../mixins/button';
+import {GRAY, RED} from '../common/color';
+import {toPromise} from '../common/utils';
+
 global['__wxVueOptions'] = {components:{'van-popup': VanPopup,'van-button': VanButton,'van-goods-action': VanGoodsAction,'van-goods-action-button': VanGoodsActionButton}}
 
 global['__wxRoute'] = 'vant/dialog/index'
-import { VantComponent } from '../common/component';
-import { button } from '../mixins/button';
-import { GRAY, RED } from '../common/color';
-import { toPromise } from '../common/utils';
 VantComponent({
     mixins: [button],
     props: {

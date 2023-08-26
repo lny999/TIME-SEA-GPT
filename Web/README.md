@@ -1,4 +1,4 @@
-# TIME SEA PLUS web拓展插件
+# HUJIAXIN
 
 ## 安装依赖
 ```

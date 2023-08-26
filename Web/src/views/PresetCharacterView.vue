@@ -113,8 +113,8 @@ export default {
 }
 
 .item {
-  height: 150px;
   width: 210px;
+  height: 160px;
   background-color: rgb(27,30,32);
   margin-bottom: 15px;
   border-radius: 8px;

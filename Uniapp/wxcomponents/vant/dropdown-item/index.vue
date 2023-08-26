@@ -17,11 +17,12 @@
 import VanPopup from '../popup/index.vue'
 import VanCell from '../cell/index.vue'
 import VanIcon from '../icon/index.vue'
+import {useParent} from '../common/relation';
+import {VantComponent} from '../common/component';
+
 global['__wxVueOptions'] = {components:{'van-popup': VanPopup,'van-cell': VanCell,'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/dropdown-item/index'
-import { useParent } from '../common/relation';
-import { VantComponent } from '../common/component';
 VantComponent({
     field: true,
     relation: useParent('dropdown-menu', function () {

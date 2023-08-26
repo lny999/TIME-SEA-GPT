@@ -19,11 +19,12 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs>
 <script>
 import VanField from '../field/index.vue'
+import {VantComponent} from '../common/component';
+import {canIUseModel} from '../common/version';
+
 global['__wxVueOptions'] = {components:{'van-field': VanField}}
 
 global['__wxRoute'] = 'vant/search/index'
-import { VantComponent } from '../common/component';
-import { canIUseModel } from '../common/version';
 VantComponent({
     field: true,
     classes: ['field-class', 'input-class', 'cancel-class'],

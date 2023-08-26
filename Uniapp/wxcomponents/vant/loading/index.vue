@@ -12,7 +12,8 @@
 <script>
 
 global['__wxRoute'] = 'vant/loading/index'
-import { VantComponent } from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
     props: {
         color: String,

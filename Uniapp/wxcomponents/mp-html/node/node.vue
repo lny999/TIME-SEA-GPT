@@ -44,7 +44,7 @@
       <!-- #endif -->
       <!-- #ifndef MP-TOUTIAO || ((H5 || APP-PLUS) && VUE3) -->
       <!-- 音频 -->
-      
+
       <!-- #endif -->
       <view v-else-if="(n.name==='table'&&(n.c||opts[5]))||n.name==='li'" :id="n.attrs.id" :class="'_'+n.name+' '+n.attrs.class" :style="n.attrs.style">
         <node v-if="n.name==='li'" :childs="n.children" :opts="[opts[0],opts[1],opts[2],opts[3],opts[4],opts[5],opts[6],opts[7]+'.'+i+'.children']" />
@@ -108,6 +108,10 @@ module.exports = {
 </script>
 <script>
 import Parser from '../parser'
+import myAudio from '../audio/audio'
+
+import node from './node'
+
 function getTop(e) {
   let top
   // #ifdef H5 || APP-PLUS
@@ -127,9 +131,7 @@ function getTop(e) {
   }
   return top - 30
 }
-import myAudio from '../audio/audio'
 
-import node from './node'
 export default {
   name: 'node',
   options: {
@@ -935,7 +937,7 @@ myAudio,
 /deep/ .line-numbers-rows .span {
   display: block;
   counter-increment: linenumber;
-} 
+}
 /deep/ .line-numbers-rows .span:before {
   content: counter(linenumber);
   color: #999;
@@ -958,7 +960,7 @@ myAudio,
   /deep/ ._section {
     display: block;
   }
-  
+
   /* #endif */
   /deep/ ._video {
     width: 300px;

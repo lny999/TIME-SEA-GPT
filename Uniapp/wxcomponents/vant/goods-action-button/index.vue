@@ -7,13 +7,14 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs>
 <script>
 import VanButton from '../button/index.vue'
+import {VantComponent} from '../common/component';
+import {useParent} from '../common/relation';
+import {button} from '../mixins/button';
+import {link} from '../mixins/link';
+
 global['__wxVueOptions'] = {components:{'van-button': VanButton}}
 
 global['__wxRoute'] = 'vant/goods-action-button/index'
-import { VantComponent } from '../common/component';
-import { useParent } from '../common/relation';
-import { button } from '../mixins/button';
-import { link } from '../mixins/link';
 VantComponent({
     mixins: [link, button],
     relation: useParent('goods-action'),

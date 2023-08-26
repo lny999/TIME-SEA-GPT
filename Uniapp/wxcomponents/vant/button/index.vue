@@ -18,12 +18,13 @@
 <script>
 import VanIcon from '../icon/index.vue'
 import VanLoading from '../loading/index.vue'
+import {VantComponent} from '../common/component';
+import {button} from '../mixins/button';
+import {canIUseFormFieldButton} from '../common/version';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-loading': VanLoading}}
 
 global['__wxRoute'] = 'vant/button/index'
-import { VantComponent } from '../common/component';
-import { button } from '../mixins/button';
-import { canIUseFormFieldButton } from '../common/version';
 const mixins = [button];
 if (canIUseFormFieldButton()) {
     mixins.push('wx://form-field-button');

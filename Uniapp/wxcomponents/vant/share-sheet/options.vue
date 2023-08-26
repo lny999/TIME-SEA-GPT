@@ -2,7 +2,7 @@
 <uni-shadow-root class="vant-share-sheet-options"><view :class="utils.bem('share-sheet__options', { border: showBorder })">
   <view v-for="(item,index) in (options)" :key="item.index" class="van-share-sheet__option" :data-index="index" @click="onSelect">
     <button class="van-share-sheet__button" :open-type="item.openType">
-      <image :src="computed.getIconURL(item.icon)" class="van-share-sheet__icon"></image> 
+      <image :src="computed.getIconURL(item.icon)" class="van-share-sheet__icon"></image>
       <view v-if="item.name" class="van-share-sheet__name">{{ item.name }}</view>
       <view v-if="item.description" class="van-share-sheet__option-description">
         {{ item.description }}
@@ -15,7 +15,8 @@
 <script>
 
 global['__wxRoute'] = 'vant/share-sheet/options'
-import { VantComponent } from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
     props: {
         options: Array,

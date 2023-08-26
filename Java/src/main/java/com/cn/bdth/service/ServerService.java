@@ -3,8 +3,10 @@ package com.cn.bdth.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cn.bdth.dto.PutExchangeDto;
 import com.cn.bdth.dto.ServerConfigDto;
+import com.cn.bdth.dto.TerminalConfigDto;
 import com.cn.bdth.dto.admin.AnnouncementDto;
 import com.cn.bdth.structure.AnnouncementStructure;
+import com.cn.bdth.structure.ControlStructure;
 import com.cn.bdth.structure.ServerStructure;
 import com.cn.bdth.vo.admin.RedemptionCodeVo;
 
@@ -32,6 +34,19 @@ public interface ServerService {
 
 
     /**
+     * 获取终端配置
+     *
+     * @return ControlCommon
+     */
+    ControlStructure getTerminal();
+
+
+    /**
+     * 更新终端配置
+     */
+    void putTerminal(final TerminalConfigDto dto);
+
+    /**
      * 生成兑换码
      *
      * @param dto the dto
@@ -57,7 +72,6 @@ public interface ServerService {
     void deleteRedemptionCodeBasedOnTheId(final Long id);
 
 
-
     /**
      * 发布公告
      *
@@ -72,4 +86,12 @@ public interface ServerService {
      * @return the announcement
      */
     AnnouncementStructure getAnnouncement();
+
+
+    /**
+     * 获取小程序状态
+     *
+     * @return 开启?关闭
+     */
+    boolean wechatStatus();
 }

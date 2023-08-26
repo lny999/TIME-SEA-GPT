@@ -25,7 +25,8 @@
 global['__wxVueOptions'] = {components:{}}
 
 global['__wxRoute'] = 'vant/empty/index'
-import { VantComponent } from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
     props: {
         description: String,

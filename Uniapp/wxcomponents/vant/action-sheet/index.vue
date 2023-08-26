@@ -8,7 +8,7 @@
     {{ description }}
   </view>
   <view v-if="actions && actions.length">
-    
+
     <button v-for="(item,index) in (actions)" :key="item.index" :open-type="item.disabled || item.loading || (canIUseGetUserProfile && item.openType === 'getUserInfo') ? '' : item.openType" :style="item.color ? 'color: ' + item.color : ''" :class="(utils.bem('action-sheet__item', { disabled: item.disabled || item.loading }))+' '+(item.className || '')" hover-class="van-action-sheet__item--hover" :data-index="index" @click="_$self[(item.disabled || item.loading ? '' : 'onSelect')||'_$noop']($event)" @getuserinfo="onGetUserInfo" @contact="onContact" @getphonenumber="onGetPhoneNumber" @error="onError" @launchapp="onLaunchApp" @opensetting="onOpenSetting" :lang="lang" :session-from="sessionFrom" :send-message-title="sendMessageTitle" :send-message-path="sendMessagePath" :send-message-img="sendMessageImg" :show-message-card="showMessageCard" :app-parameter="appParameter">
       <block v-if="(!item.loading)">
         {{ item.name }}
@@ -31,11 +31,12 @@
 import VanIcon from '../icon/index.vue'
 import VanPopup from '../popup/index.vue'
 import VanLoading from '../loading/index.vue'
+import {VantComponent} from '../common/component';
+import {button} from '../mixins/button';
+
 global['__wxVueOptions'] = {components:{'van-icon': VanIcon,'van-popup': VanPopup,'van-loading': VanLoading}}
 
 global['__wxRoute'] = 'vant/action-sheet/index'
-import { VantComponent } from '../common/component';
-import { button } from '../mixins/button';
 VantComponent({
     mixins: [button],
     props: {

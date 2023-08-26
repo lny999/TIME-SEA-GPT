@@ -1,6 +1,19 @@
 // 引用网络请求中间件
 import request from './../utils/request';
 
+
+/**
+ *    绑定
+ */
+export function wechatBindEmail(data) {
+    return request({
+        url: '/user/wechat/bind',
+        method: 'POST',
+        data
+    })
+}
+
+
 /**
  *    获取当前登录用户信息
  */

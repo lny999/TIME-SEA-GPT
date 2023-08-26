@@ -24,4 +24,10 @@ public class LoginPasswordException extends RuntimeException {
         this.message = message;
         this.code = code;
     }
+
+    public LoginPasswordException(final String message) {
+        super(message);
+        this.message = message;
+        this.code = 500;
+    }
 }

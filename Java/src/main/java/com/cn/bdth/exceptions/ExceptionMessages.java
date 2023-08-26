@@ -7,7 +7,14 @@ package com.cn.bdth.exceptions;
  * @version 1.0
  */
 public interface ExceptionMessages {
+
+    String EMAIL_BIND_ERR = "当前微信号已经绑定过了,不可再次绑定";
+    String EMAIL_LOGIN_PWD_ERR = "邮箱或密码错误";
+    String ACCOUNT_ALREADY_EXISTS_ERR = "该账号已存在";
+    String CODE_ERR = "验证码错误";
     String NOT_EXIST_CODE = "兑换码不存在或已失效";
+
+    String VERIFICATION_CODE_ERR = "生成验证码失败";
 
     String NOT_PAID_FOR_LONG_TIME = "长时间未支付,已自动取消";
 

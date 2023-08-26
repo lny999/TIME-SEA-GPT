@@ -2,7 +2,9 @@ package com.cn.bdth.api;
 
 
 import com.cn.bdth.dto.StarDialogueDto;
+import com.cn.bdth.dto.WeChatBindDto;
 import com.cn.bdth.exceptions.UploadException;
+import com.cn.bdth.exceptions.WeChatBindingException;
 import com.cn.bdth.msg.Result;
 import com.cn.bdth.service.DrawingService;
 import com.cn.bdth.service.StarService;
@@ -34,6 +36,25 @@ public class UserController {
     private final StarService starService;
 
     private final DrawingService drawingService;
+
+
+
+
+    /**
+     * 微信绑定邮箱
+     *
+     * @return the result
+     */
+    @PostMapping(value = "/wechat/bind", name = "微信绑定邮箱", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Result wechatBindEmail(@RequestBody @Validated WeChatBindDto dto) {
+        try {
+            userService.wechatBindEmail(dto.getEmail(), dto.getPassword());
+            return Result.ok();
+        } catch (WeChatBindingException e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
 
     /**
      * 当前用户信息结果。

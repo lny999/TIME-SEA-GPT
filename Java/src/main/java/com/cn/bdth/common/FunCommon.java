@@ -1,7 +1,6 @@
 package com.cn.bdth.common;
 
 import com.cn.bdth.constants.ServerConstant;
-
 import com.cn.bdth.structure.ServerStructure;
 import com.cn.bdth.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
@@ -81,10 +80,9 @@ public class FunCommon {
     private String newBingCookie;
 
 
-
     public ServerStructure getServer() {
         try {
-            final ServerStructure value = (ServerStructure) redisUtils.getValue(ServerConstant.CONFIG);
+            final ServerStructure value = (ServerStructure) redisUtils.getValue(ServerConstant.SERVER);
             if (value == null) {
                 log.warn("当前正在使用服务器默认配置,请及时前往控制台配置服务器参数");
                 return createdDefaultServer();
@@ -92,7 +90,7 @@ public class FunCommon {
                 return value;
             }
         } catch (Exception e) {
-            redisUtils.delKey(ServerConstant.CONFIG);
+            redisUtils.delKey(ServerConstant.SERVER);
             log.warn("已清除旧版本的服务器配置,当前正在使用服务器默认配置,请及时前往控制台配置服务器参数");
             return createdDefaultServer();
 

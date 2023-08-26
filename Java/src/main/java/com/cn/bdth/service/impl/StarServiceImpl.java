@@ -44,7 +44,7 @@ public class StarServiceImpl implements StarService {
     @Override
     public IPage<UserStarVo> getUserStarVoPage(final int pageNum) {
         final Long currentLoginId = UserUtils.getCurrentLoginId();
-        return starMapper.selectPage(new Page<>(pageNum, 10), new QueryWrapper<Star>()
+        return starMapper.selectPage(new Page<>(pageNum, 15), new QueryWrapper<Star>()
                 .lambda()
                 .eq(Star::getUserId, currentLoginId)
                 .select(Star::getIssue, Star::getCreatedTime, Star::getStarId)

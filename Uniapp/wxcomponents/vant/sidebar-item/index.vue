@@ -10,11 +10,12 @@
 <wxs src="../wxs/utils.wxs" module="utils"></wxs>
 <script>
 import VanInfo from '../info/index.vue'
+import {VantComponent} from '../common/component';
+import {useParent} from '../common/relation';
+
 global['__wxVueOptions'] = {components:{'van-info': VanInfo}}
 
 global['__wxRoute'] = 'vant/sidebar-item/index'
-import { VantComponent } from '../common/component';
-import { useParent } from '../common/relation';
 VantComponent({
     classes: ['active-class', 'disabled-class'],
     relation: useParent('sidebar'),

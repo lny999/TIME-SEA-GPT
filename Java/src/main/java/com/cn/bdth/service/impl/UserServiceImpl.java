@@ -1,12 +1,21 @@
 package com.cn.bdth.service.impl;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cn.bdth.constants.OperateConstant;
 import com.cn.bdth.dto.admin.UserPutDto;
+import com.cn.bdth.entity.Orders;
+import com.cn.bdth.entity.Star;
 import com.cn.bdth.entity.User;
 import com.cn.bdth.enums.FileEnum;
+import com.cn.bdth.exceptions.ExceptionMessages;
+import com.cn.bdth.exceptions.WeChatBindingException;
+import com.cn.bdth.mapper.OrdersMapper;
+import com.cn.bdth.mapper.StarMapper;
 import com.cn.bdth.mapper.UserMapper;
 import com.cn.bdth.service.UserService;
 import com.cn.bdth.utils.*;
@@ -39,6 +48,12 @@ public class UserServiceImpl implements UserService {
 
     private final RedisUtils redisUtils;
 
+    private final static String SALT = "HuJiaXin";
+
+    private final StarMapper starMapper;
+
+    private final OrdersMapper ordersMapper;
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -60,32 +75,83 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void wechatBindEmail(final String email, final String password) {
+        //获取当前登录ID
+        final Long currentLoginId = UserUtils.getCurrentLoginId();
+        final User currentUser = userMapper.selectOne(new QueryWrapper<User>()
+                .lambda()
+                .eq(User::getUserId, currentLoginId)
+        );
+        if (currentUser.getEmail() != null) {
+            throw new WeChatBindingException(ExceptionMessages.EMAIL_BIND_ERR);
+        }
+
+        final String md5 = SaSecureUtil.md5BySalt(password, SALT);
+        final User user = userMapper.selectOne(new QueryWrapper<User>()
+                .lambda()
+                .eq(User::getEmail, email)
+                .eq(User::getPassword, md5)
+        );
+        if (user == null) {
+            throw new WeChatBindingException(ExceptionMessages.EMAIL_LOGIN_PWD_ERR);
+        }
+
+        //将收藏归为小程序账号所属
+        starMapper.update(new Star().setUserId(currentLoginId), new UpdateWrapper<Star>()
+                .lambda().eq(Star::getUserId, user.getUserId())
+        );
+        //打赏记录
+        ordersMapper.update(new Orders().setUserId(currentLoginId), new UpdateWrapper<Orders>()
+                .lambda()
+                .eq(Orders::getUserId, user.getUserId())
+        );
+        //删除缓存数据信息
+        StpUtil.logout(user.getUserId());
+        //删除原有邮箱账号
+        userMapper.deleteById(user.getUserId());
+        //重新分配小程序账号数据
+        userMapper.updateById(
+                new User()
+                        .setUserId(currentLoginId)
+                        .setEmail(email)
+                        .setPassword(md5)
+                        .setType(user.getType())
+                        .setFrequency(user.getFrequency() + currentUser.getFrequency())
+        );
+    }
+
+
+    @Override
     public UserInfoVo getCurrentUserInfo() {
 
         final User user = userMapper.selectOne(new QueryWrapper<User>()
                 .lambda()
                 .eq(User::getUserId, UserUtils.getCurrentLoginId())
-                .select(User::getUserName, User::getAvatar, User::getFrequency, User::getOpenId)
+                .select(User::getUserName, User::getAvatar, User::getFrequency, User::getOpenId, User::getType)
         );
-        final UserInfoVo userInfoVo = BeanUtils.copyClassProperTies(user, UserInfoVo.class);
-        return userInfoVo.setType(UserUtils.getCurrentRole());
-
+        return BeanUtils.copyClassProperTies(user, UserInfoVo.class);
 
     }
 
+    @Override
+    public Long getTotalUsers() {
+        return userMapper.selectCount(null);
+    }
 
     @Override
     public IPage<UserDataVo> getUserPageVo(final int pageNum, final String prompt) {
-        return userMapper.selectPage(new Page<>(pageNum, 20), new QueryWrapper<User>()
+        return userMapper.selectPage(new Page<>(pageNum, 15), new QueryWrapper<User>()
                 .lambda()
                 .like(StringUtils.notEmpty(prompt), User::getUserName, prompt)
                 .or().like(StringUtils.notEmpty(prompt), User::getOpenId, prompt)
-                .select(User::getFrequency, User::getUserName, User::getCreatedTime, User::getUserId)
+                .select(User::getFrequency, User::getUserName, User::getCreatedTime, User::getUserId, User::getEmail)
                 .orderByDesc(User::getFrequency)
         ).convert(u -> {
             //设置用户最后功能操作时间
             final Object value = redisUtils.getValue(OperateConstant.USER_CALL_TIME + u.getUserId());
             final UserDataVo userDataVo = new UserDataVo()
+                    .setEmail(u.getEmail())
                     .setUserId(u.getUserId())
                     .setUserName(u.getUserName())
                     .setFrequency(u.getFrequency())

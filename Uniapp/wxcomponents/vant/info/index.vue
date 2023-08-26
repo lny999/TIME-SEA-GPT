@@ -5,7 +5,8 @@
 <script>
 
 global['__wxRoute'] = 'vant/info/index'
-import { VantComponent } from '../common/component';
+import {VantComponent} from '../common/component';
+
 VantComponent({
     props: {
         dot: Boolean,

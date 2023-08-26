@@ -7,8 +7,9 @@
 <script>
 
 global['__wxRoute'] = 'vant/col/index'
-import { useParent } from '../common/relation';
-import { VantComponent } from '../common/component';
+import {useParent} from '../common/relation';
+import {VantComponent} from '../common/component';
+
 VantComponent({
     relation: useParent('row'),
     props: {

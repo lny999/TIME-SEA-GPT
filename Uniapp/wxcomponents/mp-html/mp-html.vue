@@ -62,6 +62,7 @@ import search from './search/index.js'
 import style from './style/index.js'
 import imgCache from './img-cache/index.js'
 import editable from './editable/index.js'
+
 const plugins=[markdown,audio,emoji,highlight,search,style,imgCache,editable,]
 // #ifdef APP-PLUS-NVUE
 const dom = weex.requireModule('dom')

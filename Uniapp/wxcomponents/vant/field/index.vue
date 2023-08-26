@@ -34,12 +34,13 @@
 <script>
 import VanCell from '../cell/index.vue'
 import VanIcon from '../icon/index.vue'
+import {nextTick} from '../common/utils';
+import {VantComponent} from '../common/component';
+import {commonProps, inputProps, textareaProps} from './props';
+
 global['__wxVueOptions'] = {components:{'van-cell': VanCell,'van-icon': VanIcon}}
 
 global['__wxRoute'] = 'vant/field/index'
-import { nextTick } from '../common/utils';
-import { VantComponent } from '../common/component';
-import { commonProps, inputProps, textareaProps } from './props';
 VantComponent({
     field: true,
     classes: ['input-class', 'right-icon-class', 'label-class'],
