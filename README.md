@@ -3,7 +3,7 @@
 基于SpringBoot3开发的Ai多功能绘图微信流量主小程序 此项目为长期维护更新项目 有什么问题可以直接在微信群问或者留下你的issues
 
 
-v1.3.0 现在可以选择性部署 网页或者小程序 目前网页支持邮箱注册登录 更动态化的人性配置
+v1.3.0 现在可以选择性部署 网页或者小程序 也可以两者都部署(推荐) 目前网页支持邮箱注册登录 更动态化的人性配置
 
 [![GitHub release](https://img.shields.io/static/v1?label=release&message=v2.4&color=blue)]([https://www.github.com/novicezk/midjourney-proxy](https://github.com/dulaiduwang003/TIME-SEA-PLUS))
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
