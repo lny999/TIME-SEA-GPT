@@ -3,14 +3,16 @@
 # TIME-SEA-PLUS
 
 基于SpringBoot3开发的Ai多功能绘图微信流量主小程序 此项目为长期维护更新项目 有什么问题可以直接在微信群问或者留下你的issues
-另外 web plugs部署前提为 小程序端部署成功后 方可部署 (Web plugs部署十分简单 首先 npm install 之后配置 env环境后 可选择本地执行或者打包上传,不过部署时请先部署好小程序! 因为登录依赖于微信小程序扫一扫功能,另外 Webplugs并不是强制性部署 可根据自己需要来选择 你也可以只部署小程序)
+
+
+v1.3.0 现在可以选择性部署 网页或者小程序 目前网页支持邮箱注册登录 更动态化的人性配置
 
 [![GitHub release](https://img.shields.io/static/v1?label=release&message=v2.4&color=blue)]([https://www.github.com/novicezk/midjourney-proxy](https://github.com/dulaiduwang003/TIME-SEA-PLUS))
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 快速体验
 
-小程序
+小程序 演示
 
 
 
@@ -18,19 +20,23 @@
 
 
 
-web plugs 拓展演示
+web 演示
 https://anchwngb.cn/
 
 主要功能以及特性
+
 ` Web 和 小程序 共用一个后端 且 web登录依赖于小程序,需要通过微信扫一扫 登录web数据来源于小程序 数据全一致`
+- 新增小程序主界面隐藏控制机制
+- 网页支持邮箱注册登录
+- 网页新增 控制台
 - 更新WEB 黑色主题系 新增 超级实验室功能 (NewBing  Claude)
 - Web主要GPT对话形式更改为 与小程序相同
-- 小程序对话记忆(历史对话记录)(v1.2.5)
-- Web对话记忆(历史对话记录)(v1.2.4)
-- Web拓展(v1.2.3)
+- 小程序对话记忆(历史对话记录)
+- Web对话记忆(历史对话记录)
+- Web拓展
 - 对话暂停(双端支持)
 - 支付宝支付(仅Web)
-- GPT流对话(支持3.5 4.0)
+- GPT流对话
 - 对话功能收藏功能 以及 收藏对话回溯场景 (双端支持,回溯目前只支持小程序)
 - 支持GPT自定义敏感词拦截 以及 微信铭感词拦截 (web暂时无拦截 , 小程序支持任意拦截)
 - SD MJ 文生图 图生图 (绘图功能仅小程序支持,web不好把控图片涉黄故暂时不写)
@@ -66,23 +72,14 @@ https://anchwngb.cn/
 <img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS-GPT/assets/87460202/a1fbce71-c077-4c16-aab1-32ce401d157f" style="width:300px;height:600px">
 
 
-TIME-SEA 搭配 web plugs 效果展示 (同后端 使用微信扫一扫登录 数据同步)
+网页效果展示 (同后端 使用微信扫一扫登录 如果是邮箱则需要在小程序中绑定手动绑定数据同步)
 
-
-<img src="https://github.com/dulaiduwang003/TIME-SEA-GPT/assets/87460202/490e4205-3761-4109-aeb3-2ae880c0448d" style="width:700px;height:350px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-GPT/assets/87460202/09068c31-1e3e-4a24-a913-515768ff4ae6" style="width:700px;height:350px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-GPT/assets/87460202/33cc1926-de3e-4d35-93ab-53b040be963a" style="width:700px;height:350px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS-GPT/assets/87460202/4eb9b317-0897-45cc-8340-c960857d07bc" style="width:600px;height:420px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS/assets/87460202/0707260e-61f8-4d00-9aab-e2cb751cbb70" style="width:600px;height:300px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS/assets/87460202/5ea3adff-5ea9-465b-acc4-aabf05af9fe9" style="width:600px;height:300px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS/assets/87460202/15c91f85-0bc6-4997-b151-13a1fab19360" style="width:600px;height:300px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS/assets/87460202/97b75639-03ad-42a4-bc62-f3db7dae4468" style="width:600px;height:300px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS/assets/87460202/19738bdf-423d-44b0-a90b-a3498d997381" style="width:600px;height:300px">
-<img src="https://github.com/dulaiduwang003/TIME-SEA-PLUS/assets/87460202/675d2ee4-4232-4c9a-ae37-9e1f8d68ea5a" style="width:600px;height:300px">
-
-
-
-
+<img src="https://github.com/dulaiduwang003/TIME-SEA-chatgpt/assets/87460202/f4977f98-1b50-4667-b19b-45964ea1f3a9" style="width:700px;height:350px">
+<img src="https://github.com/dulaiduwang003/TIME-SEA-chatgpt/assets/87460202/03f996fe-4c74-42c7-970b-4ad9d500283e" style="width:700px;height:350px">
+<img src="https://github.com/dulaiduwang003/TIME-SEA-chatgpt/assets/87460202/0667e521-99f0-4e78-bd31-595f46bfdb24" style="width:700px;height:350px">
+<img src="https://github.com/dulaiduwang003/TIME-SEA-chatgpt/assets/87460202/6a25f839-2982-43f0-8a8d-7f6fade8a730" style="width:700px;height:350px">
+<img src="https://github.com/dulaiduwang003/TIME-SEA-chatgpt/assets/87460202/c248355f-79e0-456b-bb0f-79aed885345e" style="width:700px;height:350px">
+<img src="https://github.com/dulaiduwang003/TIME-SEA-chatgpt/assets/87460202/c97379de-5989-498a-bea7-f7b9aee53f7e" style="width:700px;height:350px">
 
 
 ## 部署环境
@@ -119,86 +116,90 @@ spring:
       database: 1
       host: 127.0.0.1
       port: 6379
-      password: 'eBFIEQ5'
+      password: ''
   # mysql配置
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/super_bot?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&allowMultiQueries=true&useSSL=true
-    username: super_bot
-    password: 'h8MHFZ7KACK'
+    username: root
+    password: 123
+  # 邮箱 QQ 可以自己邮箱申请
+  mail:
+    host: smtp.qq.com
+    username: 2074055628@qq.com
+    password: 'vmfxyasluqlaqycabb'
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+    port: 587
+
+# 超级管理员账号密码
+root:
+  # 邮箱
+  email: 2074055628@qq.com
+  # 密码
+  password: 'hjxyran003@'
 
 
-# 管理员 多个使用，隔开
-admin: ooskO5McQ18QR1J4-DMJp2M67F2o,
-
-#是否开启文本拦截 (防止GPT乱说话) ，触发敏感词时中断回复并提示
-isSensitive: true
-
-#过滤哪些敏感字(需开启文本拦截才生效)
-sensitive: "(CHAT|GPT|OPENAI)"
-
-# 是否开启GPT-4 如果关闭 则前端的选择模型将无效 最终都会指向GPT-3.5 (如果当前KEY不支持GPT-4 请不要开启 否则用户选择GPT-4则会报错)
-enable-gpt: false
 
 # 微信
 we-chat:
   # APPID
-  appId: 'wx28aa7eed'
+  appId: 'wx28a15asda9ea7eed'
   # 密钥
-  secret: 'c82fb936b67bdd8aff6bae'
+  secret: 'c82fasdecf76db68b67bdd8aff6bae'
   # 通知模板
-  template: '1I4cl8Qk9JT5Irezvaw'
-  # 小程序环境 (develop开发板 trial体验版 release正式版)
-  env: 'release'
+  template: '1I4casdlOys-H7rAMMoavLS-xu9t1QuT5Irezvaw'
 
 # 百度翻译
 baidu-translation:
   # 百度翻译Appid
-  appid: '20asd361832'
-  # 百度翻译密码
-  secret: '2Wiasdbh1IDPTBG8'
+  appid: '202asd01361832'
+  # 百度翻译密码要
+  secret: '2Wibasdubh1IDPTBG8'
 
 # 阿里OSS
 ali-oss:
-  endpoint: 'oss-asdliyuncs.com'
-  accessKey: 'LTAIasdcoPBoonh48n'
-  secretKey: 'WDqmasd27o61iWoZUMUtCrI'
+  endpoint: 'oss-cn-sasdai.aliyuncs.com'
+  accessKey: 'LTAI5tasdoPBoonh48n'
+  secretKey: 'WDqasdwqqH27o61iWoZUMUtCrI'
   bucketName: 'sea-time'
-  domain: 'https://sasdanghai.aliyuncs.com'
+  domain: 'https:asd.oss-cn-shanghai.aliyuncs.com'
 
 # GPT 对话助手配置
 gpt:
   # 开发者名称
   author: '时间海'
   # BOT 中文名
-  botNameChinese: '时间海的助手'
+  botNameChinese: '时间海'
   # BOT 英文名
   botNameEnglish: 'TIME SEA'
-  # Web最大上下文控制条数 记忆 (-1不限制)
-  web-message-max: 10
-  # Web最大处理文字 单条信息数量 (-1不限制)
-  web-message-size: -1
+
 # 支付宝配置
 ali-pay:
   # 支付宝应用ID
-  appId: '2021003191691414'
+  appId: '202asd9649746'
   # 支付宝公钥
-  alipayPublicKey: 'XXXX'
+  alipayPublicKey: 'MIIBasdgKCAQEAke8GlhZEkuXt4TTivqFKAIEz9y5pyXaHbECraFKpSk3GKNciKCZU5v9EdgapfEkh4hayKhl552gytK0TSY9bfTeISZwPQvlylXQb4B+PUTbBhpz1JLun0hep1MtqcChYNQofAA27Los1V8JoddbCPc+qRwRiavi50OmrBei58NnB8W8AHpeFqXCFpIIDnSBpCtm+Q8hsULFfi2y6iaVP/EggONO51q8Wu+jrW5ql0uRD7BvOFeEyS2NLhiRgG/1Ap0hda/JyU8WcQovwuyoP/RhTHghUEDFwFcMrYBVfjJLkXDsfOHu+G+qD6PAJAyQoF32jaWlN8VpQAp7T0dqo3QIDAQAB'
   # 私钥
-  privateKey: 'XXXX'
+  privateKey: 'MIIEvwasdAAoIBAQCCHx62yhuxnMZbzHyDK9ck9JXmh2fXAHuBDHYSxCZEPAhjrCa8PmUOuK3CJP1NAzvwKWpd/DaO6e8GTUH5Ez017RZvmDZ0H2ef/SaK8eEF/CixPEIBV9ZPmu/KsW4ovKavptDbDaGcJ4C26qLsGxt3WbYPbqBe6WM9KjfTG5Xk7zI5cN6GzaR/Mm3kYve8Tx772FZuyEvs/xRtOS91oj3W/kkgVjPIjR8+zR1j8o35ZrqjbdV755R6RPGo81eYeuFgt4flqnhKyTNmrSXRZEQ9m4bTJdhs8o+ZaE2Uj4I0ys7ScLY17v0WuiIcHwnLdk2GtudU4TwhXiS8/ckWbxUtAgMBAAECggEAC7fdvjxpTg9+VZoOxIlYML3OGhqroVMrzC1hHMOJZq+5WbCRNHayBydejpNiNGNMLI6uQ5SJHUm3+utOO64d3xNg59/fV4nUfTYBGJY725wf1gZFM3XDmRus6KYd85E5uaveNzv9B+EO2Go9DeJLEO6FVNJzotiF1WZN7LcZQqqfCKMXJqhMGMCpwliGG/fE5rLuVA5BwkSLRoTgW7qQAgM+w9QXJOaz/4JJMMbk8+Ge5eaZXs+MROO5sHl6+eypxRidMRYwYBcBhOLK04kux717pXW6O/HgxXlqjEbeq1fHJIvC2IjP7ahEDdb78Im8ialsU3iPUM0TBGI65pVGgQKBgQC89iWbYhbPrMqLVJHjRwbgYlWr7FEi9t2dLuM+m5VdknvPH6B/26CJTgsRgOWUnDpmt4xyEwUOpahOPxwQsZd81a5MDdGS0MKJSJuTliTUL5WfVA2NXBBB15srh0MWTlpFv/E8b68wjOaBC1S4AGp+mrzCP5QiISdHmQhRngsL0QKBgQCwSQOdooam+OPUNEhts+vRXFvYGPOnmBSPUF+INGd0aX9oFe0uSX5JgRkdBHIi+G5l0A4u3VnB7fF0eQ7oXrS7/3Axnp5zNuh+DZKU0diJx5IIVXtgEt/X+nDqocDi01XLmHzmSUHGL2yrTCtQ3BAvlnFtTrEA9S4cJQhSkO72nQKBgQCOBNIu/oH2g/+WyHD9SJy6eC27kVlJ1hCp2lug6n5QXZAAE90lO4RkretTtHTYRLMAEGPWOMVMROVCKdyGD3Ozt0XQk3I3zf7n/1IukmILt9fUb+/flpoBYnKVPIwHb8wZMDG3Ipmg+8Uip8l8oZNopBPKSs6i+Bf1j+bYsNfMgQKBgQCF380ZJ1Yu85DBlLr0ZNDPe95b7AcN3Zavh5AlNfbjF0MkXpJytmlrlNjninrLR/M+6pP6zyrc9cCKfWzu1w1WQBSJ+jXGtYo2QERzNDHH4IFsRs6dFXhc4tphtVlwaKIdLb6cfEGxKk7Sf9PdYmIAYbXeFwag/ZF42j7JxTtUmQKBgQCT46GxJOMCKGx0tMa8wp6jzLaoXbJF8xAVy6CEYtarfHS3M6bi/Y+dRFRGydRtB2Xjw1OFEhqbLY2Hs9g4m+mYFWMZIrt/4qkwZCFRJC8ED/iTp0lbqFUj5AL3f/04gkMw1PzLojkCqdhBhZPc1/XefZE44Dgxok/I/nhRcfZlnw=='
   # 域名
-  domain: 'https://adadcp.fun'
+  domain: 'https://71asd3a8x8.zicp.fun'
 
-# 初始化配置(只加载一次)
-
+# 服务器初始化配置(只加载一次)
 config:
   # OPEN AI API
-  openAiUrl: 'https://chatgpt1.nextweb.fun/api/proxy/v1'
+  openAiUrl: 'https://chatmp.hcolor.pro/v1'
   # SD API
   sdUrl: 'http://127.0.0.1:7860'
   # MJ API
   mjUrl: 'http://127.0.0.1:7860'
-  #OPEN
-  openKey: 'sk-Nw4Oe7C89asdMtLxEaFhKU'
+  # GPT-3:
+  openKey: 'sk-Nw4Oeasd3BlbkFJzFkhF1exF1MtLxEaFhKU'
+  # GPT-4
+  openPlusKey: 'sk-KGUasdJUv3M0WvrECHr4uv52wTt'
   # 用户第一次登录奖励次数
   incentiveFrequency: 10
   # 观看视频奖励次数
@@ -215,8 +216,40 @@ config:
   mjImage2Frequency: 5
   #GPT消耗次数
   gptFrequency: 1
+  #GPT消耗次数
+  gptPlusFrequency: 20
   # 观看视频奖励次数
   signInFrequency: 1
+  # claude
+  organizationUuid: '3eead2bb-e6b8-49c1-aad4-2bec4e62c709'
+  # 连ID
+  conversationUuid: '082e1205-2081-456a-a0ae-9ea06cc6dc59'
+  # sessionKey
+  sessionKey: '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'
+  # 必应Cookie
+  newBingCookie: '1c5f8HXnvasdgmhdrCHD33Xsw9n5eBK0_uWUFygYnl_2SSuejpXTnw8R7ZetpesLSSjVuZnOfOOGCVKJ2pEM_0Hg2ozW2ep_bvADewjMZDXBvzjHv8mpOAxrZ1tLjQQphjpeemQAMKl4AqmvObIClK8e0noqoXjr9jZ3l45qKy6ABBEqFeiWMiF8UCkKVqHBI5g'
+
+# 终端配置 只加载配置
+control:
+  # 代理ip 只支持 clash
+  proxyIp: 127.0.0.1
+  # 代理端口
+  proxyPort: 7890
+  # 小程序环境 (develop开发板 trial体验版 release正式版)
+  wechatAppEnv: develop
+  # 敏感词
+  sensitiveWords: "(CHAT|GPT|OPEN|OPENAI)"
+  # 是否开启敏感词过滤
+  enableSensitive: true
+  # 是否开启GPT-4 不开启则 所有流量指向GPT-3模型
+  enableGptPlus: true
+  # 是否隐藏小程序主页面
+  enableWechatAppMain: true
+  # 是否开启代理了
+  enableProxy: false
+
+
+
 
 
 
