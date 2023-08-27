@@ -5,8 +5,8 @@
       <swiper :autoplay="false" @change="changeSwiper($event)" :current="swiperIndex" class="master-container">
         <!--首页-->
         <swiper-item>
-          <home-view v-if="isWechatStatus"/>
-          <camouflage-component v-else/>
+          <home-view v-show="isWechatStatus"/>
+          <camouflage-component v-show="!isWechatStatus"/>
         </swiper-item>
         <!--登录-->
         <swiper-item v-if="!isLogin">
